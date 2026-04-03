@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Custodes Painting Dashboard — Darren</title>
+<style>
+  :root {
+    --bg: #1a1a2e;
+    --surface: #16213e;
+    --accent: #d4a745;
+    --accent2: #e74c3c;
+    --silver: #a8b2c1;
+    --text: #e0e0e0;
+    --text-muted: #8892a0;
+    --border: #2a3a5c;
+    --green: #00b894;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 24px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  a { color: var(--accent); }
+  h1 { font-size: 1.8rem; margin-bottom: 4px; color: var(--accent); letter-spacing: 1px; text-transform: uppercase; }
+  .subtitle { color: var(--text-muted); margin-bottom: 24px; font-size: 0.9rem; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+  .grid-full { grid-column: 1 / -1; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
+  .card h2 { font-size: 1.1rem; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+  .badge { font-size: 0.7rem; padding: 2px 8px; border-radius: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .badge-new { background: var(--accent2); color: white; }
+  .badge-done { background: var(--green); color: #1a1a2e; }
+  .badge-todo { background: var(--border); color: var(--text-muted); }
+
+  .progress-container { margin: 12px 0; }
+  .progress-label { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; }
+  .progress-bar { height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 4px; transition: width 0.3s; background: var(--accent); }
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th { text-align: left; padding: 8px 10px; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--border); }
+  td { padding: 10px; border-bottom: 1px solid rgba(42,58,92,0.5); vertical-align: middle; }
+  tr:hover td { background: rgba(212,167,69,0.05); }
+  .unit-name { font-weight: 600; position: relative; cursor: pointer; }
+  .pts { color: var(--text-muted); font-size: 0.8rem; }
+
+  .unit-name .model-thumb { display: none; position: absolute; bottom: calc(100% + 8px); left: 0; width: 200px; height: 200px; object-fit: contain; background: #fff; border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.6); z-index: 100; padding: 8px; pointer-events: none; }
+  .unit-name:hover .model-thumb { display: block; }
+
+  select.status { appearance: none; background: var(--border); color: var(--text); border: none; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; cursor: pointer; }
+  select.status.assembled { background: #2d3748; color: var(--silver); }
+  select.status.primed { background: #3b2f63; color: #b388ff; }
+  select.status.painting { background: #4a3000; color: var(--accent); }
+  select.status.based { background: #1a3a2a; color: #69db7c; }
+  select.status.done { background: #0a3d2a; color: var(--green); }
+
+  .swatch-row { display: flex; align-items: center; gap: 8px; padding: 5px 0; font-size: 0.82rem; }
+  .swatch { width: 22px; height: 22px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.15); flex-shrink: 0; }
+  .swatch-name { flex: 1; }
+  .swatch-brand { color: var(--text-muted); font-size: 0.75rem; }
+  .swatch-section { font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 12px; margin-bottom: 4px; font-weight: 600; }
+  .note { font-size: 0.8rem; color: var(--text-muted); background: rgba(0,0,0,0.2); padding: 8px 12px; border-radius: 6px; margin-top: 10px; line-height: 1.5; }
+  .step { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(42,58,92,0.3); font-size: 0.85rem; }
+  .step-num { background: var(--accent); color: #1a1a2e; width: 24px; height: 24px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; flex-shrink: 0; }
+  .step-text { flex: 1; }
+  .step-text strong { color: var(--accent); }
+
+  .save-note { position: fixed; bottom: 16px; right: 16px; background: var(--accent); color: #1a1a2e; padding: 8px 16px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+  .save-note.show { opacity: 1; }
+
+  .nav { margin-bottom: 20px; font-size: 0.85rem; }
+  .nav a { margin-right: 16px; }
+
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="nav"><a href="index.html">Home</a> <a href="necrons.html">Necrons (jrob)</a></div>
+
+<h1>Adeptus Custodes — Darren</h1>
+<p class="subtitle">Combat Patrol ~500pts &mdash; Welcome to 40K!</p>
+
+<div class="card" style="margin-bottom: 20px;">
+  <h2>Painting Progress</h2>
+  <div class="progress-container">
+    <div class="progress-label"><span>Models Painted</span><span id="paint-count">0 / 13</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="paint-bar" style="width: 0%"></div></div>
+  </div>
+</div>
+
+<div class="grid">
+  <!-- Army List -->
+  <div class="card grid-full">
+    <h2>Combat Patrol <span class="badge badge-new">New Player</span></h2>
+    <table>
+      <thead><tr><th>Unit</th><th>Models</th><th>Role</th><th>Status</th></tr></thead>
+      <tbody id="unit-table"></tbody>
+    </table>
+  </div>
+
+  <!-- Gold Armor Scheme -->
+  <div class="card">
+    <h2>Gold Armor Scheme</h2>
+    <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:8px;">Shield-Captain, Custodian Guard, Vertus Praetors</p>
+
+    <div class="swatch-section">Primer & Base</div>
+    <div class="swatch-row"><div class="swatch" style="background:#c5962a"></div><span class="swatch-name">Retributor Armour Spray</span><span class="swatch-brand">Citadel</span></div>
+
+    <div class="swatch-section">Shade</div>
+    <div class="swatch-row"><div class="swatch" style="background:rgba(180,120,60,0.4); border: 1px solid #b4783c"></div><span class="swatch-name">Reikland Fleshshade Gloss</span><span class="swatch-brand">Citadel Shade</span></div>
+
+    <div class="swatch-section">Layer & Highlight</div>
+    <div class="swatch-row"><div class="swatch" style="background:#d4a745"></div><span class="swatch-name">Liberator Gold</span><span class="swatch-brand">Citadel Layer</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#d4d8dc"></div><span class="swatch-name">Stormhost Silver</span><span class="swatch-brand">Citadel Layer</span></div>
+
+    <div class="swatch-section">Joints & Black Areas</div>
+    <div class="swatch-row"><div class="swatch" style="background:#1a1a1a"></div><span class="swatch-name">Abaddon Black</span><span class="swatch-brand">Citadel Base</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#484b4e"></div><span class="swatch-name">Eshin Grey</span><span class="swatch-brand">Citadel Layer</span></div>
+
+    <div class="swatch-section">Red Cloth & Plumes</div>
+    <div class="swatch-row"><div class="swatch" style="background:#9b1a1a"></div><span class="swatch-name">Mephiston Red</span><span class="swatch-brand">Citadel Base</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:rgba(180,40,60,0.4); border: 1px solid #b4283c"></div><span class="swatch-name">Carroburg Crimson</span><span class="swatch-brand">Citadel Shade</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#c83c2e"></div><span class="swatch-name">Evil Sunz Scarlet</span><span class="swatch-brand">Citadel Layer</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#e05540"></div><span class="swatch-name">Wild Rider Red</span><span class="swatch-brand">Citadel Layer</span></div>
+
+    <div class="note">
+      <strong>Upgrade picks:</strong> Vallejo Metal Color Gold (smoother than Retributor), ProAcryl Bold Pyrrole Red (1-coat coverage). Shade gold with Reikland Fleshshade, NOT Nuln Oil.
+    </div>
+  </div>
+
+  <!-- Prosecutors / Sisters Scheme -->
+  <div class="card">
+    <h2>Prosecutors (Sisters of Silence)</h2>
+    <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:12px;">Dark armor with silver trim, grey robes</p>
+
+    <div class="swatch-section">Armor (Black)</div>
+    <div class="swatch-row"><div class="swatch" style="background:#1a1a1a"></div><span class="swatch-name">Abaddon Black</span><span class="swatch-brand">Citadel Base</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#5a6268"></div><span class="swatch-name">Mechanicus Standard Grey</span><span class="swatch-brand">Citadel Base</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#9ca3ab"></div><span class="swatch-name">Administratum Grey</span><span class="swatch-brand">Citadel Layer</span></div>
+
+    <div class="swatch-section">Silver Trim & Blades</div>
+    <div class="swatch-row"><div class="swatch" style="background:#7a7d82"></div><span class="swatch-name">Leadbelcher</span><span class="swatch-brand">Citadel Base</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#2b2b2b"></div><span class="swatch-name">Nuln Oil</span><span class="swatch-brand">Citadel Shade</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#d4d8dc"></div><span class="swatch-name">Stormhost Silver</span><span class="swatch-brand">Citadel Layer</span></div>
+
+    <div class="swatch-section">Robes</div>
+    <div class="swatch-row"><div class="swatch" style="background:#5a6268"></div><span class="swatch-name">Mechanicus Standard Grey</span><span class="swatch-brand">Citadel Base</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#787e84"></div><span class="swatch-name">Dawnstone</span><span class="swatch-brand">Citadel Layer</span></div>
+
+    <div class="swatch-section">Skin (faces visible)</div>
+    <div class="swatch-row"><div class="swatch" style="background:#b07050"></div><span class="swatch-name">Bugman's Glow</span><span class="swatch-brand">Citadel Base</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:rgba(180,120,80,0.4); border: 1px solid #b47850"></div><span class="swatch-name">Reikland Fleshshade</span><span class="swatch-brand">Citadel Shade</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#c8a080"></div><span class="swatch-name">Cadian Fleshtone</span><span class="swatch-brand">Citadel Layer</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#dcc0a8"></div><span class="swatch-name">Kislev Flesh</span><span class="swatch-brand">Citadel Layer</span></div>
+  </div>
+
+  <!-- Painting Order -->
+  <div class="card grid-full">
+    <h2>Recommended Painting Order</h2>
+    <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Spray gold</strong> all Custodians (Shield-Captain, Guard, Praetors). Spray <strong>black</strong> all Prosecutors.</div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Shade gold</strong> with Reikland Fleshshade Gloss — do all gold models at once. While drying, basecoat <strong>black joints</strong> on Custodians.</div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Basecoat reds</strong> (Mephiston Red) on all cloth, capes, plumes. 2 thin coats.</div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-text"><strong>Layer gold</strong> (Liberator Gold) on raised surfaces. <strong>Shade red</strong> (Carroburg Crimson) in folds.</div></div>
+    <div class="step"><div class="step-num">5</div><div class="step-text"><strong>Highlight gold edges</strong> (Stormhost Silver). <strong>Layer red</strong> (Evil Sunz Scarlet) on raised folds.</div></div>
+    <div class="step"><div class="step-num">6</div><div class="step-text"><strong>Prosecutors:</strong> Grey drybrush on armor, Leadbelcher on trim, Nuln Oil wash, robes, then skin last.</div></div>
+    <div class="step"><div class="step-num">7</div><div class="step-text"><strong>Base all models together</strong> at the end. Keep it simple — texture paint + drybrush + tufts.</div></div>
+  </div>
+
+  <!-- Opponent -->
+  <div class="card" style="border-color: var(--green);">
+    <h2 style="color: var(--green);">Opponent — jrob's Szarekhan Necrons</h2>
+    <p style="font-size: 0.85rem; margin-bottom: 12px;">~515pts Szarekhan Dynasty</p>
+    <table>
+      <thead><tr><th>Unit</th><th>Models</th></tr></thead>
+      <tbody>
+        <tr><td class="unit-name">Overlord</td><td>1</td></tr>
+        <tr><td class="unit-name">Royal Warden</td><td>1</td></tr>
+        <tr><td class="unit-name">Necron Warriors x10 (Flayers)</td><td>10</td></tr>
+        <tr><td class="unit-name">Necron Warriors x10 (Reapers)</td><td>10</td></tr>
+        <tr><td class="unit-name">Skorpekh Destroyers x3</td><td>3</td></tr>
+        <tr><td class="unit-name">Skorpekh Lord</td><td>1</td></tr>
+        <tr><td class="unit-name">Canoptek Scarab Swarms</td><td>3</td></tr>
+      </tbody>
+    </table>
+    <div class="note">
+      <strong>Matchup tips:</strong> Your Vertus Praetors are your best unit — fast and deadly. Target the Skorpekh Destroyers early (they can hurt you). Don't get bogged down fighting Warriors — they reanimate. Use your invulnerable saves aggressively. You're outnumbered but every model hits like a truck.
+    </div>
+  </div>
+</div>
+
+<div class="save-note" id="save-note">Progress saved!</div>
+
+<script>
+const units = [
+  { name: "Shield-Captain (Allarus Terminator)", models: 1, role: "Leader / Tank", status: "unbuilt",
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120108011_AllarusCustodiansCpt01.jpg" },
+  { name: "Custodian Guard x4", models: 4, role: "Battleline / Anvil", status: "unbuilt",
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/60010101002_BurningProsperoENG02.jpg" },
+  { name: "Prosecutors x5 (Sisters of Silence)", models: 5, role: "Anti-Psyker / Objective", status: "unbuilt",
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99550108188_SistersofSilenceProsecutorUpgrades01.jpg" },
+  { name: "Vertus Praetors x3 (Jetbikes)", models: 3, role: "Fast Attack / Hammer", status: "unbuilt",
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120108014_VertusPraetors01.jpg" },
+];
+
+const statuses = ["unbuilt", "assembled", "primed", "painting", "based", "done"];
+
+function save() {
+  const data = units.map(u => u.status);
+  localStorage.setItem("custodes-progress", JSON.stringify(data));
+  const note = document.getElementById("save-note");
+  note.classList.add("show");
+  setTimeout(() => note.classList.remove("show"), 1500);
+}
+
+function load() {
+  const data = JSON.parse(localStorage.getItem("custodes-progress") || "null");
+  if (data) data.forEach((s, i) => { if (units[i]) units[i].status = s; });
+}
+
+function updateProgress() {
+  const total = units.reduce((a, u) => a + u.models, 0);
+  const done = units.filter(u => u.status === "done").reduce((a, u) => a + u.models, 0);
+  document.getElementById("paint-count").textContent = `${done} / ${total}`;
+  document.getElementById("paint-bar").style.width = `${(done / total) * 100}%`;
+}
+
+function render() {
+  const tbody = document.getElementById("unit-table");
+  tbody.innerHTML = "";
+  units.forEach((u, i) => {
+    const tr = document.createElement("tr");
+    const sel = document.createElement("select");
+    sel.className = `status ${u.status}`;
+    statuses.forEach(s => {
+      const opt = document.createElement("option");
+      opt.value = s; opt.textContent = s.charAt(0).toUpperCase() + s.slice(1);
+      if (s === u.status) opt.selected = true;
+      sel.appendChild(opt);
+    });
+    sel.addEventListener("change", e => {
+      units[i].status = e.target.value;
+      sel.className = `status ${e.target.value}`;
+      save(); updateProgress();
+    });
+    tr.innerHTML = `
+      <td class="unit-name">${u.name}<img class="model-thumb" src="${u.img}" alt="${u.name}" loading="lazy"></td>
+      <td>${u.models}</td>
+      <td class="pts">${u.role}</td>
+      <td></td>
+    `;
+    tr.lastElementChild.appendChild(sel);
+    tbody.appendChild(tr);
+  });
+  updateProgress();
+}
+
+load(); render();
+</script>
+</body>
+</html>

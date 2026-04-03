@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Warhammer Painting HQ</title>
+<style>
+  :root {
+    --bg: #1a1a2e;
+    --surface: #16213e;
+    --accent: #00b894;
+    --gold: #d4a745;
+    --text: #e0e0e0;
+    --text-muted: #8892a0;
+    --border: #2a3a5c;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 24px;
+  }
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 8px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, var(--accent), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .subtitle { color: var(--text-muted); margin-bottom: 40px; font-size: 0.95rem; }
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 800px; width: 100%; }
+  a.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    text-decoration: none;
+    color: var(--text);
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  }
+  a.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+  a.card.necron { border-color: var(--accent); }
+  a.card.necron:hover { box-shadow: 0 8px 24px rgba(0,184,148,0.2); }
+  a.card.custodes { border-color: var(--gold); }
+  a.card.custodes:hover { box-shadow: 0 8px 24px rgba(212,167,69,0.2); }
+  .card-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .necron .card-label { color: var(--accent); }
+  .custodes .card-label { color: var(--gold); }
+  .card-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 6px; }
+  .card-sub { font-size: 0.85rem; color: var(--text-muted); }
+  .card-detail { font-size: 0.8rem; color: var(--text-muted); margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); }
+
+  @media (max-width: 600px) { .cards { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+  <h1>Painting HQ</h1>
+  <p class="subtitle">Track painting progress and share schemes</p>
+  <div class="cards">
+    <a class="card necron" href="necrons.html">
+      <div class="card-label">jrob</div>
+      <div class="card-title">Szarekhan Necrons</div>
+      <div class="card-sub">~500pts vs Darren's Custodes</div>
+      <div class="card-detail">~30 models &bull; Duncan Rhodes scheme &bull; Green gauss glow</div>
+    </a>
+    <a class="card custodes" href="custodes.html">
+      <div class="card-label">Darren</div>
+      <div class="card-title">Adeptus Custodes</div>
+      <div class="card-sub">Combat Patrol ~500pts</div>
+      <div class="card-detail">13 models &bull; Classic gold &bull; New to 40K</div>
+    </a>
+  </div>
+</body>
+</html>
