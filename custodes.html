@@ -63,6 +63,8 @@
   .swatch { width: 22px; height: 22px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.15); flex-shrink: 0; }
   .swatch-name { flex: 1; }
   .swatch-brand { color: var(--text-muted); font-size: 0.75rem; }
+  .swatch-avail { font-size: 0.65rem; padding: 1px 6px; border-radius: 4px; background: var(--green); color: #1a1a2e; font-weight: 600; margin-left: auto; flex-shrink: 0; }
+  .swatch-buy { font-size: 0.65rem; padding: 1px 6px; border-radius: 4px; background: var(--border); color: var(--text-muted); font-weight: 600; margin-left: auto; flex-shrink: 0; }
   .swatch-section { font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 12px; margin-bottom: 4px; font-weight: 600; }
   .note { font-size: 0.8rem; color: var(--text-muted); background: rgba(0,0,0,0.2); padding: 8px 12px; border-radius: 6px; margin-top: 10px; line-height: 1.5; }
   .step { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(42,58,92,0.3); font-size: 0.85rem; }
@@ -144,31 +146,34 @@
     <h2>Gold Armor Scheme</h2>
     <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:8px;">Shield-Captain, Custodian Guard, Vertus Praetors</p>
 
+    <div class="note" style="margin-bottom: 12px;">Paints marked <span class="swatch-avail" style="display:inline;margin-left:0;">BORROW</span> are available from jrob's collection.</div>
+
     <div class="swatch-section">Primer & Base (Option A — Spray)</div>
-    <div class="swatch-row"><div class="swatch" style="background:#c5962a"></div><span class="swatch-name">Retributor Armour Spray</span><span class="swatch-brand">Citadel Spray</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#c5962a"></div><span class="swatch-name">Retributor Armour Spray</span><span class="swatch-brand">Citadel Spray</span><span class="swatch-buy">BUY</span></div>
 
     <div class="swatch-section">Primer & Base (Option B — Brush-on)</div>
-    <div class="swatch-row"><div class="swatch" style="background:#1a1a1a"></div><span class="swatch-name">Black primer (any brand)</span><span class="swatch-brand">Spray or airbrush</span></div>
-    <div class="swatch-row"><div class="swatch" style="background:#c5962a"></div><span class="swatch-name">Retributor Armour (pot)</span><span class="swatch-brand">Citadel Base</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#1a1a1a"></div><span class="swatch-name">Black primer (any brand)</span><span class="swatch-brand">Spray or airbrush</span><span class="swatch-avail">BORROW</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#c5962a"></div><span class="swatch-name">Retributor Armour (pot)</span><span class="swatch-brand">Citadel Base</span><span class="swatch-avail">BORROW</span></div>
     <div class="note" style="margin-top:4px; margin-bottom:8px;">Prime black, then apply 2-3 thin coats of brush-on gold. The black naturally stays in recesses, giving you free pre-shading. Slightly more work but no gold spray needed.</div>
 
     <div class="swatch-section">Shade</div>
-    <div class="swatch-row"><div class="swatch" style="background:rgba(180,120,60,0.4); border: 1px solid #b4783c"></div><span class="swatch-name">Reikland Fleshshade Gloss</span><span class="swatch-brand">Citadel Shade</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:rgba(180,120,60,0.4); border: 1px solid #b4783c"></div><span class="swatch-name">Reikland Fleshshade Gloss</span><span class="swatch-brand">Citadel Shade</span><span class="swatch-buy">BUY</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:rgba(180,120,60,0.4); border: 1px solid #b4783c"></div><span class="swatch-name">Reikland Fleshshade (regular)</span><span class="swatch-brand">Citadel Shade</span><span class="swatch-avail">BORROW</span></div>
     <div class="note" style="margin-top:4px; margin-bottom:8px;">Gloss version gives a richer sheen on gold. Regular Reikland Fleshshade works fine too — just slightly more matte.</div>
 
     <div class="swatch-section">Layer & Highlight</div>
-    <div class="swatch-row"><div class="swatch" style="background:#d4a745"></div><span class="swatch-name">Liberator Gold</span><span class="swatch-brand">Citadel Layer</span></div>
-    <div class="swatch-row"><div class="swatch" style="background:#d4d8dc"></div><span class="swatch-name">Stormhost Silver</span><span class="swatch-brand">Citadel Layer</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#d4a745"></div><span class="swatch-name">Liberator Gold</span><span class="swatch-brand">Citadel Layer</span><span class="swatch-avail">BORROW</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#d4d8dc"></div><span class="swatch-name">Stormhost Silver</span><span class="swatch-brand">Citadel Layer</span><span class="swatch-avail">BORROW</span></div>
 
     <div class="swatch-section">Joints & Black Areas</div>
-    <div class="swatch-row"><div class="swatch" style="background:#1a1a1a"></div><span class="swatch-name">Abaddon Black</span><span class="swatch-brand">Citadel Base</span></div>
-    <div class="swatch-row"><div class="swatch" style="background:#484b4e"></div><span class="swatch-name">Eshin Grey</span><span class="swatch-brand">Citadel Layer</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#1a1a1a"></div><span class="swatch-name">Abaddon Black</span><span class="swatch-brand">Citadel Base</span><span class="swatch-avail">BORROW</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#484b4e"></div><span class="swatch-name">Eshin Grey</span><span class="swatch-brand">Citadel Layer</span><span class="swatch-avail">BORROW</span></div>
 
     <div class="swatch-section">Red Cloth & Plumes</div>
-    <div class="swatch-row"><div class="swatch" style="background:#9b1a1a"></div><span class="swatch-name">Mephiston Red</span><span class="swatch-brand">Citadel Base</span></div>
-    <div class="swatch-row"><div class="swatch" style="background:rgba(180,40,60,0.4); border: 1px solid #b4283c"></div><span class="swatch-name">Carroburg Crimson</span><span class="swatch-brand">Citadel Shade</span></div>
-    <div class="swatch-row"><div class="swatch" style="background:#c83c2e"></div><span class="swatch-name">Evil Sunz Scarlet</span><span class="swatch-brand">Citadel Layer</span></div>
-    <div class="swatch-row"><div class="swatch" style="background:#e05540"></div><span class="swatch-name">Wild Rider Red</span><span class="swatch-brand">Citadel Layer</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#9b1a1a"></div><span class="swatch-name">Mephiston Red</span><span class="swatch-brand">Citadel Base</span><span class="swatch-avail">BORROW</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:rgba(180,40,60,0.4); border: 1px solid #b4283c"></div><span class="swatch-name">Carroburg Crimson</span><span class="swatch-brand">Citadel Shade</span><span class="swatch-avail">BORROW</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#c83c2e"></div><span class="swatch-name">Evil Sunz Scarlet</span><span class="swatch-brand">Citadel Layer</span><span class="swatch-avail">BORROW</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#e05540"></div><span class="swatch-name">Wild Rider Red</span><span class="swatch-brand">Citadel Layer</span><span class="swatch-avail">BORROW</span></div>
 
     <div class="note">
       <strong>Upgrade picks:</strong> Vallejo Metal Color Gold (smoother than Retributor), ProAcryl Bold Pyrrole Red (1-coat coverage). Shade gold with Reikland Fleshshade, NOT Nuln Oil.
@@ -181,24 +186,24 @@
     <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:12px;">Dark armor with silver trim, grey robes</p>
 
     <div class="swatch-section">Armor (Black)</div>
-    <div class="swatch-row"><div class="swatch" style="background:#1a1a1a"></div><span class="swatch-name">Abaddon Black</span><span class="swatch-brand">Citadel Base</span></div>
-    <div class="swatch-row"><div class="swatch" style="background:#5a6268"></div><span class="swatch-name">Mechanicus Standard Grey</span><span class="swatch-brand">Citadel Base</span></div>
-    <div class="swatch-row"><div class="swatch" style="background:#9ca3ab"></div><span class="swatch-name">Administratum Grey</span><span class="swatch-brand">Citadel Layer</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#1a1a1a"></div><span class="swatch-name">Abaddon Black</span><span class="swatch-brand">Citadel Base</span><span class="swatch-avail">BORROW</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#5a6268"></div><span class="swatch-name">Mechanicus Standard Grey</span><span class="swatch-brand">Citadel Base</span><span class="swatch-avail">BORROW</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#9ca3ab"></div><span class="swatch-name">Administratum Grey</span><span class="swatch-brand">Citadel Layer</span><span class="swatch-avail">BORROW</span></div>
 
     <div class="swatch-section">Silver Trim & Blades</div>
-    <div class="swatch-row"><div class="swatch" style="background:#7a7d82"></div><span class="swatch-name">Leadbelcher</span><span class="swatch-brand">Citadel Base</span></div>
-    <div class="swatch-row"><div class="swatch" style="background:#2b2b2b"></div><span class="swatch-name">Nuln Oil</span><span class="swatch-brand">Citadel Shade</span></div>
-    <div class="swatch-row"><div class="swatch" style="background:#d4d8dc"></div><span class="swatch-name">Stormhost Silver</span><span class="swatch-brand">Citadel Layer</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#7a7d82"></div><span class="swatch-name">Leadbelcher</span><span class="swatch-brand">Citadel Base</span><span class="swatch-avail">BORROW</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#2b2b2b"></div><span class="swatch-name">Nuln Oil</span><span class="swatch-brand">Citadel Shade</span><span class="swatch-avail">BORROW</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#d4d8dc"></div><span class="swatch-name">Stormhost Silver</span><span class="swatch-brand">Citadel Layer</span><span class="swatch-avail">BORROW</span></div>
 
     <div class="swatch-section">Robes</div>
-    <div class="swatch-row"><div class="swatch" style="background:#5a6268"></div><span class="swatch-name">Mechanicus Standard Grey</span><span class="swatch-brand">Citadel Base</span></div>
-    <div class="swatch-row"><div class="swatch" style="background:#787e84"></div><span class="swatch-name">Dawnstone</span><span class="swatch-brand">Citadel Layer</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#5a6268"></div><span class="swatch-name">Mechanicus Standard Grey</span><span class="swatch-brand">Citadel Base</span><span class="swatch-avail">BORROW</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#787e84"></div><span class="swatch-name">Dawnstone</span><span class="swatch-brand">Citadel Layer</span><span class="swatch-avail">BORROW</span></div>
 
     <div class="swatch-section">Skin (faces visible)</div>
-    <div class="swatch-row"><div class="swatch" style="background:#b07050"></div><span class="swatch-name">Bugman's Glow</span><span class="swatch-brand">Citadel Base</span></div>
-    <div class="swatch-row"><div class="swatch" style="background:rgba(180,120,80,0.4); border: 1px solid #b47850"></div><span class="swatch-name">Reikland Fleshshade</span><span class="swatch-brand">Citadel Shade</span></div>
-    <div class="swatch-row"><div class="swatch" style="background:#c8a080"></div><span class="swatch-name">Cadian Fleshtone</span><span class="swatch-brand">Citadel Layer</span></div>
-    <div class="swatch-row"><div class="swatch" style="background:#dcc0a8"></div><span class="swatch-name">Kislev Flesh</span><span class="swatch-brand">Citadel Layer</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#b07050"></div><span class="swatch-name">Bugman's Glow</span><span class="swatch-brand">Citadel Base</span><span class="swatch-avail">BORROW</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:rgba(180,120,80,0.4); border: 1px solid #b47850"></div><span class="swatch-name">Reikland Fleshshade</span><span class="swatch-brand">Citadel Shade</span><span class="swatch-avail">BORROW</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#c8a080"></div><span class="swatch-name">Cadian Fleshtone</span><span class="swatch-brand">Citadel Layer</span><span class="swatch-avail">BORROW</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#dcc0a8"></div><span class="swatch-name">Kislev Flesh</span><span class="swatch-brand">Citadel Layer</span><span class="swatch-avail">BORROW</span></div>
   </div>
 
   <!-- Painting Order -->
