@@ -4,112 +4,119 @@
 <meta charset="UTF-8">
 <title>Szarekhan Necrons — Paint Scheme Reference</title>
 <style>
-  @page { size: letter; margin: 0.5in; }
+  @page { size: letter; margin: 0.4in; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     background: #fff;
     color: #1a1a1a;
-    padding: 24px;
+    padding: 20px;
     max-width: 900px;
     margin: 0 auto;
-    font-size: 11pt;
+    font-size: 9pt;
   }
-  h1 {
-    font-size: 18pt;
-    margin-bottom: 2px;
-    letter-spacing: 0.5px;
-  }
+  h1 { font-size: 16pt; margin-bottom: 2px; }
   .subtitle {
     color: #666;
-    font-size: 9pt;
-    margin-bottom: 20px;
+    font-size: 8pt;
+    margin-bottom: 14px;
     border-bottom: 2px solid #222;
-    padding-bottom: 8px;
+    padding-bottom: 6px;
   }
   h2 {
-    font-size: 14pt;
-    margin-bottom: 12px;
+    font-size: 12pt;
+    margin: 16px 0 8px;
+    color: #222;
     border-bottom: 1px solid #ccc;
-    padding-bottom: 4px;
+    padding-bottom: 3px;
   }
-  .scheme-columns {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-  }
-  .scheme-block h3 {
-    font-size: 11pt;
-    margin-bottom: 4px;
-    color: #333;
-  }
-  .scheme-note {
-    font-size: 8pt;
-    color: #888;
-    margin-bottom: 10px;
-    font-style: italic;
-  }
-  .swatch-section-label {
-    font-size: 7.5pt;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    color: #999;
-    margin-top: 10px;
-    margin-bottom: 2px;
-    font-weight: 600;
-  }
-  .swatch-row {
+
+  .step {
     display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 2px 0;
-    font-size: 8.5pt;
+    gap: 8px;
+    padding: 4px 0;
+    border-bottom: 1px solid #f0f0f0;
+    align-items: flex-start;
   }
-  .swatch {
-    width: 14px;
-    height: 14px;
+  .step-num {
+    font-weight: 700;
+    color: #999;
+    font-size: 8pt;
+    min-width: 18px;
+    text-align: right;
+    padding-top: 1px;
+  }
+  .step-swatch {
+    width: 16px;
+    height: 16px;
     border-radius: 2px;
     border: 1px solid #ccc;
     flex-shrink: 0;
+    margin-top: 1px;
   }
-  .swatch-name { flex: 1; }
-  .swatch-brand { color: #999; font-size: 7.5pt; }
-  .scheme-note-box {
+  .step-body { flex: 1; }
+  .step-paint {
+    font-weight: 600;
+    font-size: 8.5pt;
+  }
+  .step-brand {
+    color: #999;
+    font-size: 7pt;
+  }
+  .step-where {
+    color: #444;
+    font-size: 8pt;
+    margin-top: 1px;
+  }
+  .step-tip {
+    color: #888;
+    font-size: 7.5pt;
+    font-style: italic;
+    margin-top: 1px;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .section-label {
+    font-size: 7pt;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #aaa;
+    font-weight: 700;
+    margin-top: 10px;
+    margin-bottom: 2px;
+    padding-top: 4px;
+    border-top: 1px solid #eee;
+  }
+  .section-label:first-child { border-top: none; padding-top: 0; }
+
+  .applies-box {
     margin-top: 12px;
     padding: 8px;
-    background: #f5f5f5;
+    background: #f7f7f7;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 8pt;
+    color: #444;
+  }
+  .applies-box strong { color: #222; }
+
+  .note-box {
+    margin-top: 10px;
+    padding: 8px;
     border-radius: 4px;
     font-size: 8pt;
     color: #555;
   }
+  .note-gold { border: 1px solid #c5962a; background: #fdf8ee; }
+  .note-green { border: 1px solid #1b7a2e; background: #f0faf0; }
+  .note-blue { border: 1px solid #3498db; background: #f0f7fd; }
 
-  .unit-applies {
-    margin-top: 16px;
-    padding: 10px;
-    background: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 8.5pt;
-    color: #444;
-  }
-  .unit-applies strong { color: #222; }
-
-  .lychguard-note {
-    margin-top: 20px;
-    padding: 10px;
-    border: 1px solid #c5962a;
-    border-radius: 4px;
-    background: #fdf8ee;
-  }
-  .lychguard-note h3 {
-    font-size: 10pt;
-    color: #8b6914;
-    margin-bottom: 4px;
-  }
-  .lychguard-note p {
-    font-size: 8.5pt;
-    color: #555;
-  }
+  .page-break { page-break-before: always; }
 
   @media print {
     body { padding: 0; }
@@ -118,80 +125,270 @@
 </head>
 <body>
 
-<h1>Szarekhan Necrons — Paint Scheme Reference</h1>
-<p class="subtitle">Duncan Rhodes method &bull; All paints owned &bull; Print and keep at paint station</p>
+<h1>Szarekhan Necrons — Paint Scheme</h1>
+<p class="subtitle">Duncan Rhodes method &bull; Step-by-step with placement guide &bull; All paints owned</p>
 
-<h2>Paint Schemes</h2>
-<div class="scheme-columns">
+<!-- ═══════════ WARRIOR SCHEME ═══════════ -->
+<h2>Warrior Scheme</h2>
+<p style="font-size:7.5pt;color:#888;margin-bottom:8px;">For: Warriors, Skorpekh Destroyers, Royal Warden, Scarabs, Lokhust Heavy Destroyers, Cryptothralls, Reanimator, Immortals, Wraiths, Triarch Stalker</p>
 
-  <div class="scheme-block">
-    <h3>Warrior Scheme</h3>
-    <p class="scheme-note">Source: Duncan Rhodes — Szarekhan Dynasty Necron Warrior</p>
+<div class="section-label">Step 1 — Prime &amp; Darken</div>
 
-    <div class="swatch-section-label">Primer &amp; Base Metal</div>
-    <div class="swatch-row"><div class="swatch" style="background:#7a7d82"></div><span class="swatch-name">Leadbelcher Spray</span><span class="swatch-brand">Citadel</span></div>
-    <div class="swatch-row"><div class="swatch" style="background:#1a1a1a"></div><span class="swatch-name">Black Templar</span><span class="swatch-brand">Contrast</span></div>
-    <div class="swatch-row"><div class="swatch" style="background:#2b2b2b"></div><span class="swatch-name">Nuln Oil</span><span class="swatch-brand">Shade</span></div>
-
-    <div class="swatch-section-label">Bronze / Brass Details</div>
-    <div class="swatch-row"><div class="swatch" style="background:#a67d5b"></div><span class="swatch-name">Runelord Brass</span><span class="swatch-brand">Base</span></div>
-    <div class="swatch-row"><div class="swatch" style="background:#c9a96e"></div><span class="swatch-name">Canoptek Alloy</span><span class="swatch-brand">Layer</span></div>
-    <div class="swatch-row"><div class="swatch" style="background:#3a3226"></div><span class="swatch-name">Cryptek Armourshade</span><span class="swatch-brand">Shade</span></div>
-
-    <div class="swatch-section-label">Silver Highlights</div>
-    <div class="swatch-row"><div class="swatch" style="background:#d4d8dc"></div><span class="swatch-name">Stormhost Silver</span><span class="swatch-brand">Layer</span></div>
-
-    <div class="swatch-section-label">Green Glow (Gauss)</div>
-    <div class="swatch-row"><div class="swatch" style="background:#1a1a1a"></div><span class="swatch-name">Matt Black</span><span class="swatch-brand">Army Painter</span></div>
-    <div class="swatch-row"><div class="swatch" style="background:#003d1e"></div><span class="swatch-name">Caliban Green</span><span class="swatch-brand">Base</span></div>
-    <div class="swatch-row"><div class="swatch" style="background:#1b7a2e"></div><span class="swatch-name">Warpstone Glow</span><span class="swatch-brand">Layer</span></div>
-    <div class="swatch-row"><div class="swatch" style="background:#52c41a"></div><span class="swatch-name">Moot Green</span><span class="swatch-brand">Layer</span></div>
-    <div class="swatch-row"><div class="swatch" style="background:#5a6268"></div><span class="swatch-name">Mechanicus Std Grey</span><span class="swatch-brand">Base</span></div>
-    <div class="swatch-row"><div class="swatch" style="background:#f0f0f0"></div><span class="swatch-name">Matt White</span><span class="swatch-brand">Army Painter</span></div>
-    <div class="swatch-row"><div class="swatch" style="background:#44cc66"></div><span class="swatch-name">Biel-tan Green</span><span class="swatch-brand">Shade</span></div>
-    <div class="swatch-row"><div class="swatch" style="background:#ccaa00"></div><span class="swatch-name">Casandora Yellow</span><span class="swatch-brand">Shade</span></div>
-
-    <div class="swatch-section-label">Basing</div>
-    <div class="swatch-row"><div class="swatch" style="background:#c2b59b"></div><span class="swatch-name">Moon Dust</span><span class="swatch-brand">Army Painter</span></div>
+<div class="step">
+  <span class="step-num">1</span>
+  <div class="step-swatch" style="background:#7a7d82"></div>
+  <div class="step-body">
+    <span class="step-paint">Leadbelcher Spray</span> <span class="step-brand">Citadel Spray</span>
+    <div class="step-where">Spray the <strong>entire model</strong> evenly. This is your primer + base coat in one.</div>
+    <div class="step-tip">Or: prime black first, then airbrush Stynylrez metallic as zenithal from above.</div>
   </div>
-
-  <div class="scheme-block">
-    <h3>Overlord Scheme</h3>
-    <p class="scheme-note">Source: Duncan Rhodes — Szarekhan Dynasty Overlord. Shares Warrior base + extras:</p>
-
-    <div class="swatch-section-label">Gold Details (Rank)</div>
-    <div class="swatch-row"><div class="swatch" style="background:#c5962a"></div><span class="swatch-name">Retributor Armour</span><span class="swatch-brand">Base</span></div>
-    <div class="swatch-row"><div class="swatch" style="background:#d4a745"></div><span class="swatch-name">Liberator Gold</span><span class="swatch-brand">Layer</span></div>
-
-    <div class="swatch-section-label">Robes / Cloth</div>
-    <div class="swatch-row"><div class="swatch" style="background:#3d2b1a"></div><span class="swatch-name">Wyldwood</span><span class="swatch-brand">Contrast</span></div>
-    <div class="swatch-row"><div class="swatch" style="background:#4a4a4e"></div><span class="swatch-name">Basilicanum Grey</span><span class="swatch-brand">Contrast</span></div>
-
-    <div class="swatch-section-label">Additional Metallics</div>
-    <div class="swatch-row"><div class="swatch" style="background:#5a5e63"></div><span class="swatch-name">Iron Hands Steel</span><span class="swatch-brand">Base</span></div>
-    <div class="swatch-row"><div class="swatch" style="background:#3a3a3a"></div><span class="swatch-name">Cryptek Armourshade Gloss</span><span class="swatch-brand">Shade</span></div>
-
-    <div class="swatch-section-label">Highlights</div>
-    <div class="swatch-row"><div class="swatch" style="background:#e8e8e8"></div><span class="swatch-name">Corax White</span><span class="swatch-brand">Base</span></div>
-    <div class="swatch-row"><div class="swatch" style="background:#9ca3ab"></div><span class="swatch-name">Administratum Grey</span><span class="swatch-brand">Layer</span></div>
-
-    <div class="scheme-note-box">
-      <strong>All paints owned.</strong> Only potential need: Moon Dust (basing) and Matt Black (or use Abaddon Black).
-    </div>
-  </div>
-
 </div>
 
-<div class="unit-applies">
-  <strong>Which scheme for which unit:</strong><br>
-  <strong>Warrior scheme:</strong> Warriors, Skorpekh Destroyers, Scarab Swarms, Royal Warden, Lokhust Heavy Destroyers, Cryptothralls, Canoptek Reanimator, Immortals, Canoptek Wraiths, Triarch Stalker<br>
-  <strong>Overlord scheme:</strong> Overlord(s), Skorpekh Lord, Plasmancer, Technomancer, Psychomancer<br>
-  <strong>Special:</strong> C'tan Shard of the Void Dragon (custom — green energy + dark metallic body)
+<div class="step">
+  <span class="step-num">2</span>
+  <div class="step-swatch" style="background:#1a1a1a"></div>
+  <div class="step-body">
+    <span class="step-paint">Black Templar</span> <span class="step-brand">Citadel Contrast</span>
+    <div class="step-where">Apply over the <strong>entire model</strong>. Pools into recesses to create depth. Don't let it pool on flat surfaces — wick away excess with a clean brush.</div>
+  </div>
 </div>
 
-<div class="lychguard-note">
-  <h3>Lychguard — Extra Gold Treatment</h3>
-  <p>Use the Warrior metallic base, then apply heavier gold coverage with <strong>Retributor Armour</strong> (base) and <strong>Liberator Gold</strong> (layer) across the shield faces, shoulder plates, and chest. These are elite bodyguards — more gold = higher rank.</p>
+<div class="step">
+  <span class="step-num">3</span>
+  <div class="step-swatch" style="background:#2b2b2b"></div>
+  <div class="step-body">
+    <span class="step-paint">Nuln Oil</span> <span class="step-brand">Citadel Shade</span>
+    <div class="step-where">Wash into <strong>recesses only</strong> — joint lines, panel gaps, between ribs. Not all-over.</div>
+    <div class="step-tip">This deepens the shadow lines that Black Templar started.</div>
+  </div>
+</div>
+
+<div class="section-label">Step 2 — Bronze / Brass Trim</div>
+
+<div class="step">
+  <span class="step-num">4</span>
+  <div class="step-swatch" style="background:#a67d5b"></div>
+  <div class="step-body">
+    <span class="step-paint">Runelord Brass</span> <span class="step-brand">Citadel Base</span>
+    <div class="step-where">Paint <strong>raised trim, shoulder pads, chest symbol, spine ridge, kneecaps</strong>. The Szarekhan dynasty markings — the decorative edges and borders on the armor.</div>
+  </div>
+</div>
+
+<div class="step">
+  <span class="step-num">5</span>
+  <div class="step-swatch" style="background:#c9a96e"></div>
+  <div class="step-body">
+    <span class="step-paint">Canoptek Alloy</span> <span class="step-brand">Citadel Layer</span>
+    <div class="step-where">Highlight the <strong>top edges of all bronze areas</strong> — upper rim of shoulder pads, top of chest symbol, raised edges of trim. Leave Runelord Brass visible in lower areas.</div>
+  </div>
+</div>
+
+<div class="step">
+  <span class="step-num">6</span>
+  <div class="step-swatch" style="background:#3a3226"></div>
+  <div class="step-body">
+    <span class="step-paint">Cryptek Armourshade</span> <span class="step-brand">Citadel Shade</span>
+    <div class="step-where">Wash into the <strong>recesses of bronze areas only</strong> — where trim meets armor panels, around rivets on shoulder pads. Deepens the brass tones.</div>
+  </div>
+</div>
+
+<div class="section-label">Step 3 — Silver Edge Highlights</div>
+
+<div class="step">
+  <span class="step-num">7</span>
+  <div class="step-swatch" style="background:#d4d8dc"></div>
+  <div class="step-body">
+    <span class="step-paint">Stormhost Silver</span> <span class="step-brand">Citadel Layer</span>
+    <div class="step-where">Fine edge highlight on the <strong>sharpest edges of the dark metallic body</strong> — edges of leg plates, arm ridges, head crest, ribcage edges. Small dots on rivets. Keep it subtle.</div>
+  </div>
+</div>
+
+<div class="section-label">Step 4 — Green Gauss Glow</div>
+
+<div class="step">
+  <span class="step-num">8</span>
+  <div class="step-swatch" style="background:#1a1a1a"></div>
+  <div class="step-body">
+    <span class="step-paint">Matt Black</span> <span class="step-brand">Army Painter</span>
+    <div class="step-where">Base coat the <strong>gun barrel interior, eyes, chest orb</strong> — anywhere the green glow will go. This creates a dark base for the glow to pop against.</div>
+  </div>
+</div>
+
+<div class="step">
+  <span class="step-num">9</span>
+  <div class="step-swatch" style="background:#003d1e"></div>
+  <div class="step-body">
+    <span class="step-paint">Caliban Green</span> <span class="step-brand">Citadel Base</span>
+    <div class="step-where">Paint the <strong>entire glow area</strong> — gun barrel, gauss rod, eyes, chest orb. Leave a thin black ring around the edges.</div>
+  </div>
+</div>
+
+<div class="step">
+  <span class="step-num">10</span>
+  <div class="step-swatch" style="background:#1b7a2e"></div>
+  <div class="step-body">
+    <span class="step-paint">Warpstone Glow</span> <span class="step-brand">Citadel Layer</span>
+    <div class="step-where">Layer on the <strong>center of each glow area</strong>, leaving Caliban Green visible at the edges. On the gauss rod, paint the center line.</div>
+  </div>
+</div>
+
+<div class="step">
+  <span class="step-num">11</span>
+  <div class="step-swatch" style="background:#52c41a"></div>
+  <div class="step-body">
+    <span class="step-paint">Moot Green</span> <span class="step-brand">Citadel Layer</span>
+    <div class="step-where">Thin line/dot at the <strong>very center of glow points</strong> — center of eyes, tip of gauss rod, brightest spot of chest orb. This is the "hottest" point of the glow.</div>
+  </div>
+</div>
+
+<div class="step">
+  <span class="step-num">12</span>
+  <div class="step-swatch" style="background:#5a6268"></div>
+  <div class="step-body">
+    <span class="step-paint">Mechanicus Standard Grey</span> <span class="step-brand">Citadel Base</span>
+    <div class="step-where">Mix with Moot Green for a <strong>desaturated green-grey</strong>. Apply as an OSL (object source lighting) haze on the <strong>metal surfaces near glow sources</strong> — around eyes, under gun barrel.</div>
+    <div class="step-tip">Optional but adds realism. Thin this down, it should be barely visible.</div>
+  </div>
+</div>
+
+<div class="step">
+  <span class="step-num">13</span>
+  <div class="step-swatch" style="background:#f0f0f0"></div>
+  <div class="step-body">
+    <span class="step-paint">Matt White</span> <span class="step-brand">Army Painter</span>
+    <div class="step-where">Tiny dot of white at the <strong>absolute brightest point</strong> of each eye/orb. Creates the "pinprick" light effect.</div>
+  </div>
+</div>
+
+<div class="step">
+  <span class="step-num">14</span>
+  <div class="step-swatch" style="background:#44cc66"></div>
+  <div class="step-body">
+    <span class="step-paint">Biel-tan Green</span> <span class="step-brand">Citadel Shade</span>
+    <div class="step-where">Glaze over <strong>all green glow areas</strong> to unify the layers and add a glossy, ethereal look. Also apply to the gauss rod to tie the green tones together.</div>
+  </div>
+</div>
+
+<div class="step">
+  <span class="step-num">15</span>
+  <div class="step-swatch" style="background:#ccaa00"></div>
+  <div class="step-body">
+    <span class="step-paint">Casandora Yellow</span> <span class="step-brand">Citadel Shade</span>
+    <div class="step-where">Tiny touch on the <strong>very center of the hottest glow points</strong> (center of eyes). Shifts the brightest spot from green towards yellow-white, mimicking intense energy.</div>
+    <div class="step-tip">Less is more — one small dab per eye.</div>
+  </div>
+</div>
+
+<div class="section-label">Step 5 — Basing</div>
+
+<div class="step">
+  <span class="step-num">16</span>
+  <div class="step-swatch" style="background:#c2b59b"></div>
+  <div class="step-body">
+    <span class="step-paint">Moon Dust</span> <span class="step-brand">Army Painter</span>
+    <div class="step-where">Apply to <strong>base</strong> — Martian/desert theme for Szarekhan tomb world.</div>
+  </div>
+</div>
+
+<!-- ═══════════ OVERLORD ADDITIONS ═══════════ -->
+<div class="page-break"></div>
+
+<h2>Overlord Scheme — Additional Steps</h2>
+<p style="font-size:7.5pt;color:#888;margin-bottom:8px;">For: Overlord(s), Skorpekh Lord, Plasmancer, Technomancer, Psychomancer. Do the full Warrior scheme first, then add these.</p>
+
+<div class="section-label">Gold Rank Details (after Warrior step 7, before green glow)</div>
+
+<div class="step">
+  <span class="step-num">A1</span>
+  <div class="step-swatch" style="background:#c5962a"></div>
+  <div class="step-body">
+    <span class="step-paint">Retributor Armour</span> <span class="step-brand">Citadel Base</span>
+    <div class="step-where">Paint <strong>gold rank markings</strong> — Overlord's face plate, crown/crest, chest eagle, weapon handle, ornamental details. On Skorpekh Lord: blade guards, spine crest.</div>
+    <div class="step-tip">Gold goes on top of (replaces) the dark metallic in these areas. More gold = higher rank.</div>
+  </div>
+</div>
+
+<div class="step">
+  <span class="step-num">A2</span>
+  <div class="step-swatch" style="background:#d4a745"></div>
+  <div class="step-body">
+    <span class="step-paint">Liberator Gold</span> <span class="step-brand">Citadel Layer</span>
+    <div class="step-where">Highlight the <strong>upper edges of gold areas</strong> — top of crown, raised face plate ridges, weapon pommel edges. Brighter gold over the darker Retributor base.</div>
+  </div>
+</div>
+
+<div class="section-label">Robes &amp; Cloth (Overlord only)</div>
+
+<div class="step">
+  <span class="step-num">A3</span>
+  <div class="step-swatch" style="background:#3d2b1a"></div>
+  <div class="step-body">
+    <span class="step-paint">Wyldwood</span> <span class="step-brand">Citadel Contrast</span>
+    <div class="step-where">Apply over the <strong>tabard/loincloth/hanging cloth</strong> on the Overlord. Let it pool in folds — Contrast does the shading for you.</div>
+  </div>
+</div>
+
+<div class="step">
+  <span class="step-num">A4</span>
+  <div class="step-swatch" style="background:#4a4a4e"></div>
+  <div class="step-body">
+    <span class="step-paint">Basilicanum Grey</span> <span class="step-brand">Citadel Contrast</span>
+    <div class="step-where">Apply to any <strong>secondary cloth or leather straps</strong> — belt, arm wraps, underside of shoulder cape if present.</div>
+  </div>
+</div>
+
+<div class="section-label">Additional Metallic Detail</div>
+
+<div class="step">
+  <span class="step-num">A5</span>
+  <div class="step-swatch" style="background:#5a5e63"></div>
+  <div class="step-body">
+    <span class="step-paint">Iron Hands Steel</span> <span class="step-brand">Citadel Base</span>
+    <div class="step-where">Paint <strong>blade edges, weapon blades, sharp metallic details</strong> that should look like polished steel (different tone from the body's darker Leadbelcher).</div>
+  </div>
+</div>
+
+<div class="step">
+  <span class="step-num">A6</span>
+  <div class="step-swatch" style="background:#3a3a3a"></div>
+  <div class="step-body">
+    <span class="step-paint">Cryptek Armourshade Gloss</span> <span class="step-brand">Citadel Shade</span>
+    <div class="step-where">Wash over <strong>gold areas and blades</strong>. The gloss finish makes metals look polished and rich. Apply thinly — don't let it pool on flat gold surfaces.</div>
+  </div>
+</div>
+
+<div class="section-label">Final Highlights</div>
+
+<div class="step">
+  <span class="step-num">A7</span>
+  <div class="step-swatch" style="background:#e8e8e8"></div>
+  <div class="step-body">
+    <span class="step-paint">Corax White</span> <span class="step-brand">Citadel Base</span>
+    <div class="step-where">Mix with Administratum Grey for <strong>cloth highlights</strong> — top of cloth folds on the tabard, highest points of draped fabric.</div>
+  </div>
+</div>
+
+<div class="step">
+  <span class="step-num">A8</span>
+  <div class="step-swatch" style="background:#9ca3ab"></div>
+  <div class="step-body">
+    <span class="step-paint">Administratum Grey</span> <span class="step-brand">Citadel Layer</span>
+    <div class="step-where">Edge highlight on <strong>Basilicanum Grey cloth/leather areas</strong> — top edges of straps, raised folds.</div>
+  </div>
+</div>
+
+<!-- ═══════════ SPECIAL NOTES ═══════════ -->
+
+<div class="note-box note-gold" style="margin-top:16px;">
+  <strong>Lychguard — Extra Gold:</strong> Follow Warrior scheme for the body, then apply Retributor Armour + Liberator Gold much more generously — cover <strong>shield faces, entire shoulder plates, chest plate, and helmet</strong> (not just trim). These are elite bodyguards; more gold = higher rank. Wash gold with Cryptek Armourshade Gloss.
+</div>
+
+<div class="note-box note-green">
+  <strong>C'tan Void Dragon:</strong> Custom scheme. Dark metallic body (Warrior steps 1-3), then heavy green energy effects across the <strong>energy tendrils, chest core, eyes, and base lightning</strong>. Use the full green glow sequence (steps 8-15) but more aggressively — bigger glow areas, more white/yellow at the hottest points. Consider Vallejo Fluorescent Green for extra pop.
+</div>
+
+<div class="note-box note-blue">
+  <strong>Scarab Swarms (speed method):</strong> Prime black, heavy drybrush Leadbelcher over the whole base, Nuln Oil wash, then pick out a few wing edges with Stormhost Silver and eyes with Moot Green. Done — don't overthink these, they're tiny.
 </div>
 
 </body>
