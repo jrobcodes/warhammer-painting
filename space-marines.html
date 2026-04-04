@@ -123,6 +123,7 @@
     font-size: 0.8rem;
     cursor: pointer;
   }
+  select.status.unbuilt { background: #1a1a2e; color: #666; border: 1px dashed #444; }
   select.status.assembled { background: #2d3748; color: var(--silver); }
   select.status.primed { background: #3b2f63; color: #b388ff; }
   select.status.painting { background: #4a3000; color: var(--gold); }
@@ -251,13 +252,6 @@
 <h1>Space Marines &mdash; Primaris</h1>
 <p class="subtitle">Army Project &mdash; Dark Imperium + Indomitus box sets</p>
 
-<!-- Tier selector -->
-<div style="display:flex;gap:8px;margin-bottom:20px;">
-  <button class="tier-btn active" data-tier="500" onclick="setTier(500)">500pts</button>
-  <button class="tier-btn" data-tier="1000" onclick="setTier(1000)">1000pts</button>
-  <button class="tier-btn" data-tier="2000" onclick="setTier(2000)">2000pts</button>
-</div>
-
 <!-- Overall Progress -->
 <div class="card" style="margin-bottom: 20px;">
   <h2>Overall Progress</h2>
@@ -382,62 +376,81 @@ const allUnits = [
     img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101376_BrutalisDreadnoughtLead.jpg" },
 ];
 
-const statuses = ["assembled", "primed", "painting", "based", "done"];
-let currentTier = 500;
+const statuses = ["unbuilt", "assembled", "primed", "painting", "based", "done"];
 
-function getUnitsForTier(tier) {
-  return allUnits.filter(u => u.tier <= tier);
-}
+/* ── Sync config ── */
+const SYNC_URL = "https://wrdbzjaw48.execute-api.us-west-2.amazonaws.com";
+const ARMY_KEY = "space-marines";
+const STORAGE_KEY = "marines-progress-v2";
 
+/* ── Save & Sync ── */
 function save() {
   const data = allUnits.map(u => u.status);
-  localStorage.setItem("marines-progress", JSON.stringify(data));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  fetch(`${SYNC_URL}/jrob`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(getCloudData()),
+  }).catch(() => {});
   const note = document.getElementById("save-note");
   note.classList.add("show");
   setTimeout(() => note.classList.remove("show"), 1500);
 }
 
-function load() {
-  const data = JSON.parse(localStorage.getItem("marines-progress") || "null");
+function getCloudData() {
+  const existing = JSON.parse(localStorage.getItem("cloud-cache") || "{}");
+  existing[ARMY_KEY] = allUnits.map(u => u.status);
+  localStorage.setItem("cloud-cache", JSON.stringify(existing));
+  return existing;
+}
+
+async function load() {
+  try {
+    const res = await fetch(`${SYNC_URL}/jrob`);
+    if (res.ok) {
+      const cloud = await res.json();
+      if (cloud[ARMY_KEY]) {
+        cloud[ARMY_KEY].forEach((s, i) => { if (allUnits[i]) allUnits[i].status = s; });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(cloud[ARMY_KEY]));
+        localStorage.setItem("cloud-cache", JSON.stringify(cloud));
+        return;
+      }
+    }
+  } catch (e) {}
+  const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
   if (data) {
     data.forEach((s, i) => { if (allUnits[i]) allUnits[i].status = s; });
   }
 }
 
+/* ── Progress ── */
 function updateProgress() {
-  const units = getUnitsForTier(currentTier);
-  const totalModels = units.reduce((a, u) => a + u.models, 0);
-  const doneModels = units.filter(u => u.status === "done").reduce((a, u) => a + u.models, 0);
-  const totalPts = units.reduce((a, u) => a + u.pts, 0);
-  const donePts = units.filter(u => u.status === "done").reduce((a, u) => a + u.pts, 0);
-
+  const totalModels = allUnits.reduce((a, u) => a + u.models, 0);
+  const doneModels = allUnits.filter(u => u.status === "done").reduce((a, u) => a + u.models, 0);
+  const totalPts = allUnits.reduce((a, u) => a + u.pts, 0);
+  const donePts = allUnits.filter(u => u.status === "done").reduce((a, u) => a + u.pts, 0);
   document.getElementById("paint-count").textContent = `${doneModels} / ${totalModels}`;
   document.getElementById("paint-bar").style.width = `${totalModels ? (doneModels / totalModels) * 100 : 0}%`;
   document.getElementById("pts-count").textContent = `${donePts} / ${totalPts}`;
   document.getElementById("pts-bar").style.width = `${totalPts ? (donePts / totalPts) * 100 : 0}%`;
 }
 
+/* ── Render ── */
 function render() {
-  const units = getUnitsForTier(currentTier);
   const tbody = document.getElementById("unit-table");
   tbody.innerHTML = "";
-
-  // Group units by tier and render with section headers
   const tierLabels = { 500: "Base Army (500pts)", 1000: "1000pt Additions", 2000: "2000pt Additions" };
   const tierStyles = { 500: "", 1000: "gold", 2000: "red" };
   let lastTier = 0;
 
-  units.forEach((u) => {
-    // Insert tier section header when tier changes
+  allUnits.forEach((u, idx) => {
     if (u.tier !== lastTier) {
-      const headerTr = document.createElement("tr");
-      headerTr.className = `tier-header ${tierStyles[u.tier] || ""}`;
-      headerTr.innerHTML = `<td colspan="4">${tierLabels[u.tier] || u.tier + "pt"}</td>`;
-      tbody.appendChild(headerTr);
+      const h = document.createElement("tr");
+      h.className = `tier-header ${tierStyles[u.tier] || ""}`;
+      h.innerHTML = `<td colspan="4">${tierLabels[u.tier] || u.tier + "pt"}</td>`;
+      tbody.appendChild(h);
       lastTier = u.tier;
     }
-
-    const idx = allUnits.indexOf(u);
     const tr = document.createElement("tr");
     const sel = document.createElement("select");
     sel.className = `status ${u.status}`;
@@ -465,40 +478,11 @@ function render() {
     tbody.appendChild(tr);
   });
   updateProgress();
-  renderBacklog();
+  const bl = document.getElementById("backlog-card");
+  if (bl) bl.style.display = "none";
 }
 
-function renderBacklog() {
-  const tbody = document.getElementById("backlog-table");
-  tbody.innerHTML = "";
-  const unitsInTier = getUnitsForTier(currentTier);
-  const backlogUnits = allUnits.filter(u => !unitsInTier.includes(u));
-  if (backlogUnits.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="2" style="color:var(--text-muted);font-size:0.85rem;">All units included at this tier!</td></tr>';
-    return;
-  }
-  backlogUnits.forEach(u => {
-    const tr = document.createElement("tr");
-    const ownTag = !u.own ? '<span class="tag-buy">BUY</span>' : '<span class="tag-own">OWNED</span>';
-    tr.innerHTML = `
-      <td class="unit-name">${u.name} <span class="tag-new">${u.tier}pt</span>${ownTag}<img class="model-thumb" src="${u.img}" alt="${u.name}" loading="lazy"></td>
-      <td class="pts">${u.pts}pts</td>
-    `;
-    tbody.appendChild(tr);
-  });
-}
-
-
-function setTier(tier) {
-  currentTier = tier;
-  document.querySelectorAll(".tier-btn").forEach(b => {
-    b.classList.toggle("active", Number(b.dataset.tier) === tier);
-  });
-  render();
-}
-
-load();
-render();
+load().then(render);
 </script>
 </body>
 </html>
