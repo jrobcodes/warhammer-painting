@@ -248,10 +248,16 @@
 </head>
 <body>
 
-<div class="nav" style="margin-bottom:20px;font-size:0.85rem;">
-  <a href="index.html" style="color:var(--accent);margin-right:16px;">Home</a>
-  <a href="necrons.html" style="color:var(--accent);margin-right:16px;">Necrons</a>
-  <a href="custodes.html" style="color:var(--accent);">Custodes (Darren)</a>
+<div class="nav" style="display:flex;align-items:center;gap:12px;margin-bottom:20px;font-size:0.82rem;flex-wrap:wrap;">
+  <a href="index.html" style="color:var(--text-muted);">Home</a>
+  <span style="color:#2a3a5c;">|</span>
+  <a href="necrons.html" style="color:#00b894;">Necrons</a>
+  <a href="sylvaneth.html" style="color:#27ae60;">Sylvaneth</a>
+  <a href="skaven.html" style="color:#8b6914;font-weight:600;">Skaven</a>
+  <a href="space-marines.html" style="color:#3498db;">Marines</a>
+  <a href="death-guard.html" style="color:#6d8c3c;">Death Guard</a>
+  <span style="color:#2a3a5c;margin-left:auto;">|</span>
+  <a href="custodes.html" style="color:#d4a745;">Darren's Custodes</a>
 </div>
 <h1>Skaven &mdash; The Under-Empire</h1>
 <p class="subtitle">Age of Sigmar Army Project &mdash; Claw-Horde / Virulent Procession</p>
@@ -377,33 +383,33 @@
 const allUnits = [
   // 500pt units (Raiding Party variant) — all OWNED
   { tier: 500, phase: "1 — Assassin", name: "Deathmaster", models: 1, pts: 130, status: "unbuilt", own: true,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120206049_SkavenDeathmasterLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99070206004_SKADeathmasterLead.jpg" },
   { tier: 500, phase: "2 — Elite", name: "Stormvermin x10", models: 10, pts: 110, status: "unbuilt", own: true,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120206031_StormverminLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120206045_SKAStormvermin01.jpg" },
   { tier: 500, phase: "2 — Horde", name: "Clanrats x20", models: 20, pts: 150, status: "unbuilt", own: true,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120206032_SkavenClanratsLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120206050_Clanrats1.jpg" },
   { tier: 500, phase: "3 — Artillery", name: "Plagueclaw", models: 1, pts: 100, status: "unbuilt", own: true,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120206021_PlagueclawLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120206020_SkavenPestilensPlagueClawCatapult01.jpg" },
 
   // 1000pt additions — all OWNED
   { tier: 1000, phase: "4 — Centerpiece", name: "Grey Seer on Screaming Bell", models: 1, pts: 310, status: "unbuilt", own: true,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120206020_ScreamingBellLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120206022_PestilensScreamingBell01.jpg" },
   { tier: 1000, phase: "4 — Horde", name: "Plague Monks x20", models: 20, pts: 140, status: "unbuilt", own: true,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120206025_PlagueMonksLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120206021_PestelinPlagueMonks01.jpg" },
 
   // 2000pt additions
   { tier: 2000, phase: "5 — Centerpiece", name: "Plague Priest on Plague Furnace", models: 1, pts: 340, status: "unbuilt", own: true,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120206020_ScreamingBellLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120206022_PestilensPlagueFurnace01.jpg" },
   { tier: 2000, phase: "6 — Horde", name: "Clanrats x20 (2nd unit)", models: 20, pts: 150, status: "unbuilt", own: false,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120206032_SkavenClanratsLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120206050_Clanrats1.jpg" },
   { tier: 2000, phase: "6 — Monsters", name: "Rat Ogors x3", models: 3, pts: 140, status: "unbuilt", own: false,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120206027_RatOgorsLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120206043_RatOgors1.jpg" },
   { tier: 2000, phase: "7 — War Machine", name: "Doomwheel", models: 1, pts: 100, status: "unbuilt", own: false,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120206022_DoomWheelLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120206009_SKADoomwheel01.jpg" },
   { tier: 2000, phase: "7 — Support", name: "Warlock Bombardier", models: 1, pts: 90, status: "unbuilt", own: false,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99070206007_WarlockBombardierLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99070206003_WarplockBombardier01.jpg" },
   { tier: 2000, phase: "7 — Support", name: "Grey Seer (foot)", models: 1, pts: 120, status: "unbuilt", own: false,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99070206006_GreySeerLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120206041_SkavenGreyseer01.jpg" },
 ];
 
 const statuses = ["unbuilt", "assembled", "primed", "painting", "based", "done"];

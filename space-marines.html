@@ -248,7 +248,17 @@
 </head>
 <body>
 
-<div class="nav" style="margin-bottom:20px;font-size:0.85rem;"><a href="index.html" style="color:var(--accent);margin-right:16px;">Home</a><a href="necrons.html" style="color:var(--accent);margin-right:16px;">Necrons</a><a href="custodes.html" style="color:var(--accent);">Custodes (Darren)</a></div>
+<div class="nav" style="display:flex;align-items:center;gap:12px;margin-bottom:20px;font-size:0.82rem;flex-wrap:wrap;">
+  <a href="index.html" style="color:var(--text-muted);">Home</a>
+  <span style="color:#2a3a5c;">|</span>
+  <a href="necrons.html" style="color:#00b894;">Necrons</a>
+  <a href="sylvaneth.html" style="color:#27ae60;">Sylvaneth</a>
+  <a href="skaven.html" style="color:#8b6914;">Skaven</a>
+  <a href="space-marines.html" style="color:#3498db;font-weight:600;">Marines</a>
+  <a href="death-guard.html" style="color:#6d8c3c;">Death Guard</a>
+  <span style="color:#2a3a5c;margin-left:auto;">|</span>
+  <a href="custodes.html" style="color:#d4a745;">Darren's Custodes</a>
+</div>
 <h1>Space Marines &mdash; Primaris</h1>
 <p class="subtitle">Army Project &mdash; Dark Imperium + Indomitus box sets</p>
 
@@ -335,45 +345,45 @@
 const allUnits = [
   // 500pt units
   { tier: 500, phase: "1 — Command", name: "Captain (relic shield)", models: 1, pts: 80, status: "assembled", own: true,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101287_SMIndomitusCaptainLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101396_SMCaptainStormShield1.jpg" },
   { tier: 500, phase: "1 — Command", name: "Chaplain", models: 1, pts: 60, status: "assembled", own: true,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101287_SMIndomitusChaplainLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101180_PrimarisChaplain01.jpg" },
   { tier: 500, phase: "2 — Battleline", name: "Assault Intercessors x10", models: 10, pts: 150, status: "assembled", own: true,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101307_AssaultIntercessorsLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101283_SMAssaultIntercessorsLead.jpg" },
   { tier: 500, phase: "2 — Elite", name: "Bladeguard Veterans x3", models: 3, pts: 80, status: "assembled", own: true,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101286_BladeguardVeteransLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101284_SMBladeguardVeteransLeadUltramarines.jpg" },
   { tier: 500, phase: "3 — Fire Support", name: "Eradicators x3", models: 3, pts: 90, status: "assembled", own: true,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101322_EradicatorsLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101286_SMPrimarisEradicatorsLead.jpg" },
 
   // 1000pt additions
   { tier: 1000, phase: "4 — Command", name: "Captain in Gravis Armour", models: 1, pts: 80, status: "assembled", own: true,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99070101044_CaptainGravisArmour1.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99070101077_SMCPTGravisArmourLead.jpg" },
   { tier: 1000, phase: "4 — Command", name: "Lieutenant", models: 1, pts: 55, status: "assembled", own: true,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99070101042_PrimarisLieutenant1.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99070101079_SMLieutenant1.jpg" },
   { tier: 1000, phase: "4 — Command", name: "Ancient", models: 1, pts: 50, status: "assembled", own: true,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99070101043_PrimarisAncient1.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99070101076_SMPrimarisAncientLead.jpg" },
   { tier: 1000, phase: "5 — Battleline", name: "Intercessors x10", models: 10, pts: 160, status: "assembled", own: true,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101190_PrimarisIntercessorsLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101190_PrimarisIntercessors01.jpg" },
   { tier: 1000, phase: "5 — Fire Support", name: "Hellblasters x5", models: 5, pts: 110, status: "assembled", own: true,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101191_PrimarisHellblastersLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101189_PrimarisHellblasters01.jpg" },
   { tier: 1000, phase: "6 — Fast Attack", name: "Outriders x3", models: 3, pts: 80, status: "assembled", own: true,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101296_OutridersLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101285_SMOutridersLead.jpg" },
 
   // 2000pt additions
   { tier: 2000, phase: "7 — Elite", name: "Judiciar", models: 1, pts: 70, status: "assembled", own: true,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101287_SMIndomitusJudiciarLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101353_HonouredoftheChapterFeature2.jpg" },
   { tier: 2000, phase: "7 — Elite", name: "Bladeguard Ancient", models: 1, pts: 45, status: "assembled", own: true,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101287_SMIndomitusBladeguardAncientLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101353_HonouredoftheChapterFeature1.jpg" },
   { tier: 2000, phase: "7 — Deep Strike", name: "Inceptors x3", models: 3, pts: 120, status: "assembled", own: true,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101192_PrimarisInceptorsLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101193_PrimarisInceptors01.jpg" },
   { tier: 2000, phase: "8 — Heavy", name: "Redemptor Dreadnought", models: 1, pts: 195, status: "assembled", own: false,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101331_RedemptorDreadnoughtLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101191_RedemptorDreadnought01.jpg" },
   { tier: 2000, phase: "8 — Transport", name: "Impulsor", models: 1, pts: 80, status: "assembled", own: false,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101244_ImpulsorLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101262_SMPrimarisImpulsor01.jpg" },
   { tier: 2000, phase: "8 — Heavy", name: "Ballistus Dreadnought", models: 1, pts: 150, status: "assembled", own: false,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101375_BallistusDreadnoughtLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101393_BallistusDreadnought1.jpg" },
   { tier: 2000, phase: "8 — Heavy", name: "Brutalis Dreadnought", models: 1, pts: 160, status: "assembled", own: false,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101376_BrutalisDreadnoughtLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101371_SMBrutlisDread1.jpg" },
 ];
 
 const statuses = ["unbuilt", "assembled", "primed", "painting", "based", "done"];

@@ -245,10 +245,16 @@
 </head>
 <body>
 
-<div class="nav" style="margin-bottom:20px;font-size:0.85rem;">
-  <a href="index.html" style="color:var(--accent);margin-right:16px;">Home</a>
-  <a href="necrons.html" style="color:var(--accent);margin-right:16px;">Necrons</a>
-  <a href="custodes.html" style="color:var(--accent);">Custodes (Darren)</a>
+<div class="nav" style="display:flex;align-items:center;gap:12px;margin-bottom:20px;font-size:0.82rem;flex-wrap:wrap;">
+  <a href="index.html" style="color:var(--text-muted);">Home</a>
+  <span style="color:#2a3a5c;">|</span>
+  <a href="necrons.html" style="color:#00b894;">Necrons</a>
+  <a href="sylvaneth.html" style="color:#27ae60;">Sylvaneth</a>
+  <a href="skaven.html" style="color:#8b6914;">Skaven</a>
+  <a href="space-marines.html" style="color:#3498db;">Marines</a>
+  <a href="death-guard.html" style="color:#6d8c3c;font-weight:600;">Death Guard</a>
+  <span style="color:#2a3a5c;margin-left:auto;">|</span>
+  <a href="custodes.html" style="color:#d4a745;">Darren's Custodes</a>
 </div>
 <h1>Death Guard &mdash; Plague Company</h1>
 <p class="subtitle">Secondary Army &mdash; Dark Imperium (2017) box set + expansions</p>
@@ -366,25 +372,25 @@
 const allUnits = [
   // 500pt units
   { tier: 500, phase: "1 — HQ", name: "Lord of Contagion", models: 1, pts: 120, status: "assembled", own: true,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99070102001_LordofContagionLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120102150_LordFelthiusCohortLead.jpg" },
   { tier: 500, phase: "1 — HQ", name: "Malignant Plaguecaster", models: 1, pts: 60, status: "assembled", own: true,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99070102002_MalignantPlaguecasterLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120102114_DGChosenofMortarionLead.jpg" },
   { tier: 500, phase: "2 — Core", name: "Plague Marines x7", models: 7, pts: 130, status: "assembled", own: true,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120102095_PlagueMarinesLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120102078_PlagueMarines01.jpg" },
   { tier: 500, phase: "2 — Horde", name: "Poxwalkers x20", models: 20, pts: 130, status: "assembled", own: true,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120102096_PoxwalkersLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120102115_CSMDGPoxwalkersFeature1.jpg" },
   { tier: 500, phase: "3 — Fast", name: "Foetid Bloat-drone", models: 1, pts: 100, status: "assembled", own: true,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120102024_FoetidBloatDroneLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120102077_BloatDrone01.jpg" },
 
   // 1000pt additions
   { tier: 1000, phase: "4 — Support", name: "Noxious Blightbringer", models: 1, pts: 50, status: "assembled", own: true,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99070102003_NoxiousBlightbringerLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120102114_DGChosenofMortarionFeature.jpg" },
   { tier: 1000, phase: "4 — HQ", name: "Typhus", models: 1, pts: 100, status: "assembled", own: false,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120102079_TyphusLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120102076_DeathGuardTyphus01.jpg" },
   { tier: 1000, phase: "5 — Core", name: "Plague Marines x7 (2nd squad)", models: 7, pts: 130, status: "assembled", own: false,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120102095_PlagueMarinesLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120102078_PlagueMarines01.jpg" },
   { tier: 1000, phase: "5 — Heavy", name: "Plagueburst Crawler", models: 1, pts: 210, status: "assembled", own: false,
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120102080_PlagueburstCrawlerLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120102075_Crawler01.jpg" },
 ];
 
 const statuses = ["unbuilt", "assembled", "primed", "painting", "based", "done"];

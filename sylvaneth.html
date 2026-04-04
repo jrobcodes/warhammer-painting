@@ -248,10 +248,16 @@
 </head>
 <body>
 
-<div class="nav" style="margin-bottom:20px;font-size:0.85rem;">
-  <a href="index.html" style="color:var(--accent);margin-right:16px;">Home</a>
-  <a href="necrons.html" style="color:var(--accent);margin-right:16px;">Necrons</a>
-  <a href="custodes.html" style="color:var(--accent);">Custodes (Darren)</a>
+<div class="nav" style="display:flex;align-items:center;gap:12px;margin-bottom:20px;font-size:0.82rem;flex-wrap:wrap;">
+  <a href="index.html" style="color:var(--text-muted);">Home</a>
+  <span style="color:#2a3a5c;">|</span>
+  <a href="necrons.html" style="color:#00b894;">Necrons</a>
+  <a href="sylvaneth.html" style="color:#27ae60;font-weight:600;">Sylvaneth</a>
+  <a href="skaven.html" style="color:#8b6914;">Skaven</a>
+  <a href="space-marines.html" style="color:#3498db;">Marines</a>
+  <a href="death-guard.html" style="color:#6d8c3c;">Death Guard</a>
+  <span style="color:#2a3a5c;margin-left:auto;">|</span>
+  <a href="custodes.html" style="color:#d4a745;">Darren's Custodes</a>
 </div>
 <h1>Sylvaneth &mdash; Outcasts <span class="system-tag">AoS</span></h1>
 <p class="subtitle">Age of Sigmar Army Project &mdash; Battle Formation: Outcasts (-3 enemy Control Score in combat)</p>
@@ -400,31 +406,31 @@
 const allUnits = [
   // 1000pt units
   { tier: 1000, phase: "1 — Heroes", name: "Treelord Ancient", models: 1, pts: 280, status: "unbuilt",
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120204019_SylvanethTreelordAncientLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120204013_SylvanethTreelordAncient01.jpg" },
   { tier: 1000, phase: "1 — Heroes", name: "Branchwych", models: 1, pts: 100, status: "unbuilt",
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99070204004_SylvanethBranchwychwithBittergrubLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99070204002_SylvanethBranchwych04.jpg" },
   { tier: 1000, phase: "2 — Battleline", name: "Dryads x10", models: 10, pts: 90, status: "done",
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120204020_SylvanethDryadsLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120204012_SylvanethDryads01.jpg" },
   { tier: 1000, phase: "2 — Battleline", name: "Dryads x10 (2nd)", models: 10, pts: 90, status: "unbuilt",
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120204020_SylvanethDryadsLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120204012_SylvanethDryads01.jpg" },
   { tier: 1000, phase: "3 — Elite", name: "Kurnoth Hunters x3 (Greatbows)", models: 3, pts: 200, status: "unbuilt",
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120204021_SylvanethKurnothHuntersLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120204018_KurnothHunters01.jpg" },
   { tier: 1000, phase: "3 — Elite", name: "Revenant Seekers x3", models: 3, pts: 180, status: "unbuilt",
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120204032_RevenantSeekersLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120204031_RevenantSeekersFeature01.jpg" },
   { tier: 1000, phase: "4 — Support", name: "Spite-Revenants x5", models: 5, pts: 80, status: "unbuilt",
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120204022_SylvanethSpiteRevenantsLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120204016_SpiteRevenant01.jpg" },
 
   // 2000pt additions
   { tier: 2000, phase: "5 — Monsters", name: "The Lady of Vines", models: 1, pts: 280, status: "unbuilt",
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120204036_TheLadyofVinesLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120204034_SYLLadyofVinesLead.jpg" },
   { tier: 2000, phase: "5 — Monsters", name: "Kurnoth Hunters x3 (Greatswords)", models: 3, pts: 200, status: "unbuilt",
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120204021_SylvanethKurnothHuntersLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120204018_KurnothHunters01.jpg" },
   { tier: 2000, phase: "6 — Hammer", name: "Drycha Hamadreth", models: 1, pts: 250, status: "unbuilt",
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120204018_SylvanethDrychaHamadrethLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120204017_DrycaHamadreth01.jpg" },
   { tier: 2000, phase: "6 — Hammer", name: "Spiterider Lancers x3", models: 3, pts: 220, status: "unbuilt",
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120204033_SpiteriderLancersLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120204031_SpiteriderLancersLead.jpg" },
   { tier: 2000, phase: "7 — Ranged", name: "Gossamid Archers x5", models: 5, pts: 120, status: "unbuilt",
-    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120204035_GossamidArchersLead.jpg" },
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120204032_GossamidArchersLead.jpg" },
 ];
 
 const statuses = ["unbuilt", "assembled", "primed", "painting", "based", "done"];
