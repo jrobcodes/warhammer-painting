@@ -206,6 +206,20 @@
   }
   .unit-name:hover .model-thumb { display: block; }
 
+  /* Tier section headers in table */
+  .tier-header td {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent);
+    padding: 14px 10px 6px;
+    border-bottom: 1px solid var(--accent);
+    background: none;
+  }
+  .tier-header.gold td { color: var(--gold); border-bottom-color: var(--gold); }
+  .tier-header.red td { color: var(--red); border-bottom-color: var(--red); }
+
   /* Tier buttons */
   .tier-btn {
     padding: 8px 20px;
@@ -270,7 +284,6 @@
     <table>
       <thead>
         <tr>
-          <th>Phase</th>
           <th>Unit</th>
           <th>Models</th>
           <th>~Pts</th>
@@ -278,6 +291,16 @@
         </tr>
       </thead>
       <tbody id="unit-table">
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Backlog -->
+  <div class="card grid-full" id="backlog-card">
+    <h2>Backlog (Higher Tiers)</h2>
+    <table>
+      <thead><tr><th>Unit</th><th>Pts</th></tr></thead>
+      <tbody id="backlog-table">
       </tbody>
     </table>
   </div>
@@ -308,16 +331,6 @@
     <div class="note">
       <strong>Tip:</strong> Use included Ultramarines transfers from the Dark Imperium and Indomitus box sets for chapter markings. Apply after a gloss varnish coat, then seal with matte varnish.
     </div>
-  </div>
-
-  <!-- Backlog -->
-  <div class="card">
-    <h2>Backlog (Higher Tiers)</h2>
-    <table>
-      <thead><tr><th>Unit</th><th>Status</th></tr></thead>
-      <tbody id="backlog-table">
-      </tbody>
-    </table>
   </div>
 </div>
 
@@ -408,7 +421,22 @@ function render() {
   const units = getUnitsForTier(currentTier);
   const tbody = document.getElementById("unit-table");
   tbody.innerHTML = "";
+
+  // Group units by tier and render with section headers
+  const tierLabels = { 500: "Base Army (500pts)", 1000: "1000pt Additions", 2000: "2000pt Additions" };
+  const tierStyles = { 500: "", 1000: "gold", 2000: "red" };
+  let lastTier = 0;
+
   units.forEach((u) => {
+    // Insert tier section header when tier changes
+    if (u.tier !== lastTier) {
+      const headerTr = document.createElement("tr");
+      headerTr.className = `tier-header ${tierStyles[u.tier] || ""}`;
+      headerTr.innerHTML = `<td colspan="4">${tierLabels[u.tier] || u.tier + "pt"}</td>`;
+      tbody.appendChild(headerTr);
+      lastTier = u.tier;
+    }
+
     const idx = allUnits.indexOf(u);
     const tr = document.createElement("tr");
     const sel = document.createElement("select");
@@ -426,12 +454,9 @@ function render() {
       save();
       updateProgress();
     });
-    const tierTag = u.tier > 500 && u.tier <= currentTier
-      ? `<span class="tag-new">${u.tier}pt</span>` : "";
-    const buyTag = !u.own ? `<span class="tag-buy">BUY</span>` : "";
+    const ownTag = !u.own ? `<span class="tag-buy">BUY</span>` : "";
     tr.innerHTML = `
-      <td class="pts">${u.phase}</td>
-      <td class="unit-name">${u.name}${tierTag}${buyTag}<img class="model-thumb" src="${u.img}" alt="${u.name}" loading="lazy"></td>
+      <td class="unit-name">${u.name}${ownTag}<img class="model-thumb" src="${u.img}" alt="${u.name}" loading="lazy"></td>
       <td>${u.models}</td>
       <td class="pts">${u.pts}</td>
       <td></td>
@@ -462,6 +487,7 @@ function renderBacklog() {
     tbody.appendChild(tr);
   });
 }
+
 
 function setTier(tier) {
   currentTier = tier;

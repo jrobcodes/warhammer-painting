@@ -209,6 +209,19 @@
   }
   .unit-name:hover .model-thumb { display: block; }
 
+  /* Tier section headers in table */
+  .tier-header td {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent);
+    padding: 14px 10px 6px;
+    border-bottom: 1px solid var(--accent);
+    background: none;
+  }
+  .tier-header.gold td { color: var(--gold); border-bottom-color: var(--gold); }
+
   /* Tier buttons */
   .tier-btn {
     padding: 8px 20px;
@@ -275,7 +288,6 @@
     <table>
       <thead>
         <tr>
-          <th>Phase</th>
           <th>Unit</th>
           <th>Models</th>
           <th>~Pts</th>
@@ -283,6 +295,16 @@
         </tr>
       </thead>
       <tbody id="unit-table">
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Backlog -->
+  <div class="card grid-full" id="backlog-card">
+    <h2>Backlog (Higher Tiers)</h2>
+    <table>
+      <thead><tr><th>Unit</th><th>Status</th></tr></thead>
+      <tbody id="backlog-table">
       </tbody>
     </table>
   </div>
@@ -375,15 +397,6 @@
     <div class="note">All 24 paints <strong>OWNED</strong>. Use for Spite-Revenants, Revenant Seekers, and Spiterider Lancers (adapt cavalry scheme).</div>
   </div>
 
-  <!-- Backlog -->
-  <div class="card grid-full">
-    <h2>Backlog (Higher Tiers)</h2>
-    <table>
-      <thead><tr><th>Unit</th><th>Status</th></tr></thead>
-      <tbody id="backlog-table">
-      </tbody>
-    </table>
-  </div>
 </div>
 
 <div class="save-note" id="save-note">Progress saved!</div>
@@ -459,7 +472,22 @@ function render() {
   const units = getUnitsForTier(currentTier);
   const tbody = document.getElementById("unit-table");
   tbody.innerHTML = "";
+
+  // Group units by tier and render with section headers
+  const tierLabels = { 1000: "Base Army (1000pts)", 2000: "2000pt Additions" };
+  const tierStyles = { 1000: "", 2000: "gold" };
+  let lastTier = 0;
+
   units.forEach((u) => {
+    // Insert tier section header when tier changes
+    if (u.tier !== lastTier) {
+      const headerTr = document.createElement("tr");
+      headerTr.className = `tier-header ${tierStyles[u.tier] || ""}`;
+      headerTr.innerHTML = `<td colspan="4">${tierLabels[u.tier] || u.tier + "pt"}</td>`;
+      tbody.appendChild(headerTr);
+      lastTier = u.tier;
+    }
+
     const idx = allUnits.indexOf(u);
     const tr = document.createElement("tr");
     const sel = document.createElement("select");
@@ -477,11 +505,8 @@ function render() {
       save();
       updateProgress();
     });
-    const tierTag = u.tier > 1000 && u.tier <= currentTier
-      ? `<span class="tag-new">${u.tier}pt</span>` : "";
     tr.innerHTML = `
-      <td class="pts">${u.phase}</td>
-      <td class="unit-name">${u.name}${tierTag}<img class="model-thumb" src="${u.img}" alt="${u.name}" loading="lazy"></td>
+      <td class="unit-name">${u.name}<img class="model-thumb" src="${u.img}" alt="${u.name}" loading="lazy"></td>
       <td>${u.models}</td>
       <td class="pts">${u.pts}</td>
       <td></td>

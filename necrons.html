@@ -214,6 +214,20 @@
   }
   .unit-name:hover .model-thumb { display: block; }
 
+  /* Tier section headers in table */
+  .tier-header td {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent);
+    padding: 14px 10px 6px;
+    border-bottom: 1px solid var(--accent);
+    background: none;
+  }
+  .tier-header.gold td { color: var(--gold); border-bottom-color: var(--gold); }
+  .tier-header.red td { color: var(--red); border-bottom-color: var(--red); }
+
   /* Tier buttons */
   .tier-btn {
     padding: 8px 20px;
@@ -243,7 +257,7 @@
 
 <div class="nav" style="margin-bottom:20px;font-size:0.85rem;"><a href="index.html" style="color:var(--accent);margin-right:16px;">Home</a><a href="custodes.html" style="color:var(--accent);">Custodes (Darren)</a></div>
 <h1>Szarekhan Dynasty — Necrons</h1>
-<p class="subtitle">Army Project &mdash; vs Darren's Custodes</p>
+<p class="subtitle">Szarekhan Dynasty &mdash; Warhammer 40,000</p>
 
 <!-- Tier selector -->
 <div style="display:flex;gap:8px;margin-bottom:20px;">
@@ -274,11 +288,10 @@
 <div class="grid">
   <!-- Army List -->
   <div class="card grid-full">
-    <h2>Army List <span class="badge badge-priority">Priority</span></h2>
+    <h2>Army List</h2>
     <table>
       <thead>
         <tr>
-          <th>Phase</th>
           <th>Unit</th>
           <th>Models</th>
           <th>~Pts</th>
@@ -349,29 +362,11 @@
     </div>
   </div>
 
-  <!-- Opponent -->
-  <div class="card vs-card">
-    <h2>Opponent — Darren's Custodes</h2>
-    <p style="font-size: 0.85rem; margin-bottom: 12px;">Combat Patrol: Adeptus Custodes (~500pts)</p>
-    <table>
-      <thead><tr><th>Unit</th><th>Models</th></tr></thead>
-      <tbody>
-        <tr><td class="unit-name">Shield-Captain (Allarus Terminator)</td><td>1</td></tr>
-        <tr><td class="unit-name">Custodian Guard</td><td>4</td></tr>
-        <tr><td class="unit-name">Prosecutors (Sisters of Silence)</td><td>5</td></tr>
-        <tr><td class="unit-name">Vertus Praetors (Jetbikes)</td><td>3</td></tr>
-      </tbody>
-    </table>
-    <div class="note">
-      <strong>Matchup notes:</strong> Slightly Custodes-favored at 500pts. Your Skorpekh Destroyers are key — they have the AP to crack Custodes armor. Focus fire Warriors, counter-charge with Skorpekhs. Reanimation Protocols and numbers keep it honest.
-    </div>
-  </div>
-
   <!-- Backlog -->
-  <div class="card">
+  <div class="card grid-full" id="backlog-card">
     <h2>Backlog (Higher Tiers)</h2>
     <table>
-      <thead><tr><th>Unit</th><th>Status</th></tr></thead>
+      <thead><tr><th>Unit</th><th>Pts</th></tr></thead>
       <tbody id="backlog-table">
       </tbody>
     </table>
@@ -478,7 +473,22 @@ function render() {
   const units = getUnitsForTier(currentTier);
   const tbody = document.getElementById("unit-table");
   tbody.innerHTML = "";
+
+  // Group units by tier and render with section headers
+  const tierLabels = { 500: "Base Army (500pts)", 1000: "1000pt Additions", 2000: "2000pt Additions" };
+  const tierStyles = { 500: "", 1000: "gold", 2000: "red" };
+  let lastTier = 0;
+
   units.forEach((u) => {
+    // Insert tier section header when tier changes
+    if (u.tier !== lastTier) {
+      const headerTr = document.createElement("tr");
+      headerTr.className = `tier-header ${tierStyles[u.tier] || ""}`;
+      headerTr.innerHTML = `<td colspan="4">${tierLabels[u.tier] || u.tier + "pt"}</td>`;
+      tbody.appendChild(headerTr);
+      lastTier = u.tier;
+    }
+
     const idx = allUnits.indexOf(u);
     const tr = document.createElement("tr");
     const sel = document.createElement("select");
@@ -496,12 +506,9 @@ function render() {
       save();
       updateProgress();
     });
-    const tierTag = u.tier > 500 && u.tier <= currentTier
-      ? `<span class="tag-new">${u.tier}pt</span>` : "";
     const ownTag = !u.own ? `<span class="tag-buy">BUY</span>` : "";
     tr.innerHTML = `
-      <td class="pts">${u.phase}</td>
-      <td class="unit-name">${u.name}${tierTag}${ownTag}<img class="model-thumb" src="${u.img}" alt="${u.name}" loading="lazy"></td>
+      <td class="unit-name">${u.name}${ownTag}<img class="model-thumb" src="${u.img}" alt="${u.name}" loading="lazy"></td>
       <td>${u.models}</td>
       <td class="pts">${u.pts}</td>
       <td></td>
@@ -510,8 +517,6 @@ function render() {
     tbody.appendChild(tr);
   });
   updateProgress();
-
-  // Update backlog: show units NOT in the current tier
   renderBacklog();
 }
 

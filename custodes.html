@@ -16,6 +16,7 @@
     --text-muted: #8892a0;
     --border: #2a3a5c;
     --green: #00b894;
+    --gold: #d4a745;
     --red: #e74c3c;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -105,6 +106,21 @@
   .tag-own { font-size: 0.65rem; padding: 1px 6px; border-radius: 4px; background: var(--green); color: #1a1a2e; font-weight: 600; margin-left: 6px; }
   .tag-new { font-size: 0.65rem; padding: 1px 6px; border-radius: 4px; background: var(--surface2); color: var(--accent); font-weight: 600; margin-left: 6px; border: 1px solid var(--accent); }
 
+  /* Tier section headers in table */
+  .tier-header td {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent);
+    padding: 14px 10px 6px;
+    border-bottom: 1px solid var(--accent);
+    background: none;
+  }
+  .tier-header.green td { color: var(--green); border-bottom-color: var(--green); }
+  .tier-header.gold td { color: var(--gold); border-bottom-color: var(--gold); }
+  .tier-header.red td { color: var(--red); border-bottom-color: var(--red); }
+
   @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
 </style>
 </head>
@@ -183,7 +199,6 @@
     <table>
       <thead>
         <tr>
-          <th>Phase</th>
           <th>Unit</th>
           <th>Models</th>
           <th>~Pts</th>
@@ -191,6 +206,16 @@
         </tr>
       </thead>
       <tbody id="unit-table">
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Backlog -->
+  <div class="card grid-full" id="backlog-card">
+    <h2>Backlog (Higher Tiers)</h2>
+    <table>
+      <thead><tr><th>Unit</th><th>Pts</th></tr></thead>
+      <tbody id="backlog-table">
       </tbody>
     </table>
   </div>
@@ -270,37 +295,6 @@
     <div class="step"><div class="step-num">5</div><div class="step-text"><strong>Highlight gold edges</strong> (Stormhost Silver). <strong>Layer red</strong> (Evil Sunz Scarlet) on raised folds.</div></div>
     <div class="step"><div class="step-num">6</div><div class="step-text"><strong>Prosecutors:</strong> Grey drybrush on armor, Leadbelcher on trim, Nuln Oil wash, robes, then skin last.</div></div>
     <div class="step"><div class="step-num">7</div><div class="step-text"><strong>Base all models together</strong> at the end. Keep it simple — texture paint + drybrush + tufts.</div></div>
-  </div>
-
-  <!-- Opponent -->
-  <div class="card" style="border-color: var(--green);">
-    <h2 style="color: var(--green);">Opponent — jrob's Szarekhan Necrons</h2>
-    <p style="font-size: 0.85rem; margin-bottom: 12px;">~515pts Szarekhan Dynasty</p>
-    <table>
-      <thead><tr><th>Unit</th><th>Models</th></tr></thead>
-      <tbody>
-        <tr><td class="unit-name">Overlord</td><td>1</td></tr>
-        <tr><td class="unit-name">Royal Warden</td><td>1</td></tr>
-        <tr><td class="unit-name">Necron Warriors x10 (Flayers)</td><td>10</td></tr>
-        <tr><td class="unit-name">Necron Warriors x10 (Reapers)</td><td>10</td></tr>
-        <tr><td class="unit-name">Skorpekh Destroyers x3</td><td>3</td></tr>
-        <tr><td class="unit-name">Skorpekh Lord</td><td>1</td></tr>
-        <tr><td class="unit-name">Canoptek Scarab Swarms</td><td>3</td></tr>
-      </tbody>
-    </table>
-    <div class="note">
-      <strong>Matchup tips:</strong> Your Vertus Praetors are your best unit — fast and deadly. Target the Skorpekh Destroyers early (they can hurt you). Don't get bogged down fighting Warriors — they reanimate. Use your invulnerable saves aggressively. You're outnumbered but every model hits like a truck.
-    </div>
-  </div>
-
-  <!-- Backlog -->
-  <div class="card">
-    <h2>Backlog (Higher Tiers)</h2>
-    <table>
-      <thead><tr><th>Unit</th><th>Status</th></tr></thead>
-      <tbody id="backlog-table">
-      </tbody>
-    </table>
   </div>
 </div>
 
@@ -395,7 +389,22 @@ function render() {
   const units = getUnitsForTier(currentTier);
   const tbody = document.getElementById("unit-table");
   tbody.innerHTML = "";
+
+  // Group units by tier and render with section headers
+  const tierLabels = { 500: "Base Army (500pts)", 1000: "1000pt Additions", 2000: "2000pt Additions" };
+  const tierStyles = { 500: "green", 1000: "gold", 2000: "red" };
+  let lastTier = 0;
+
   units.forEach((u) => {
+    // Insert tier section header when tier changes
+    if (u.tier !== lastTier) {
+      const headerTr = document.createElement("tr");
+      headerTr.className = `tier-header ${tierStyles[u.tier] || ""}`;
+      headerTr.innerHTML = `<td colspan="4">${tierLabels[u.tier] || u.tier + "pt"}</td>`;
+      tbody.appendChild(headerTr);
+      lastTier = u.tier;
+    }
+
     const idx = allUnits.indexOf(u);
     const tr = document.createElement("tr");
     const sel = document.createElement("select");
@@ -413,12 +422,9 @@ function render() {
       save();
       updateProgress();
     });
-    const tierTag = u.tier > 500 && u.tier <= currentTier
-      ? `<span class="tag-new">${u.tier}pt</span>` : "";
     const ownTag = !u.own ? `<span class="tag-buy">BUY</span>` : "";
     tr.innerHTML = `
-      <td class="pts">${u.phase}</td>
-      <td class="unit-name">${u.name}${tierTag}${ownTag}<img class="model-thumb" src="${u.img}" alt="${u.name}" loading="lazy"></td>
+      <td class="unit-name">${u.name}${ownTag}<img class="model-thumb" src="${u.img}" alt="${u.name}" loading="lazy"></td>
       <td>${u.models}</td>
       <td class="pts">${u.pts}</td>
       <td></td>
@@ -427,8 +433,6 @@ function render() {
     tbody.appendChild(tr);
   });
   updateProgress();
-
-  // Update backlog: show units NOT in the current tier
   renderBacklog();
 }
 
