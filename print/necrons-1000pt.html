@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Szarekhan Necrons — 1000pt Additions</title>
+<style>
+  @page { size: letter; margin: 0.5in; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #fff;
+    color: #1a1a1a;
+    padding: 24px;
+    max-width: 900px;
+    margin: 0 auto;
+    font-size: 11pt;
+  }
+  h1 {
+    font-size: 18pt;
+    margin-bottom: 2px;
+    color: #1a1a1a;
+    letter-spacing: 0.5px;
+  }
+  .subtitle {
+    color: #666;
+    font-size: 9pt;
+    margin-bottom: 16px;
+    border-bottom: 2px solid #222;
+    padding-bottom: 8px;
+  }
+
+  .unit-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .unit-card {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    page-break-inside: avoid;
+  }
+  .unit-card .unit-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  .unit-card .unit-name {
+    font-weight: 700;
+    font-size: 9.5pt;
+    line-height: 1.2;
+    flex: 1;
+  }
+  .unit-card .unit-pts {
+    font-size: 8.5pt;
+    color: #666;
+    white-space: nowrap;
+  }
+  .unit-card .unit-img {
+    width: 100%;
+    max-width: 120px;
+    height: 100px;
+    object-fit: contain;
+    margin: 0 auto;
+    display: block;
+    background: #f8f8f8;
+    border-radius: 4px;
+  }
+  .unit-card .unit-models {
+    font-size: 8pt;
+    color: #888;
+  }
+  .tag-buy {
+    display: inline-block;
+    font-size: 7pt;
+    padding: 1px 5px;
+    border-radius: 3px;
+    background: #e8a000;
+    color: #fff;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    vertical-align: middle;
+    margin-left: 3px;
+  }
+  .checklist {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    font-size: 7.5pt;
+    color: #444;
+    margin-top: auto;
+    padding-top: 4px;
+    border-top: 1px solid #eee;
+  }
+  .checklist label {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+  .checklist input[type="checkbox"] {
+    width: 10px;
+    height: 10px;
+    margin: 0;
+  }
+
+  .paint-section {
+    page-break-before: always;
+    padding-top: 8px;
+  }
+  .paint-section h2 {
+    font-size: 14pt;
+    margin-bottom: 12px;
+    border-bottom: 2px solid #222;
+    padding-bottom: 4px;
+  }
+  .scheme-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .scheme-block h3 {
+    font-size: 11pt;
+    margin-bottom: 2px;
+  }
+  .scheme-block .scheme-note {
+    font-size: 8pt;
+    color: #888;
+    margin-bottom: 8px;
+  }
+  .swatch-section-label {
+    font-size: 8pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #888;
+    margin-top: 10px;
+    margin-bottom: 3px;
+  }
+  .swatch-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 0;
+    font-size: 8.5pt;
+  }
+  .swatch {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    flex-shrink: 0;
+  }
+  .swatch-name { flex: 1; }
+  .swatch-brand { color: #999; font-size: 7.5pt; }
+
+  .scheme-note-box {
+    margin-top: 12px;
+    padding: 8px 10px;
+    background: #f5f5f5;
+    border-radius: 4px;
+    font-size: 8pt;
+    color: #555;
+    line-height: 1.5;
+  }
+
+  @media print {
+    body { padding: 0; }
+    .unit-card { border: 1px solid #aaa; }
+    .checklist input[type="checkbox"] {
+      -webkit-appearance: none;
+      appearance: none;
+      border: 1px solid #666;
+      border-radius: 2px;
+      width: 10px;
+      height: 10px;
+      background: #fff;
+    }
+  }
+</style>
+</head>
+<body>
+
+<h1>Szarekhan Necrons — 1000pt Additions</h1>
+<p class="subtitle">Models added on top of 500pt base — 5 units, 8 models, 435pts</p>
+
+<div class="unit-grid">
+
+  <div class="unit-card">
+    <div class="unit-header">
+      <span class="unit-name">Lokhust Heavy Destroyers x3</span>
+      <span class="unit-pts">165pts</span>
+    </div>
+    <img class="unit-img" src="https://www.warhammer.com/app/resources/catalog/product/920x950/99120110044_LokhustHeavyDestroyerLead.jpg" alt="Lokhust Heavy Destroyers">
+    <span class="unit-models">3 models</span>
+    <div class="checklist">
+      <label><input type="checkbox"> Built</label>
+      <label><input type="checkbox"> Primed</label>
+      <label><input type="checkbox"> Painted</label>
+      <label><input type="checkbox"> Based</label>
+    </div>
+  </div>
+
+  <div class="unit-card">
+    <div class="unit-header">
+      <span class="unit-name">Plasmancer</span>
+      <span class="unit-pts">55pts</span>
+    </div>
+    <img class="unit-img" src="https://www.warhammer.com/app/resources/catalog/product/threeSixty/99120110072_NecronsRoyalCourtOTT3360/01-01.jpg" alt="Plasmancer">
+    <span class="unit-models">1 model</span>
+    <div class="checklist">
+      <label><input type="checkbox"> Built</label>
+      <label><input type="checkbox"> Primed</label>
+      <label><input type="checkbox"> Painted</label>
+      <label><input type="checkbox"> Based</label>
+    </div>
+  </div>
+
+  <div class="unit-card">
+    <div class="unit-header">
+      <span class="unit-name">Cryptothralls x2</span>
+      <span class="unit-pts">60pts</span>
+    </div>
+    <img class="unit-img" src="https://www.warhammer.com/app/resources/catalog/product/threeSixty/99120110072_NecronsRoyalCourtOTT4360/01-01.jpg" alt="Cryptothralls">
+    <span class="unit-models">2 models</span>
+    <div class="checklist">
+      <label><input type="checkbox"> Built</label>
+      <label><input type="checkbox"> Primed</label>
+      <label><input type="checkbox"> Painted</label>
+      <label><input type="checkbox"> Based</label>
+    </div>
+  </div>
+
+  <div class="unit-card">
+    <div class="unit-header">
+      <span class="unit-name">Canoptek Reanimator</span>
+      <span class="unit-pts">75pts</span>
+    </div>
+    <img class="unit-img" src="https://www.warhammer.com/app/resources/catalog/product/threeSixty/99120110072_NecronsRoyalCourtOTT2360/01-01.jpg" alt="Canoptek Reanimator">
+    <span class="unit-models">1 model</span>
+    <div class="checklist">
+      <label><input type="checkbox"> Built</label>
+      <label><input type="checkbox"> Primed</label>
+      <label><input type="checkbox"> Painted</label>
+      <label><input type="checkbox"> Based</label>
+    </div>
+  </div>
+
+  <div class="unit-card">
+    <div class="unit-header">
+      <span class="unit-name">Technomancer</span>
+      <span class="unit-pts">80pts</span>
+    </div>
+    <img class="unit-img" src="https://www.warhammer.com/app/resources/catalog/product/920x950/99070110005_NECCryptekLead.jpg" alt="Technomancer">
+    <span class="unit-models">1 model</span>
+    <div class="checklist">
+      <label><input type="checkbox"> Built</label>
+      <label><input type="checkbox"> Primed</label>
+      <label><input type="checkbox"> Painted</label>
+      <label><input type="checkbox"> Based</label>
+    </div>
+  </div>
+
+</div>
+
+<!-- Paint Scheme Reference -->
+<div class="paint-section">
+  <h2>Paint Scheme Reference</h2>
+  <div class="scheme-columns">
+
+    <!-- Warrior Scheme -->
+    <div class="scheme-block">
+      <h3>Warrior Scheme</h3>
+      <p class="scheme-note">Lokhust Heavy Destroyers, Cryptothralls, Canoptek Reanimator</p>
+
+      <div class="swatch-section-label">Primer &amp; Base Metal</div>
+      <div class="swatch-row"><div class="swatch" style="background:#7a7d82"></div><span class="swatch-name">Leadbelcher Spray</span><span class="swatch-brand">Citadel</span></div>
+      <div class="swatch-row"><div class="swatch" style="background:#1a1a1a"></div><span class="swatch-name">Black Templar</span><span class="swatch-brand">Citadel Contrast</span></div>
+      <div class="swatch-row"><div class="swatch" style="background:#2b2b2b"></div><span class="swatch-name">Nuln Oil</span><span class="swatch-brand">Citadel Shade</span></div>
+
+      <div class="swatch-section-label">Bronze / Brass Details</div>
+      <div class="swatch-row"><div class="swatch" style="background:#a67d5b"></div><span class="swatch-name">Runelord Brass</span><span class="swatch-brand">Citadel Base</span></div>
+      <div class="swatch-row"><div class="swatch" style="background:#c9a96e"></div><span class="swatch-name">Canoptek Alloy</span><span class="swatch-brand">Citadel Layer</span></div>
+      <div class="swatch-row"><div class="swatch" style="background:#3a3226"></div><span class="swatch-name">Cryptek Armourshade</span><span class="swatch-brand">Citadel Shade</span></div>
+
+      <div class="swatch-section-label">Silver Highlights</div>
+      <div class="swatch-row"><div class="swatch" style="background:#d4d8dc"></div><span class="swatch-name">Stormhost Silver</span><span class="swatch-brand">Citadel Layer</span></div>
+
+      <div class="swatch-section-label">Green Glow (Gauss)</div>
+      <div class="swatch-row"><div class="swatch" style="background:#1a1a1a"></div><span class="swatch-name">Matt Black</span><span class="swatch-brand">Army Painter</span></div>
+      <div class="swatch-row"><div class="swatch" style="background:#003d1e"></div><span class="swatch-name">Caliban Green</span><span class="swatch-brand">Citadel Base</span></div>
+      <div class="swatch-row"><div class="swatch" style="background:#1b7a2e"></div><span class="swatch-name">Warpstone Glow</span><span class="swatch-brand">Citadel Layer</span></div>
+      <div class="swatch-row"><div class="swatch" style="background:#52c41a"></div><span class="swatch-name">Moot Green</span><span class="swatch-brand">Citadel Layer</span></div>
+      <div class="swatch-row"><div class="swatch" style="background:#5a6268"></div><span class="swatch-name">Mechanicus Std Grey</span><span class="swatch-brand">Citadel Base</span></div>
+      <div class="swatch-row"><div class="swatch" style="background:#f0f0f0"></div><span class="swatch-name">Matt White</span><span class="swatch-brand">Army Painter</span></div>
+      <div class="swatch-row"><div class="swatch" style="background:#44cc66"></div><span class="swatch-name">Biel-tan Green</span><span class="swatch-brand">Citadel Shade</span></div>
+      <div class="swatch-row"><div class="swatch" style="background:#ccaa00"></div><span class="swatch-name">Casandora Yellow</span><span class="swatch-brand">Citadel Shade</span></div>
+
+      <div class="swatch-section-label">Basing</div>
+      <div class="swatch-row"><div class="swatch" style="background:#c2b59b"></div><span class="swatch-name">Moon Dust</span><span class="swatch-brand">Army Painter</span></div>
+    </div>
+
+    <!-- Overlord Scheme -->
+    <div class="scheme-block">
+      <h3>Overlord Scheme</h3>
+      <p class="scheme-note">Plasmancer, Technomancer (characters). Shares Warrior base + these extras:</p>
+
+      <div class="swatch-section-label">Gold Details (Rank)</div>
+      <div class="swatch-row"><div class="swatch" style="background:#c5962a"></div><span class="swatch-name">Retributor Armour</span><span class="swatch-brand">Citadel Base</span></div>
+      <div class="swatch-row"><div class="swatch" style="background:#d4a745"></div><span class="swatch-name">Liberator Gold</span><span class="swatch-brand">Citadel Layer</span></div>
+
+      <div class="swatch-section-label">Robes / Cloth</div>
+      <div class="swatch-row"><div class="swatch" style="background:#3d2b1a"></div><span class="swatch-name">Wyldwood</span><span class="swatch-brand">Citadel Contrast</span></div>
+      <div class="swatch-row"><div class="swatch" style="background:#4a4a4e"></div><span class="swatch-name">Basilicanum Grey</span><span class="swatch-brand">Citadel Contrast</span></div>
+
+      <div class="swatch-section-label">Additional Metallics</div>
+      <div class="swatch-row"><div class="swatch" style="background:#5a5e63"></div><span class="swatch-name">Iron Hands Steel</span><span class="swatch-brand">Citadel Base</span></div>
+      <div class="swatch-row"><div class="swatch" style="background:#3a3a3a"></div><span class="swatch-name">Cryptek Armourshade Gloss</span><span class="swatch-brand">Citadel Shade</span></div>
+
+      <div class="swatch-section-label">Highlights</div>
+      <div class="swatch-row"><div class="swatch" style="background:#e8e8e8"></div><span class="swatch-name">Corax White</span><span class="swatch-brand">Citadel Base</span></div>
+      <div class="swatch-row"><div class="swatch" style="background:#9ca3ab"></div><span class="swatch-name">Administratum Grey</span><span class="swatch-brand">Citadel Layer</span></div>
+
+      <div class="scheme-note-box">
+        <strong>All paints owned.</strong> No additional purchases needed for the 1000pt tier.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
