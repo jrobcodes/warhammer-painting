@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Space Marines Painting Dashboard — jrob</title>
+<style>
+  :root {
+    --bg: #1a1a2e;
+    --surface: #16213e;
+    --surface2: #0f3460;
+    --accent: #3498db;
+    --gold: #d4a745;
+    --silver: #a8b2c1;
+    --red: #e74c3c;
+    --text: #e0e0e0;
+    --text-muted: #8892a0;
+    --border: #2a3a5c;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 24px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  h1 {
+    font-size: 1.8rem;
+    margin-bottom: 4px;
+    color: var(--accent);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .subtitle { color: var(--text-muted); margin-bottom: 24px; font-size: 0.9rem; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+  .grid-full { grid-column: 1 / -1; }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .card h2 {
+    font-size: 1.1rem;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card h3 {
+    font-size: 0.95rem;
+    color: var(--silver);
+    margin: 16px 0 8px 0;
+  }
+  .badge {
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .badge-priority { background: var(--red); color: white; }
+  .badge-progress { background: var(--gold); color: #1a1a2e; }
+  .badge-done { background: var(--accent); color: #1a1a2e; }
+  .badge-todo { background: var(--border); color: var(--text-muted); }
+
+  /* Progress bar */
+  .progress-container { margin: 12px 0; }
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+  .progress-bar {
+    height: 8px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.3s;
+  }
+  .progress-fill.green { background: var(--accent); }
+  .progress-fill.gold { background: var(--gold); }
+
+  /* Unit table */
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th {
+    text-align: left;
+    padding: 8px 10px;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 10px;
+    border-bottom: 1px solid rgba(42,58,92,0.5);
+    vertical-align: middle;
+  }
+  tr:hover td { background: rgba(52,152,219,0.05); }
+  .unit-name { font-weight: 600; }
+  .pts { color: var(--text-muted); font-size: 0.8rem; }
+
+  /* Status select */
+  select.status {
+    appearance: none;
+    background: var(--border);
+    color: var(--text);
+    border: none;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+  select.status.assembled { background: #2d3748; color: var(--silver); }
+  select.status.primed { background: #3b2f63; color: #b388ff; }
+  select.status.painting { background: #4a3000; color: var(--gold); }
+  select.status.based { background: #1a3a2a; color: #69db7c; }
+  select.status.done { background: #0a3d2a; color: var(--accent); }
+
+  /* Paint swatch */
+  .swatch-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 0;
+    font-size: 0.82rem;
+  }
+  .swatch {
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    border: 1px solid rgba(255,255,255,0.15);
+    flex-shrink: 0;
+  }
+  .swatch-name { flex: 1; }
+  .swatch-brand { color: var(--text-muted); font-size: 0.75rem; }
+  .swatch-section {
+    font-size: 0.75rem;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 12px;
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+
+  /* Notes */
+  .note {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    background: rgba(0,0,0,0.2);
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-top: 10px;
+    line-height: 1.5;
+  }
+
+  /* Save indicator */
+  .save-note {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    background: var(--accent);
+    color: #1a1a2e;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+  .save-note.show { opacity: 1; }
+
+  /* Model image tooltip */
+  .unit-name {
+    position: relative;
+    cursor: pointer;
+  }
+  .unit-name .model-thumb {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 0;
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+    z-index: 100;
+    padding: 8px;
+    pointer-events: none;
+  }
+  .unit-name:hover .model-thumb { display: block; }
+
+  /* Tier buttons */
+  .tier-btn {
+    padding: 8px 20px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tier-btn:hover { border-color: var(--accent); color: var(--text); }
+  .tier-btn.active { background: var(--accent); color: #1a1a2e; border-color: var(--accent); }
+
+  /* Tags */
+  .tag-buy { font-size: 0.65rem; padding: 1px 6px; border-radius: 4px; background: var(--gold); color: #1a1a2e; font-weight: 600; margin-left: 6px; }
+  .tag-own { font-size: 0.65rem; padding: 1px 6px; border-radius: 4px; background: var(--accent); color: #1a1a2e; font-weight: 600; margin-left: 6px; }
+  .tag-new { font-size: 0.65rem; padding: 1px 6px; border-radius: 4px; background: var(--surface2); color: var(--gold); font-weight: 600; margin-left: 6px; border: 1px solid var(--gold); }
+
+  @media (max-width: 900px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="nav" style="margin-bottom:20px;font-size:0.85rem;"><a href="index.html" style="color:var(--accent);margin-right:16px;">Home</a><a href="necrons.html" style="color:var(--accent);margin-right:16px;">Necrons</a><a href="custodes.html" style="color:var(--accent);">Custodes (Darren)</a></div>
+<h1>Space Marines &mdash; Primaris</h1>
+<p class="subtitle">Army Project &mdash; Dark Imperium + Indomitus box sets</p>
+
+<!-- Tier selector -->
+<div style="display:flex;gap:8px;margin-bottom:20px;">
+  <button class="tier-btn active" data-tier="500" onclick="setTier(500)">500pts</button>
+  <button class="tier-btn" data-tier="1000" onclick="setTier(1000)">1000pts</button>
+  <button class="tier-btn" data-tier="2000" onclick="setTier(2000)">2000pts</button>
+</div>
+
+<!-- Overall Progress -->
+<div class="card" style="margin-bottom: 20px;">
+  <h2>Overall Progress</h2>
+  <div class="grid" style="margin-bottom: 0;">
+    <div>
+      <div class="progress-container">
+        <div class="progress-label"><span>Models Painted</span><span id="paint-count">0 / 18</span></div>
+        <div class="progress-bar"><div class="progress-fill green" id="paint-bar" style="width: 0%"></div></div>
+      </div>
+    </div>
+    <div>
+      <div class="progress-container">
+        <div class="progress-label"><span>Army Points Ready</span><span id="pts-count">0 / 460</span></div>
+        <div class="progress-bar"><div class="progress-fill gold" id="pts-bar" style="width: 0%"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="grid">
+  <!-- Army List -->
+  <div class="card grid-full">
+    <h2>Army List <span class="badge badge-priority">Priority</span></h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Phase</th>
+          <th>Unit</th>
+          <th>Models</th>
+          <th>~Pts</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="unit-table">
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Paint Scheme -->
+  <div class="card">
+    <h2>Ultramarines Speed-Paint Scheme</h2>
+    <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:8px;">Source: Goonhammer &amp; GW recommended method</p>
+
+    <div class="swatch-section">Primer</div>
+    <div class="swatch-row"><div class="swatch" style="background:#2a5b9e"></div><span class="swatch-name">Macragge Blue Spray</span><span class="swatch-brand">Citadel Spray</span></div>
+
+    <div class="swatch-section">Recess Shade</div>
+    <div class="swatch-row"><div class="swatch" style="background:#2b2b2b"></div><span class="swatch-name">Nuln Oil</span><span class="swatch-brand">Citadel Shade</span></div>
+
+    <div class="swatch-section">Layer Highlights</div>
+    <div class="swatch-row"><div class="swatch" style="background:#4a7dc4"></div><span class="swatch-name">Calgar Blue</span><span class="swatch-brand">Citadel Layer</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#a4c8e8"></div><span class="swatch-name">Fenrisian Grey</span><span class="swatch-brand">Citadel Layer</span></div>
+
+    <div class="swatch-section">Gold Trim</div>
+    <div class="swatch-row"><div class="swatch" style="background:#c5962a"></div><span class="swatch-name">Retributor Armour</span><span class="swatch-brand">Citadel Base</span></div>
+    <div class="swatch-row"><div class="swatch" style="background: rgba(160,100,40,0.4); border: 1px solid #a06428"></div><span class="swatch-name">Reikland Fleshshade</span><span class="swatch-brand">Citadel Shade</span></div>
+
+    <div class="swatch-section">Alternative Fast Method</div>
+    <div class="swatch-row"><div class="swatch" style="background:#c8c8c8"></div><span class="swatch-name">Grey Seer Spray</span><span class="swatch-brand">Citadel Spray</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#2a6baa; border: 1px solid #3a7bba"></div><span class="swatch-name">Talassar Blue</span><span class="swatch-brand">Citadel Contrast</span></div>
+
+    <div class="note">
+      <strong>Tip:</strong> Use included Ultramarines transfers from the Dark Imperium and Indomitus box sets for chapter markings. Apply after a gloss varnish coat, then seal with matte varnish.
+    </div>
+  </div>
+
+  <!-- Backlog -->
+  <div class="card">
+    <h2>Backlog (Higher Tiers)</h2>
+    <table>
+      <thead><tr><th>Unit</th><th>Status</th></tr></thead>
+      <tbody id="backlog-table">
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="save-note" id="save-note">Progress saved!</div>
+
+<script>
+/* ── All units across all tiers ── */
+const allUnits = [
+  // 500pt units
+  { tier: 500, phase: "1 — Command", name: "Captain (relic shield)", models: 1, pts: 80, status: "assembled", own: true,
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101287_SMIndomitusCaptainLead.jpg" },
+  { tier: 500, phase: "1 — Command", name: "Chaplain", models: 1, pts: 60, status: "assembled", own: true,
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101287_SMIndomitusChaplainLead.jpg" },
+  { tier: 500, phase: "2 — Battleline", name: "Assault Intercessors x10", models: 10, pts: 150, status: "assembled", own: true,
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101307_AssaultIntercessorsLead.jpg" },
+  { tier: 500, phase: "2 — Elite", name: "Bladeguard Veterans x3", models: 3, pts: 80, status: "assembled", own: true,
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101286_BladeguardVeteransLead.jpg" },
+  { tier: 500, phase: "3 — Fire Support", name: "Eradicators x3", models: 3, pts: 90, status: "assembled", own: true,
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101322_EradicatorsLead.jpg" },
+
+  // 1000pt additions
+  { tier: 1000, phase: "4 — Command", name: "Captain in Gravis Armour", models: 1, pts: 80, status: "assembled", own: true,
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99070101044_CaptainGravisArmour1.jpg" },
+  { tier: 1000, phase: "4 — Command", name: "Lieutenant", models: 1, pts: 55, status: "assembled", own: true,
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99070101042_PrimarisLieutenant1.jpg" },
+  { tier: 1000, phase: "4 — Command", name: "Ancient", models: 1, pts: 50, status: "assembled", own: true,
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99070101043_PrimarisAncient1.jpg" },
+  { tier: 1000, phase: "5 — Battleline", name: "Intercessors x10", models: 10, pts: 160, status: "assembled", own: true,
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101190_PrimarisIntercessorsLead.jpg" },
+  { tier: 1000, phase: "5 — Fire Support", name: "Hellblasters x5", models: 5, pts: 110, status: "assembled", own: true,
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101191_PrimarisHellblastersLead.jpg" },
+  { tier: 1000, phase: "6 — Fast Attack", name: "Outriders x3", models: 3, pts: 80, status: "assembled", own: true,
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101296_OutridersLead.jpg" },
+
+  // 2000pt additions
+  { tier: 2000, phase: "7 — Elite", name: "Judiciar", models: 1, pts: 70, status: "assembled", own: true,
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101287_SMIndomitusJudiciarLead.jpg" },
+  { tier: 2000, phase: "7 — Elite", name: "Bladeguard Ancient", models: 1, pts: 45, status: "assembled", own: true,
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101287_SMIndomitusBladeguardAncientLead.jpg" },
+  { tier: 2000, phase: "7 — Deep Strike", name: "Inceptors x3", models: 3, pts: 120, status: "assembled", own: true,
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101192_PrimarisInceptorsLead.jpg" },
+  { tier: 2000, phase: "8 — Heavy", name: "Redemptor Dreadnought", models: 1, pts: 195, status: "assembled", own: false,
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101331_RedemptorDreadnoughtLead.jpg" },
+  { tier: 2000, phase: "8 — Transport", name: "Impulsor", models: 1, pts: 80, status: "assembled", own: false,
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101244_ImpulsorLead.jpg" },
+  { tier: 2000, phase: "8 — Heavy", name: "Ballistus Dreadnought", models: 1, pts: 150, status: "assembled", own: false,
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101375_BallistusDreadnoughtLead.jpg" },
+  { tier: 2000, phase: "8 — Heavy", name: "Brutalis Dreadnought", models: 1, pts: 160, status: "assembled", own: false,
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120101376_BrutalisDreadnoughtLead.jpg" },
+];
+
+const statuses = ["assembled", "primed", "painting", "based", "done"];
+let currentTier = 500;
+
+function getUnitsForTier(tier) {
+  return allUnits.filter(u => u.tier <= tier);
+}
+
+function save() {
+  const data = allUnits.map(u => u.status);
+  localStorage.setItem("marines-progress", JSON.stringify(data));
+  const note = document.getElementById("save-note");
+  note.classList.add("show");
+  setTimeout(() => note.classList.remove("show"), 1500);
+}
+
+function load() {
+  const data = JSON.parse(localStorage.getItem("marines-progress") || "null");
+  if (data) {
+    data.forEach((s, i) => { if (allUnits[i]) allUnits[i].status = s; });
+  }
+}
+
+function updateProgress() {
+  const units = getUnitsForTier(currentTier);
+  const totalModels = units.reduce((a, u) => a + u.models, 0);
+  const doneModels = units.filter(u => u.status === "done").reduce((a, u) => a + u.models, 0);
+  const totalPts = units.reduce((a, u) => a + u.pts, 0);
+  const donePts = units.filter(u => u.status === "done").reduce((a, u) => a + u.pts, 0);
+
+  document.getElementById("paint-count").textContent = `${doneModels} / ${totalModels}`;
+  document.getElementById("paint-bar").style.width = `${totalModels ? (doneModels / totalModels) * 100 : 0}%`;
+  document.getElementById("pts-count").textContent = `${donePts} / ${totalPts}`;
+  document.getElementById("pts-bar").style.width = `${totalPts ? (donePts / totalPts) * 100 : 0}%`;
+}
+
+function render() {
+  const units = getUnitsForTier(currentTier);
+  const tbody = document.getElementById("unit-table");
+  tbody.innerHTML = "";
+  units.forEach((u) => {
+    const idx = allUnits.indexOf(u);
+    const tr = document.createElement("tr");
+    const sel = document.createElement("select");
+    sel.className = `status ${u.status}`;
+    statuses.forEach(s => {
+      const opt = document.createElement("option");
+      opt.value = s;
+      opt.textContent = s.charAt(0).toUpperCase() + s.slice(1);
+      if (s === u.status) opt.selected = true;
+      sel.appendChild(opt);
+    });
+    sel.addEventListener("change", (e) => {
+      allUnits[idx].status = e.target.value;
+      sel.className = `status ${e.target.value}`;
+      save();
+      updateProgress();
+    });
+    const tierTag = u.tier > 500 && u.tier <= currentTier
+      ? `<span class="tag-new">${u.tier}pt</span>` : "";
+    const buyTag = !u.own ? `<span class="tag-buy">BUY</span>` : "";
+    tr.innerHTML = `
+      <td class="pts">${u.phase}</td>
+      <td class="unit-name">${u.name}${tierTag}${buyTag}<img class="model-thumb" src="${u.img}" alt="${u.name}" loading="lazy"></td>
+      <td>${u.models}</td>
+      <td class="pts">${u.pts}</td>
+      <td></td>
+    `;
+    tr.lastElementChild.appendChild(sel);
+    tbody.appendChild(tr);
+  });
+  updateProgress();
+  renderBacklog();
+}
+
+function renderBacklog() {
+  const tbody = document.getElementById("backlog-table");
+  tbody.innerHTML = "";
+  const unitsInTier = getUnitsForTier(currentTier);
+  const backlogUnits = allUnits.filter(u => !unitsInTier.includes(u));
+  if (backlogUnits.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="2" style="color:var(--text-muted);font-size:0.85rem;">All units included at this tier!</td></tr>';
+    return;
+  }
+  backlogUnits.forEach(u => {
+    const tr = document.createElement("tr");
+    const ownTag = !u.own ? '<span class="tag-buy">BUY</span>' : '<span class="tag-own">OWNED</span>';
+    tr.innerHTML = `
+      <td class="unit-name">${u.name} <span class="tag-new">${u.tier}pt</span>${ownTag}<img class="model-thumb" src="${u.img}" alt="${u.name}" loading="lazy"></td>
+      <td class="pts">${u.pts}pts</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function setTier(tier) {
+  currentTier = tier;
+  document.querySelectorAll(".tier-btn").forEach(b => {
+    b.classList.toggle("active", Number(b.dataset.tier) === tier);
+  });
+  render();
+}
+
+load();
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Death Guard Painting Dashboard — jrob</title>
+<style>
+  :root {
+    --bg: #1a1a2e;
+    --surface: #16213e;
+    --accent: #6d8c3c;
+    --gold: #d4a745;
+    --text: #e0e0e0;
+    --text-muted: #8892a0;
+    --border: #2a3a5c;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 24px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  h1 {
+    font-size: 1.8rem;
+    margin-bottom: 4px;
+    color: var(--accent);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .subtitle { color: var(--text-muted); margin-bottom: 24px; font-size: 0.9rem; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+  .grid-full { grid-column: 1 / -1; }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .card h2 {
+    font-size: 1.1rem;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card h3 {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin: 16px 0 8px 0;
+  }
+  .badge {
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .badge-priority { background: #e74c3c; color: white; }
+  .badge-progress { background: var(--gold); color: #1a1a2e; }
+  .badge-done { background: var(--accent); color: #1a1a2e; }
+  .badge-todo { background: var(--border); color: var(--text-muted); }
+
+  /* Progress bar */
+  .progress-container { margin: 12px 0; }
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+  .progress-bar {
+    height: 8px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.3s;
+  }
+  .progress-fill.green { background: var(--accent); }
+  .progress-fill.gold { background: var(--gold); }
+
+  /* Unit table */
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th {
+    text-align: left;
+    padding: 8px 10px;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 10px;
+    border-bottom: 1px solid rgba(42,58,92,0.5);
+    vertical-align: middle;
+  }
+  tr:hover td { background: rgba(109,140,60,0.05); }
+  .unit-name { font-weight: 600; }
+  .pts { color: var(--text-muted); font-size: 0.8rem; }
+
+  /* Status select */
+  select.status {
+    appearance: none;
+    background: var(--border);
+    color: var(--text);
+    border: none;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+  select.status.assembled { background: #2d3748; color: #a8b2c1; }
+  select.status.primed { background: #3b2f63; color: #b388ff; }
+  select.status.painting { background: #4a3000; color: var(--gold); }
+  select.status.based { background: #1a3a2a; color: #69db7c; }
+  select.status.done { background: #2a4a1a; color: var(--accent); }
+
+  /* Paint swatch */
+  .swatch-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 0;
+    font-size: 0.82rem;
+  }
+  .swatch {
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    border: 1px solid rgba(255,255,255,0.15);
+    flex-shrink: 0;
+  }
+  .swatch-name { flex: 1; }
+  .swatch-brand { color: var(--text-muted); font-size: 0.75rem; }
+  .swatch-section {
+    font-size: 0.75rem;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 12px;
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+
+  /* Notes */
+  .note {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    background: rgba(0,0,0,0.2);
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-top: 10px;
+    line-height: 1.5;
+  }
+
+  /* Save indicator */
+  .save-note {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    background: var(--accent);
+    color: #1a1a2e;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+  .save-note.show { opacity: 1; }
+
+  /* Model image tooltip */
+  .unit-name {
+    position: relative;
+    cursor: pointer;
+  }
+  .unit-name .model-thumb {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 0;
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+    z-index: 100;
+    padding: 8px;
+    pointer-events: none;
+  }
+  .unit-name:hover .model-thumb { display: block; }
+
+  /* Tier buttons */
+  .tier-btn {
+    padding: 8px 20px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tier-btn:hover { border-color: var(--accent); color: var(--text); }
+  .tier-btn.active { background: var(--accent); color: #1a1a2e; border-color: var(--accent); }
+
+  /* Tags */
+  .tag-buy { font-size: 0.65rem; padding: 1px 6px; border-radius: 4px; background: var(--gold); color: #1a1a2e; font-weight: 600; margin-left: 6px; }
+  .tag-own { font-size: 0.65rem; padding: 1px 6px; border-radius: 4px; background: var(--accent); color: #1a1a2e; font-weight: 600; margin-left: 6px; }
+  .tag-new { font-size: 0.65rem; padding: 1px 6px; border-radius: 4px; background: var(--surface); color: var(--gold); font-weight: 600; margin-left: 6px; border: 1px solid var(--gold); }
+
+  @media (max-width: 900px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="nav" style="margin-bottom:20px;font-size:0.85rem;">
+  <a href="index.html" style="color:var(--accent);margin-right:16px;">Home</a>
+  <a href="necrons.html" style="color:var(--accent);margin-right:16px;">Necrons</a>
+  <a href="custodes.html" style="color:var(--accent);">Custodes (Darren)</a>
+</div>
+<h1>Death Guard &mdash; Plague Company</h1>
+<p class="subtitle">Secondary Army &mdash; Dark Imperium (2017) box set + expansions</p>
+
+<!-- Tier selector -->
+<div style="display:flex;gap:8px;margin-bottom:20px;">
+  <button class="tier-btn active" data-tier="500" onclick="setTier(500)">500pts</button>
+  <button class="tier-btn" data-tier="1000" onclick="setTier(1000)">1000pts</button>
+</div>
+
+<!-- Overall Progress -->
+<div class="card" style="margin-bottom: 20px;">
+  <h2>Overall Progress</h2>
+  <div class="grid" style="margin-bottom: 0;">
+    <div>
+      <div class="progress-container">
+        <div class="progress-label"><span>Models Painted</span><span id="paint-count">0 / 30</span></div>
+        <div class="progress-bar"><div class="progress-fill green" id="paint-bar" style="width: 0%"></div></div>
+      </div>
+    </div>
+    <div>
+      <div class="progress-container">
+        <div class="progress-label"><span>Army Points Ready</span><span id="pts-count">0 / 540</span></div>
+        <div class="progress-bar"><div class="progress-fill gold" id="pts-bar" style="width: 0%"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="grid">
+  <!-- Army List -->
+  <div class="card grid-full">
+    <h2>Army List <span class="badge badge-priority">Priority</span></h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Phase</th>
+          <th>Unit</th>
+          <th>Models</th>
+          <th>~Pts</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="unit-table">
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Paint Scheme: Plague Marines -->
+  <div class="card">
+    <h2>Plague Marine Scheme</h2>
+    <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:8px;">Death Guard Speed-Paint Method</p>
+
+    <div class="swatch-section">Primer</div>
+    <div class="swatch-row"><div class="swatch" style="background:#6d8c3c"></div><span class="swatch-name">Death Guard Green Spray</span><span class="swatch-brand">Citadel Spray</span></div>
+
+    <div class="swatch-section">All-Over Wash</div>
+    <div class="swatch-row"><div class="swatch" style="background:#3d2b1a; border: 1px solid #5a4030"></div><span class="swatch-name">Agrax Earthshade</span><span class="swatch-brand">Citadel Shade</span></div>
+
+    <div class="swatch-section">Armor Restore &amp; Highlight</div>
+    <div class="swatch-row"><div class="swatch" style="background:#6d8c3c"></div><span class="swatch-name">Death Guard Green (drybrush)</span><span class="swatch-brand">Citadel Base</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#9eb83c"></div><span class="swatch-name">Ogryn Camo (edge highlight)</span><span class="swatch-brand">Citadel Layer</span></div>
+
+    <div class="swatch-section">Verdigris Trim</div>
+    <div class="swatch-row"><div class="swatch" style="background:#a67d3c"></div><span class="swatch-name">Balthasar Gold</span><span class="swatch-brand">Citadel Base</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#5fb8a0; border: 1px solid #7dd8c0"></div><span class="swatch-name">Nihilakh Oxide</span><span class="swatch-brand">Citadel Technical</span></div>
+
+    <div class="swatch-section">Rust &amp; Weathering</div>
+    <div class="swatch-row"><div class="swatch" style="background:#3a3226; border: 1px solid #5a4a36"></div><span class="swatch-name">Typhus Corrosion</span><span class="swatch-brand">Citadel Technical</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#c45a20"></div><span class="swatch-name">Ryza Rust (drybrush)</span><span class="swatch-brand">Citadel Dry</span></div>
+
+    <div class="swatch-section">Slime &amp; Ooze</div>
+    <div class="swatch-row"><div class="swatch" style="background:#7aa020; border: 1px solid #9ac030"></div><span class="swatch-name">Nurgle's Rot</span><span class="swatch-brand">Citadel Technical</span></div>
+
+    <div class="note">
+      <strong>Tip:</strong> Death Guard are the most forgiving army to paint &mdash; mistakes look intentional. Heavy washes, sloppy drybrushing, and rust effects all contribute to the grimy, corroded aesthetic. Lean into it.
+    </div>
+  </div>
+
+  <!-- Paint Scheme: Poxwalkers -->
+  <div class="card">
+    <h2>Poxwalker Speed Method</h2>
+    <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:8px;">Fast batch painting for the horde</p>
+
+    <div class="swatch-section">Primer</div>
+    <div class="swatch-row"><div class="swatch" style="background:#e8dcc8"></div><span class="swatch-name">Wraithbone Spray</span><span class="swatch-brand">Citadel Spray</span></div>
+
+    <div class="swatch-section">Contrast Paints (vary per area)</div>
+    <div class="swatch-row"><div class="swatch" style="background:#8b6d50; border: 1px solid #a08060"></div><span class="swatch-name">Various Contrast paints</span><span class="swatch-brand">Citadel Contrast</span></div>
+    <p style="font-size:0.75rem; color:var(--text-muted); margin: 4px 0 4px 30px;">Skin, cloth, bone &mdash; no need for consistency, they are shambling zombies</p>
+
+    <div class="swatch-section">Final Wash</div>
+    <div class="swatch-row"><div class="swatch" style="background:#3d2b1a; border: 1px solid #5a4030"></div><span class="swatch-name">Agrax Earthshade (all over)</span><span class="swatch-brand">Citadel Shade</span></div>
+
+    <div class="swatch-section">Optional Extras</div>
+    <div class="swatch-row"><div class="swatch" style="background:#7aa020; border: 1px solid #9ac030"></div><span class="swatch-name">Nurgle's Rot (wounds)</span><span class="swatch-brand">Citadel Technical</span></div>
+    <div class="swatch-row"><div class="swatch" style="background:#c45a20"></div><span class="swatch-name">Ryza Rust (weapons)</span><span class="swatch-brand">Citadel Dry</span></div>
+
+    <div class="note">
+      Poxwalkers should look rough. Paint them fast in big batches &mdash; getting 20 models done first builds momentum for the rest of the army.
+    </div>
+  </div>
+
+  <!-- Backlog -->
+  <div class="card grid-full">
+    <h2>Backlog (Higher Tiers)</h2>
+    <table>
+      <thead><tr><th>Unit</th><th>Status</th></tr></thead>
+      <tbody id="backlog-table">
+      </tbody>
+    </table>
+    <div class="note" style="margin-top:14px;">
+      <strong>Recommendation:</strong> Stop at 1000 pts. The jump to 2000 pts requires ~$320 in additional purchases on top of ~$153 for 1000pts. That is ~$473 total for a secondary army. Save that energy and money for your Necrons.
+    </div>
+  </div>
+</div>
+
+<div class="save-note" id="save-note">Progress saved!</div>
+
+<script>
+/* -- All units across all tiers -- */
+const allUnits = [
+  // 500pt units
+  { tier: 500, phase: "1 — HQ", name: "Lord of Contagion", models: 1, pts: 120, status: "assembled", own: true,
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99070102001_LordofContagionLead.jpg" },
+  { tier: 500, phase: "1 — HQ", name: "Malignant Plaguecaster", models: 1, pts: 60, status: "assembled", own: true,
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99070102002_MalignantPlaguecasterLead.jpg" },
+  { tier: 500, phase: "2 — Core", name: "Plague Marines x7", models: 7, pts: 130, status: "assembled", own: true,
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120102095_PlagueMarinesLead.jpg" },
+  { tier: 500, phase: "2 — Horde", name: "Poxwalkers x20", models: 20, pts: 130, status: "assembled", own: true,
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120102096_PoxwalkersLead.jpg" },
+  { tier: 500, phase: "3 — Fast", name: "Foetid Bloat-drone", models: 1, pts: 100, status: "assembled", own: true,
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120102024_FoetidBloatDroneLead.jpg" },
+
+  // 1000pt additions
+  { tier: 1000, phase: "4 — Support", name: "Noxious Blightbringer", models: 1, pts: 50, status: "assembled", own: true,
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99070102003_NoxiousBlightbringerLead.jpg" },
+  { tier: 1000, phase: "4 — HQ", name: "Typhus", models: 1, pts: 100, status: "assembled", own: false,
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120102079_TyphusLead.jpg" },
+  { tier: 1000, phase: "5 — Core", name: "Plague Marines x7 (2nd squad)", models: 7, pts: 130, status: "assembled", own: false,
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120102095_PlagueMarinesLead.jpg" },
+  { tier: 1000, phase: "5 — Heavy", name: "Plagueburst Crawler", models: 1, pts: 210, status: "assembled", own: false,
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120102080_PlagueburstCrawlerLead.jpg" },
+];
+
+const statuses = ["assembled", "primed", "painting", "based", "done"];
+let currentTier = 500;
+
+function getUnitsForTier(tier) {
+  return allUnits.filter(u => u.tier <= tier);
+}
+
+function save() {
+  const data = allUnits.map(u => u.status);
+  localStorage.setItem("deathguard-progress", JSON.stringify(data));
+  const note = document.getElementById("save-note");
+  note.classList.add("show");
+  setTimeout(() => note.classList.remove("show"), 1500);
+}
+
+function load() {
+  const data = JSON.parse(localStorage.getItem("deathguard-progress") || "null");
+  if (data) {
+    data.forEach((s, i) => { if (allUnits[i]) allUnits[i].status = s; });
+  }
+}
+
+function updateProgress() {
+  const units = getUnitsForTier(currentTier);
+  const totalModels = units.reduce((a, u) => a + u.models, 0);
+  const doneModels = units.filter(u => u.status === "done").reduce((a, u) => a + u.models, 0);
+  const totalPts = units.reduce((a, u) => a + u.pts, 0);
+  const donePts = units.filter(u => u.status === "done").reduce((a, u) => a + u.pts, 0);
+
+  document.getElementById("paint-count").textContent = `${doneModels} / ${totalModels}`;
+  document.getElementById("paint-bar").style.width = `${totalModels ? (doneModels / totalModels) * 100 : 0}%`;
+  document.getElementById("pts-count").textContent = `${donePts} / ${totalPts}`;
+  document.getElementById("pts-bar").style.width = `${totalPts ? (donePts / totalPts) * 100 : 0}%`;
+}
+
+function render() {
+  const units = getUnitsForTier(currentTier);
+  const tbody = document.getElementById("unit-table");
+  tbody.innerHTML = "";
+  units.forEach((u) => {
+    const idx = allUnits.indexOf(u);
+    const tr = document.createElement("tr");
+    const sel = document.createElement("select");
+    sel.className = `status ${u.status}`;
+    statuses.forEach(s => {
+      const opt = document.createElement("option");
+      opt.value = s;
+      opt.textContent = s.charAt(0).toUpperCase() + s.slice(1);
+      if (s === u.status) opt.selected = true;
+      sel.appendChild(opt);
+    });
+    sel.addEventListener("change", (e) => {
+      allUnits[idx].status = e.target.value;
+      sel.className = `status ${e.target.value}`;
+      save();
+      updateProgress();
+    });
+    const tierTag = u.tier > 500 && u.tier <= currentTier
+      ? `<span class="tag-new">${u.tier}pt</span>` : "";
+    const ownTag = !u.own ? `<span class="tag-buy">BUY</span>` : "";
+    tr.innerHTML = `
+      <td class="pts">${u.phase}</td>
+      <td class="unit-name">${u.name}${tierTag}${ownTag}<img class="model-thumb" src="${u.img}" alt="${u.name}" loading="lazy"></td>
+      <td>${u.models}</td>
+      <td class="pts">${u.pts}</td>
+      <td></td>
+    `;
+    tr.lastElementChild.appendChild(sel);
+    tbody.appendChild(tr);
+  });
+  updateProgress();
+  renderBacklog();
+}
+
+function renderBacklog() {
+  const tbody = document.getElementById("backlog-table");
+  tbody.innerHTML = "";
+  const unitsInTier = getUnitsForTier(currentTier);
+  const backlogUnits = allUnits.filter(u => !unitsInTier.includes(u));
+  if (backlogUnits.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="2" style="color:var(--text-muted);font-size:0.85rem;">All units included at this tier!</td></tr>';
+    return;
+  }
+  backlogUnits.forEach(u => {
+    const tr = document.createElement("tr");
+    const ownTag = !u.own ? '<span class="tag-buy">BUY</span>' : '<span class="tag-own">OWNED</span>';
+    tr.innerHTML = `
+      <td class="unit-name">${u.name} <span class="tag-new">${u.tier}pt</span>${ownTag}<img class="model-thumb" src="${u.img}" alt="${u.name}" loading="lazy"></td>
+      <td class="pts">${u.pts}pts</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function setTier(tier) {
+  currentTier = tier;
+  document.querySelectorAll(".tier-btn").forEach(b => {
+    b.classList.toggle("active", Number(b.dataset.tier) === tier);
+  });
+  render();
+}
+
+load();
+render();
+</script>
+</body>
+</html>

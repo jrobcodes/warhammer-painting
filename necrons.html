@@ -214,6 +214,26 @@
   }
   .unit-name:hover .model-thumb { display: block; }
 
+  /* Tier buttons */
+  .tier-btn {
+    padding: 8px 20px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tier-btn:hover { border-color: var(--accent); color: var(--text); }
+  .tier-btn.active { background: var(--accent); color: #1a1a2e; border-color: var(--accent); }
+
+  /* Buy tag */
+  .tag-buy { font-size: 0.65rem; padding: 1px 6px; border-radius: 4px; background: var(--gold); color: #1a1a2e; font-weight: 600; margin-left: 6px; }
+  .tag-own { font-size: 0.65rem; padding: 1px 6px; border-radius: 4px; background: var(--accent); color: #1a1a2e; font-weight: 600; margin-left: 6px; }
+  .tag-new { font-size: 0.65rem; padding: 1px 6px; border-radius: 4px; background: var(--surface2); color: var(--gold); font-weight: 600; margin-left: 6px; border: 1px solid var(--gold); }
+
   @media (max-width: 900px) {
     .grid { grid-template-columns: 1fr; }
   }
@@ -223,7 +243,14 @@
 
 <div class="nav" style="margin-bottom:20px;font-size:0.85rem;"><a href="index.html" style="color:var(--accent);margin-right:16px;">Home</a><a href="custodes.html" style="color:var(--accent);">Custodes (Darren)</a></div>
 <h1>Szarekhan Dynasty — Necrons</h1>
-<p class="subtitle">500pt Army Project &mdash; vs Darren's Custodes Combat Patrol</p>
+<p class="subtitle">Army Project &mdash; vs Darren's Custodes</p>
+
+<!-- Tier selector -->
+<div style="display:flex;gap:8px;margin-bottom:20px;">
+  <button class="tier-btn active" data-tier="500" onclick="setTier(500)">500pts</button>
+  <button class="tier-btn" data-tier="1000" onclick="setTier(1000)">1000pts</button>
+  <button class="tier-btn" data-tier="2000" onclick="setTier(2000)">2000pts</button>
+</div>
 
 <!-- Overall Progress -->
 <div class="card" style="margin-bottom: 20px;">
@@ -342,7 +369,7 @@
 
   <!-- Backlog -->
   <div class="card">
-    <h2>Backlog (Not in 500pt List)</h2>
+    <h2>Backlog (Higher Tiers)</h2>
     <table>
       <thead><tr><th>Unit</th><th>Status</th></tr></thead>
       <tbody id="backlog-table">
@@ -354,65 +381,105 @@
 <div class="save-note" id="save-note">Progress saved!</div>
 
 <script>
-const units = [
-  { phase: "1 — Core", name: "Necron Warriors (Flayers)", models: 10, pts: 100, status: "assembled",
+/* ── All units across all tiers ── */
+const allUnits = [
+  // 500pt units
+  { tier: 500, phase: "1 — Core", name: "Necron Warriors (Flayers)", models: 10, pts: 90, status: "assembled", own: true,
     img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120110052_NecronWarriorsLead.jpg" },
-  { phase: "1 — Core", name: "Necron Warriors (Reapers)", models: 10, pts: 100, status: "assembled",
+  { tier: 500, phase: "1 — Core", name: "Necron Warriors (Reapers)", models: 10, pts: 90, status: "assembled", own: true,
     img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120110052_NecronWarriorsLead.jpg" },
-  { phase: "1 — Core", name: "Overlord", models: 1, pts: 85, status: "assembled",
+  { tier: 500, phase: "1 — Core", name: "Overlord", models: 1, pts: 85, status: "assembled", own: true,
     img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99070110006_OverlordTachyonArrow1.jpg" },
-  { phase: "2 — Melee", name: "Skorpekh Lord", models: 1, pts: 75, status: "assembled",
+  { tier: 500, phase: "2 — Melee", name: "Skorpekh Lord", models: 1, pts: 90, status: "assembled", own: true,
     img: "https://www.warhammer.com/app/resources/catalog/product/threeSixty/99120110072_NecronsRoyalCourtOTT1360/01-01.jpg" },
-  { phase: "2 — Melee", name: "Skorpekh Destroyers x3", models: 3, pts: 75, status: "assembled",
+  { tier: 500, phase: "2 — Melee", name: "Skorpekh Destroyers x3", models: 3, pts: 90, status: "assembled", own: true,
     img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120110051_SkorpekhDestroyersLead.jpg" },
-  { phase: "3 — Support", name: "Royal Warden", models: 1, pts: 40, status: "assembled",
+  { tier: 500, phase: "3 — Support", name: "Royal Warden", models: 1, pts: 50, status: "assembled", own: true,
     img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99070110007_RoyalWarden1.jpg" },
-  { phase: "3 — Support", name: "Canoptek Scarab Swarms x3", models: 3, pts: 40, status: "assembled",
+  { tier: 500, phase: "3 — Support", name: "Canoptek Scarab Swarms x3", models: 3, pts: 40, status: "assembled", own: true,
     img: "https://www.warhammer.com/app/resources/catalog/product/threeSixty/60010199034_NecronScarabsSpin1360/01.jpg" },
-];
 
-const backlogUnits = [
-  { name: "Plasmancer", img: "https://www.warhammer.com/app/resources/catalog/product/threeSixty/99120110072_NecronsRoyalCourtOTT3360/01-01.jpg" },
-  { name: "Cryptothralls x2", img: "https://www.warhammer.com/app/resources/catalog/product/threeSixty/99120110072_NecronsRoyalCourtOTT4360/01-01.jpg" },
-  { name: "Canoptek Reanimator", img: "https://www.warhammer.com/app/resources/catalog/product/threeSixty/99120110072_NecronsRoyalCourtOTT2360/01-01.jpg" },
-  { name: "Lokhust Heavy Destroyers x3", img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120110044_LokhustHeavyDestroyerLead.jpg" },
-  { name: "Cryptek", img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99070110005_NECCryptekLead.jpg" },
-  { name: "Overlord #2", img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99070110006_OverlordTachyonArrow1.jpg" },
+  // 1000pt additions
+  { tier: 1000, phase: "4 — Fire Support", name: "Lokhust Heavy Destroyers x3", models: 3, pts: 165, status: "assembled", own: true,
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120110044_LokhustHeavyDestroyerLead.jpg" },
+  { tier: 1000, phase: "4 — Fire Support", name: "Plasmancer", models: 1, pts: 55, status: "assembled", own: true,
+    img: "https://www.warhammer.com/app/resources/catalog/product/threeSixty/99120110072_NecronsRoyalCourtOTT3360/01-01.jpg" },
+  { tier: 1000, phase: "4 — Fire Support", name: "Cryptothralls x2", models: 2, pts: 60, status: "assembled", own: true,
+    img: "https://www.warhammer.com/app/resources/catalog/product/threeSixty/99120110072_NecronsRoyalCourtOTT4360/01-01.jpg" },
+  { tier: 1000, phase: "5 — Reanimate", name: "Canoptek Reanimator", models: 1, pts: 75, status: "assembled", own: true,
+    img: "https://www.warhammer.com/app/resources/catalog/product/threeSixty/99120110072_NecronsRoyalCourtOTT2360/01-01.jpg" },
+  { tier: 1000, phase: "5 — Reanimate", name: "Technomancer", models: 1, pts: 80, status: "assembled", own: true,
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99070110005_NECCryptekLead.jpg" },
+
+  // 2000pt additions
+  { tier: 2000, phase: "6 — Hammer", name: "Overlord w/ Translocation Shroud", models: 1, pts: 85, status: "assembled", own: true,
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99070110006_OverlordTachyonArrow1.jpg" },
+  { tier: 2000, phase: "6 — Hammer", name: "Lychguard x5 (shields)", models: 5, pts: 85, status: "assembled", own: true,
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120110066_LychGuardLead.jpg" },
+  { tier: 2000, phase: "6 — Hammer", name: "Lychguard x5 (2nd box)", models: 5, pts: 85, status: "assembled", own: false,
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120110066_LychGuardLead.jpg" },
+  { tier: 2000, phase: "7 — Midfield", name: "Immortals x10", models: 10, pts: 150, status: "assembled", own: false,
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120110065_NecronImmortalsLead.jpg" },
+  { tier: 2000, phase: "7 — Midfield", name: "Canoptek Wraiths x6", models: 6, pts: 220, status: "assembled", own: false,
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120110067_CanoptekWraithsLead.jpg" },
+  { tier: 2000, phase: "7 — Midfield", name: "Psychomancer", models: 1, pts: 55, status: "assembled", own: true,
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99070110010_Psychomancer1.jpg" },
+  { tier: 2000, phase: "7 — Midfield", name: "Triarch Stalker", models: 1, pts: 110, status: "assembled", own: true,
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120110033_TriarchStalkerLead.jpg" },
+  { tier: 2000, phase: "8 — Centerpiece", name: "C'tan Shard of the Void Dragon", models: 1, pts: 300, status: "assembled", own: false,
+    img: "https://www.warhammer.com/app/resources/catalog/product/920x950/99120110047_VoidDragonLead.jpg" },
 ];
 
 const statuses = ["assembled", "primed", "painting", "based", "done"];
+let currentTier = 500;
+
+function getUnitsForTier(tier) {
+  return allUnits.filter(u => u.tier <= tier);
+}
 
 function save() {
-  const data = units.map(u => u.status);
-  localStorage.setItem("necron-progress", JSON.stringify(data));
+  const data = allUnits.map(u => u.status);
+  localStorage.setItem("necron-progress-v2", JSON.stringify(data));
   const note = document.getElementById("save-note");
   note.classList.add("show");
   setTimeout(() => note.classList.remove("show"), 1500);
 }
 
 function load() {
-  const data = JSON.parse(localStorage.getItem("necron-progress") || "null");
+  const data = JSON.parse(localStorage.getItem("necron-progress-v2") || "null");
   if (data) {
-    data.forEach((s, i) => { if (units[i]) units[i].status = s; });
+    data.forEach((s, i) => { if (allUnits[i]) allUnits[i].status = s; });
+  }
+  // Migrate from old save
+  if (!data) {
+    const old = JSON.parse(localStorage.getItem("necron-progress") || "null");
+    if (old) {
+      // Old order: Flayers, Reapers, Overlord, Skorpekh Lord, Skorpekh Destroyers, Royal Warden, Scarabs
+      const mapping = [0,1,2,3,4,5,6];
+      old.forEach((s, i) => { if (mapping[i] !== undefined && allUnits[mapping[i]]) allUnits[mapping[i]].status = s; });
+    }
   }
 }
 
 function updateProgress() {
+  const units = getUnitsForTier(currentTier);
   const totalModels = units.reduce((a, u) => a + u.models, 0);
   const doneModels = units.filter(u => u.status === "done").reduce((a, u) => a + u.models, 0);
   const totalPts = units.reduce((a, u) => a + u.pts, 0);
   const donePts = units.filter(u => u.status === "done").reduce((a, u) => a + u.pts, 0);
 
   document.getElementById("paint-count").textContent = `${doneModels} / ${totalModels}`;
-  document.getElementById("paint-bar").style.width = `${(doneModels / totalModels) * 100}%`;
+  document.getElementById("paint-bar").style.width = `${totalModels ? (doneModels / totalModels) * 100 : 0}%`;
   document.getElementById("pts-count").textContent = `${donePts} / ${totalPts}`;
-  document.getElementById("pts-bar").style.width = `${(donePts / totalPts) * 100}%`;
+  document.getElementById("pts-bar").style.width = `${totalPts ? (donePts / totalPts) * 100 : 0}%`;
 }
 
 function render() {
+  const units = getUnitsForTier(currentTier);
   const tbody = document.getElementById("unit-table");
   tbody.innerHTML = "";
-  units.forEach((u, i) => {
+  units.forEach((u) => {
+    const idx = allUnits.indexOf(u);
     const tr = document.createElement("tr");
     const sel = document.createElement("select");
     sel.className = `status ${u.status}`;
@@ -424,14 +491,17 @@ function render() {
       sel.appendChild(opt);
     });
     sel.addEventListener("change", (e) => {
-      units[i].status = e.target.value;
+      allUnits[idx].status = e.target.value;
       sel.className = `status ${e.target.value}`;
       save();
       updateProgress();
     });
+    const tierTag = u.tier > 500 && u.tier <= currentTier
+      ? `<span class="tag-new">${u.tier}pt</span>` : "";
+    const ownTag = !u.own ? `<span class="tag-buy">BUY</span>` : "";
     tr.innerHTML = `
       <td class="pts">${u.phase}</td>
-      <td class="unit-name">${u.name}<img class="model-thumb" src="${u.img}" alt="${u.name}" loading="lazy"></td>
+      <td class="unit-name">${u.name}${tierTag}${ownTag}<img class="model-thumb" src="${u.img}" alt="${u.name}" loading="lazy"></td>
       <td>${u.models}</td>
       <td class="pts">${u.pts}</td>
       <td></td>
@@ -440,23 +510,41 @@ function render() {
     tbody.appendChild(tr);
   });
   updateProgress();
+
+  // Update backlog: show units NOT in the current tier
+  renderBacklog();
 }
 
 function renderBacklog() {
   const tbody = document.getElementById("backlog-table");
+  tbody.innerHTML = "";
+  const unitsInTier = getUnitsForTier(currentTier);
+  const backlogUnits = allUnits.filter(u => !unitsInTier.includes(u));
+  if (backlogUnits.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="2" style="color:var(--text-muted);font-size:0.85rem;">All units included at this tier!</td></tr>';
+    return;
+  }
   backlogUnits.forEach(u => {
     const tr = document.createElement("tr");
+    const ownTag = !u.own ? '<span class="tag-buy">BUY</span>' : '<span class="tag-own">OWNED</span>';
     tr.innerHTML = `
-      <td class="unit-name">${u.name}<img class="model-thumb" src="${u.img}" alt="${u.name}" loading="lazy"></td>
-      <td><span class="badge badge-todo">Assembled</span></td>
+      <td class="unit-name">${u.name} <span class="tag-new">${u.tier}pt</span>${ownTag}<img class="model-thumb" src="${u.img}" alt="${u.name}" loading="lazy"></td>
+      <td class="pts">${u.pts}pts</td>
     `;
     tbody.appendChild(tr);
   });
 }
 
+function setTier(tier) {
+  currentTier = tier;
+  document.querySelectorAll(".tier-btn").forEach(b => {
+    b.classList.toggle("active", Number(b.dataset.tier) === tier);
+  });
+  render();
+}
+
 load();
 render();
-renderBacklog();
 </script>
 </body>
 </html>
