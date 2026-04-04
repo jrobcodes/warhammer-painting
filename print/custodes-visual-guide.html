@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Custodes — Visual Paint Guide (Darren)</title>
+<style>
+  @page { size: letter; margin: 0.4in; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #fff; color: #1a1a1a;
+    padding: 20px; max-width: 950px; margin: 0 auto; font-size: 9pt;
+  }
+  h1 { font-size: 16pt; margin-bottom: 2px; }
+  .subtitle { color: #666; font-size: 8pt; margin-bottom: 14px; border-bottom: 2px solid #222; padding-bottom: 6px; }
+  h2 { font-size: 12pt; margin: 14px 0 6px; border-bottom: 1px solid #ccc; padding-bottom: 3px; }
+
+  .diagram { display: flex; gap: 16px; margin-bottom: 12px; align-items: flex-start; }
+  .model-container {
+    position: relative; width: 300px; flex-shrink: 0;
+    background: #fafafa; border-radius: 6px; border: 1px solid #ddd; overflow: hidden;
+  }
+  .model-container img { width: 100%; display: block; }
+
+  /* Zone dots — larger, clearer */
+  .dot {
+    position: absolute;
+    width: 22px; height: 22px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 9pt; color: #fff;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.7);
+    border: 2px solid #fff;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.5);
+    transform: translate(-50%, -50%);
+    z-index: 2;
+  }
+
+  /* Legend */
+  .legend { flex: 1; font-size: 8pt; }
+
+  .zone-block {
+    margin-bottom: 8px;
+    padding: 6px 8px;
+    border-radius: 4px;
+    border-left: 4px solid #ccc;
+  }
+  .zone-header {
+    display: flex; align-items: center; gap: 6px; margin-bottom: 3px;
+  }
+  .zone-letter {
+    width: 22px; height: 22px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 9pt; color: #fff; flex-shrink: 0;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  }
+  .zone-title { font-weight: 700; font-size: 8.5pt; }
+  .zone-where { color: #555; font-size: 7.5pt; font-style: italic; margin-bottom: 4px; }
+
+  .paint-step {
+    display: flex; gap: 5px; padding: 2px 0; align-items: center;
+    font-size: 7.5pt;
+  }
+  .paint-step .ps-num { color: #999; font-weight: 600; min-width: 14px; }
+  .paint-step .ps-swatch {
+    width: 12px; height: 12px; border-radius: 2px;
+    border: 1px solid #ccc; flex-shrink: 0;
+  }
+  .paint-step .ps-name { font-weight: 600; }
+  .paint-step .ps-desc { color: #666; }
+  .paint-step .ps-avail {
+    font-size: 6pt; padding: 1px 4px; border-radius: 3px;
+    font-weight: 700; margin-left: 4px; flex-shrink: 0;
+  }
+  .ps-borrow { background: #d4edda; color: #155724; }
+  .ps-buy { background: #fff3cd; color: #856404; }
+
+  .order-box {
+    padding: 6px 8px; border-radius: 4px; font-size: 7.5pt;
+    background: #f0f7ff; border: 1px solid #b0c4de; color: #333;
+    margin-top: 6px;
+  }
+  .order-box strong { color: #1a1a1a; }
+
+  .note { padding: 6px 8px; border-radius: 4px; font-size: 7pt; color: #555; margin-top: 6px; }
+  .note-green { border: 1px solid #1b7a2e; background: #f0faf0; }
+  .note-gold { border: 1px solid #c5962a; background: #fdf8ee; }
+  .note-grey { border: 1px solid #aaa; background: #f5f5f5; }
+  .note-red { border: 1px solid #c0392b; background: #fdf0f0; }
+  .note-blue { border: 1px solid #2980b9; background: #ebf5fb; }
+
+  .page-break { page-break-before: always; }
+
+  .model-table { width: 100%; border-collapse: collapse; font-size: 7pt; margin-top: 6px; }
+  .model-table td { padding: 3px 6px; border-bottom: 1px solid #eee; }
+  .model-table td:first-child { font-weight: 600; width: 30%; }
+
+  .beginner-box {
+    padding: 8px 10px; border-radius: 6px; font-size: 8pt;
+    background: #fffbeb; border: 2px solid #f0c040; color: #333;
+    margin-bottom: 10px;
+  }
+  .beginner-box strong { color: #8b6914; }
+
+  .tip-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+  .tip-card {
+    padding: 8px 10px; border-radius: 6px; font-size: 7.5pt;
+    background: #f8f9fa; border: 1px solid #dee2e6;
+  }
+  .tip-card strong { display: block; margin-bottom: 3px; color: #1a1a1a; font-size: 8pt; }
+
+  @media print { body { padding: 0; } }
+</style>
+</head>
+<body>
+
+<h1>Adeptus Custodes — Visual Paint Guide</h1>
+<p class="subtitle">For Darren (first-time painter!) &bull; Zone-by-zone placement &bull; Print for paint station</p>
+
+<div class="beginner-box">
+  <strong>Before you start painting:</strong>
+  Most paints below can be BORROWED from jrob's collection (marked <span style="background:#d4edda;color:#155724;padding:1px 4px;border-radius:3px;font-size:6pt;font-weight:700;">BORROW</span>).
+  Only a couple are optional buys (marked <span style="background:#fff3cd;color:#856404;padding:1px 4px;border-radius:3px;font-size:6pt;font-weight:700;">BUY</span>).
+  Your total paint cost: $0 to $30 depending on whether you want the gold spray can and gloss shade.
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- CUSTODIAN GUARD                             -->
+<!-- ═══════════════════════════════════════════ -->
+<h2>Custodian Guard (x4) — Core Gold Infantry</h2>
+<p style="font-size:7pt;color:#888;margin-bottom:6px;">Your bread-and-butter unit. 4 models, all identical gold scheme. Learn the recipe here — it applies to most of the army.</p>
+
+<div class="diagram">
+  <div class="model-container">
+    <img src="https://www.warhammer.com/app/resources/catalog/product/920x950/60010101002_BurningProsperoENG02.jpg" alt="Custodian Guard">
+    <!-- Zone A: gold armor — center model torso -->
+    <div class="dot" style="top:38%;left:50%;background:#c5962a;">A</div>
+    <!-- Zone A: gold armor — left model shoulder -->
+    <div class="dot" style="top:36%;left:24%;background:#c5962a;">A</div>
+    <!-- Zone A: gold armor — right model leg -->
+    <div class="dot" style="top:56%;left:72%;background:#c5962a;">A</div>
+    <!-- Zone B: red plume — center model plume -->
+    <div class="dot" style="top:22%;left:47%;background:#9b1a1a;">B</div>
+    <!-- Zone B: red cloth — left model tabard -->
+    <div class="dot" style="top:55%;left:27%;background:#9b1a1a;">B</div>
+    <!-- Zone C: dark joints — center model waist -->
+    <div class="dot" style="top:48%;left:48%;background:#1a1a1a;border-color:#888;">C</div>
+    <!-- Zone D: weapon blade — bottom model sword -->
+    <div class="dot" style="top:70%;left:52%;background:#7a7d82;">D</div>
+    <!-- Zone D: weapon blade — right model spear -->
+    <div class="dot" style="top:38%;left:78%;background:#7a7d82;">D</div>
+    <!-- Zone E: gemstone — center model chest -->
+    <div class="dot" style="top:32%;left:51%;background:#2e86c1;">E</div>
+    <!-- Zone F: base -->
+    <div class="dot" style="top:84%;left:50%;background:#c2b59b;color:#333;text-shadow:none;">F</div>
+  </div>
+
+  <div class="legend">
+    <!-- Zone A -->
+    <div class="zone-block" style="background:#fdf8ee;border-left-color:#c5962a;">
+      <div class="zone-header">
+        <div class="zone-letter" style="background:#c5962a;">A</div>
+        <span class="zone-title">Gold Armor (the BIGGEST area — 70% of the model)</span>
+      </div>
+      <div class="zone-where">ALL armor plates: shoulders, chest, legs, arms, helmet, backpack. Everything gold.</div>
+      <div class="paint-step"><span class="ps-num">1.</span><div class="ps-swatch" style="background:#c5962a"></div><span class="ps-name">Retributor Armour</span> <span class="ps-desc">— base coat ALL armor (2 thin coats)</span><span class="ps-avail ps-borrow">BORROW</span></div>
+      <div class="paint-step"><span class="ps-num">2.</span><div class="ps-swatch" style="background:rgba(180,120,60,0.5);border-color:#b4783c"></div><span class="ps-name">Reikland Fleshshade</span> <span class="ps-desc">— wash into ALL recesses of gold</span><span class="ps-avail ps-borrow">BORROW</span></div>
+      <div class="paint-step"><span class="ps-num">3.</span><div class="ps-swatch" style="background:#d4a745"></div><span class="ps-name">Liberator Gold</span> <span class="ps-desc">— highlight raised edges of armor</span><span class="ps-avail ps-borrow">BORROW</span></div>
+      <div class="paint-step"><span class="ps-num">4.</span><div class="ps-swatch" style="background:#d4d8dc"></div><span class="ps-name">Stormhost Silver</span> <span class="ps-desc">— fine edge highlights on sharpest points only</span><span class="ps-avail ps-borrow">BORROW</span></div>
+    </div>
+
+    <!-- Zone B -->
+    <div class="zone-block" style="background:#fdf0f0;border-left-color:#9b1a1a;">
+      <div class="zone-header">
+        <div class="zone-letter" style="background:#9b1a1a;">B</div>
+        <span class="zone-title">Red Plumes &amp; Cloth</span>
+      </div>
+      <div class="zone-where">Helmet plume (the big hair crest), hanging cloth tassels, tabard (front skirt), any capes.</div>
+      <div class="paint-step"><span class="ps-num">5.</span><div class="ps-swatch" style="background:#9b1a1a"></div><span class="ps-name">Khorne Red</span> <span class="ps-desc">— base coat all red areas (2 thin coats)</span><span class="ps-avail ps-borrow">BORROW</span></div>
+      <div class="paint-step"><span class="ps-num">6.</span><div class="ps-swatch" style="background:#2b2b2b"></div><span class="ps-name">Nuln Oil</span> <span class="ps-desc">— wash into cloth folds only</span><span class="ps-avail ps-borrow">BORROW</span></div>
+      <div class="paint-step"><span class="ps-num">7.</span><div class="ps-swatch" style="background:#c83c2e"></div><span class="ps-name">Evil Sunz Scarlet</span> <span class="ps-desc">— highlight raised cloth areas</span><span class="ps-avail ps-borrow">BORROW</span></div>
+    </div>
+
+    <!-- Zone C -->
+    <div class="zone-block" style="background:#f5f5f5;border-left-color:#1a1a1a;">
+      <div class="zone-header">
+        <div class="zone-letter" style="background:#1a1a1a;">C</div>
+        <span class="zone-title">Dark Details (joints &amp; undersuit)</span>
+      </div>
+      <div class="zone-where">Joints between armor plates, weapon hafts (handles), under-armor bodysuit visible at elbows/waist/knees.</div>
+      <div class="paint-step"><span class="ps-num">8.</span><div class="ps-swatch" style="background:#1a1a1a"></div><span class="ps-name">Abaddon Black</span> <span class="ps-desc">— base coat all dark areas</span><span class="ps-avail ps-borrow">BORROW</span></div>
+      <div class="paint-step"><span class="ps-num">9.</span><div class="ps-swatch" style="background:#484b4e"></div><span class="ps-name">Eshin Grey</span> <span class="ps-desc">— highlight edges of black areas</span><span class="ps-avail ps-borrow">BORROW</span></div>
+    </div>
+
+    <!-- Zone D -->
+    <div class="zone-block" style="background:#f5f5f7;border-left-color:#7a7d82;">
+      <div class="zone-header">
+        <div class="zone-letter" style="background:#7a7d82;">D</div>
+        <span class="zone-title">Weapon Blades</span>
+      </div>
+      <div class="zone-where">Guardian spear blade, sword blade — the metallic cutting edge of any weapon.</div>
+      <div class="paint-step"><span class="ps-num">10.</span><div class="ps-swatch" style="background:#7a7d82"></div><span class="ps-name">Leadbelcher</span> <span class="ps-desc">— base coat blade</span><span class="ps-avail ps-borrow">BORROW</span></div>
+      <div class="paint-step"><span class="ps-num">11.</span><div class="ps-swatch" style="background:#2b2b2b"></div><span class="ps-name">Nuln Oil</span> <span class="ps-desc">— wash blade</span><span class="ps-avail ps-borrow">BORROW</span></div>
+      <div class="paint-step"><span class="ps-num">12.</span><div class="ps-swatch" style="background:#d4d8dc"></div><span class="ps-name">Stormhost Silver</span> <span class="ps-desc">— edge highlight blade</span><span class="ps-avail ps-borrow">BORROW</span></div>
+    </div>
+
+    <!-- Zone E -->
+    <div class="zone-block" style="background:#ebf5fb;border-left-color:#2e86c1;">
+      <div class="zone-header">
+        <div class="zone-letter" style="background:#2e86c1;">E</div>
+        <span class="zone-title">Gemstones (eyes &amp; gems on armor)</span>
+      </div>
+      <div class="zone-where">Tiny gems on chest, belt, or shoulder pads. Helmet eye lenses. Very small areas.</div>
+      <div class="paint-step"><span class="ps-num">13.</span><div class="ps-swatch" style="background:#003d1e"></div><span class="ps-name">Caliban Green</span> <span class="ps-desc">— fill gem area</span><span class="ps-avail ps-borrow">BORROW</span></div>
+      <div class="paint-step"><span class="ps-num">14.</span><div class="ps-swatch" style="background:#f0f0f0"></div><span class="ps-name">White Scar</span> <span class="ps-desc">— tiny dot in corner of gem for shine</span><span class="ps-avail ps-borrow">BORROW</span></div>
+    </div>
+
+    <!-- Zone F -->
+    <div class="zone-block" style="background:#faf8f4;border-left-color:#c2b59b;">
+      <div class="zone-header">
+        <div class="zone-letter" style="background:#c2b59b;color:#333;text-shadow:none;">F</div>
+        <span class="zone-title">Base</span>
+      </div>
+      <div class="zone-where">The round base the model stands on. Do this LAST.</div>
+      <div class="paint-step"><span class="ps-num">15.</span><div class="ps-swatch" style="background:#c2b59b"></div><span class="ps-name">Texture paint</span> <span class="ps-desc">— Agrellan Earth or Astrogranite, then drybrush</span><span class="ps-avail ps-borrow">BORROW</span></div>
+    </div>
+
+    <div class="order-box">
+      <strong>Paint order:</strong> Zone A (gold) first on ALL 4 models as a batch. Then B (red), then C (black), then D (blades), then E (gems), then F (base). Doing all models together saves time!
+    </div>
+
+    <div class="note note-gold" style="margin-top:4px;">
+      <strong>Beginner tip:</strong> "Two thin coats" is the golden rule. Dip your brush in paint, then wipe most of it off on your palette. Apply a thin layer, let it dry completely (5-10 min), then do a second coat. This gives smooth, even coverage without hiding detail.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SHIELD-CAPTAIN IN ALLARUS TERMINATOR       -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="page-break"></div>
+<h2>Shield-Captain in Allarus Terminator Armour — Character</h2>
+<p style="font-size:7pt;color:#888;margin-bottom:6px;">Your army leader. Same gold scheme as Custodian Guard but BIGGER and more ornate. More surface area = more gold to paint. The large cape is the main difference.</p>
+
+<div class="diagram">
+  <div class="model-container">
+    <img src="https://www.warhammer.com/app/resources/catalog/product/920x950/99120108011_AllarusCustodiansCpt01.jpg" alt="Shield-Captain in Allarus Terminator Armour">
+    <!-- Zone A: gold armor — center model chest -->
+    <div class="dot" style="top:42%;left:50%;background:#c5962a;">A</div>
+    <!-- Zone A: gold armor — right model shoulder -->
+    <div class="dot" style="top:28%;left:72%;background:#c5962a;">A</div>
+    <!-- Zone A: gold armor — left model leg -->
+    <div class="dot" style="top:58%;left:28%;background:#c5962a;">A</div>
+    <!-- Zone B: red plume — center model plume -->
+    <div class="dot" style="top:14%;left:50%;background:#9b1a1a;">B</div>
+    <!-- Zone B: red cape — center model cape right -->
+    <div class="dot" style="top:52%;left:62%;background:#9b1a1a;">B</div>
+    <!-- Zone B: red cape — left model cape -->
+    <div class="dot" style="top:48%;left:16%;background:#9b1a1a;">B</div>
+    <!-- Zone C: dark joints — center model waist -->
+    <div class="dot" style="top:50%;left:46%;background:#1a1a1a;border-color:#888;">C</div>
+    <!-- Zone D: weapon blade — center model axe blade -->
+    <div class="dot" style="top:22%;left:40%;background:#7a7d82;">D</div>
+    <!-- Zone E: gemstones — center model chest gem -->
+    <div class="dot" style="top:36%;left:52%;background:#2e86c1;">E</div>
+    <!-- Zone E: gemstone — left model belt gem -->
+    <div class="dot" style="top:44%;left:30%;background:#2e86c1;">E</div>
+    <!-- Zone F: base -->
+    <div class="dot" style="top:82%;left:50%;background:#c2b59b;color:#333;text-shadow:none;">F</div>
+  </div>
+
+  <div class="legend">
+    <!-- Zone A -->
+    <div class="zone-block" style="background:#fdf8ee;border-left-color:#c5962a;">
+      <div class="zone-header">
+        <div class="zone-letter" style="background:#c5962a;">A</div>
+        <span class="zone-title">Gold Armor (same as Custodian Guard)</span>
+      </div>
+      <div class="zone-where">ALL armor: massive shoulder pads, chest eagle, legs, helmet, arms. Even more gold than the Guard — this model is chonky.</div>
+      <div class="paint-step"><span class="ps-num">1.</span><div class="ps-swatch" style="background:#c5962a"></div><span class="ps-name">Retributor Armour</span> <span class="ps-desc">— base coat ALL gold (2 thin coats)</span><span class="ps-avail ps-borrow">BORROW</span></div>
+      <div class="paint-step"><span class="ps-num">2.</span><div class="ps-swatch" style="background:rgba(180,120,60,0.5);border-color:#b4783c"></div><span class="ps-name">Reikland Fleshshade</span> <span class="ps-desc">— wash ALL recesses</span><span class="ps-avail ps-borrow">BORROW</span></div>
+      <div class="paint-step"><span class="ps-num">3.</span><div class="ps-swatch" style="background:#d4a745"></div><span class="ps-name">Liberator Gold</span> <span class="ps-desc">— highlight raised edges</span><span class="ps-avail ps-borrow">BORROW</span></div>
+      <div class="paint-step"><span class="ps-num">4.</span><div class="ps-swatch" style="background:#d4d8dc"></div><span class="ps-name">Stormhost Silver</span> <span class="ps-desc">— fine edge highlights</span><span class="ps-avail ps-borrow">BORROW</span></div>
+    </div>
+
+    <!-- Zone B -->
+    <div class="zone-block" style="background:#fdf0f0;border-left-color:#9b1a1a;">
+      <div class="zone-header">
+        <div class="zone-letter" style="background:#9b1a1a;">B</div>
+        <span class="zone-title">Red Plume &amp; Cape (BIG on this model)</span>
+      </div>
+      <div class="zone-where">Helmet plume AND the large flowing cape — this is a much bigger red area than the Guard. Take your time with the cape folds.</div>
+      <div class="paint-step"><span class="ps-num">5.</span><div class="ps-swatch" style="background:#9b1a1a"></div><span class="ps-name">Khorne Red</span> <span class="ps-desc">— base coat ALL red (2 thin coats)</span><span class="ps-avail ps-borrow">BORROW</span></div>
+      <div class="paint-step"><span class="ps-num">6.</span><div class="ps-swatch" style="background:#2b2b2b"></div><span class="ps-name">Nuln Oil</span> <span class="ps-desc">— wash into cape folds &amp; recesses</span><span class="ps-avail ps-borrow">BORROW</span></div>
+      <div class="paint-step"><span class="ps-num">7.</span><div class="ps-swatch" style="background:#c83c2e"></div><span class="ps-name">Evil Sunz Scarlet</span> <span class="ps-desc">— highlight raised folds of cape</span><span class="ps-avail ps-borrow">BORROW</span></div>
+    </div>
+
+    <!-- Zone C -->
+    <div class="zone-block" style="background:#f5f5f5;border-left-color:#1a1a1a;">
+      <div class="zone-header">
+        <div class="zone-letter" style="background:#1a1a1a;">C</div>
+        <span class="zone-title">Dark Details</span>
+      </div>
+      <div class="zone-where">Joints between armor plates, weapon haft (handle of the axe), bodysuit under armor.</div>
+      <div class="paint-step"><span class="ps-num">8.</span><div class="ps-swatch" style="background:#1a1a1a"></div><span class="ps-name">Abaddon Black</span> <span class="ps-desc">— base coat</span><span class="ps-avail ps-borrow">BORROW</span></div>
+      <div class="paint-step"><span class="ps-num">9.</span><div class="ps-swatch" style="background:#484b4e"></div><span class="ps-name">Eshin Grey</span> <span class="ps-desc">— edge highlight</span><span class="ps-avail ps-borrow">BORROW</span></div>
+    </div>
+
+    <!-- Zone D -->
+    <div class="zone-block" style="background:#f5f5f7;border-left-color:#7a7d82;">
+      <div class="zone-header">
+        <div class="zone-letter" style="background:#7a7d82;">D</div>
+        <span class="zone-title">Weapon Blade</span>
+      </div>
+      <div class="zone-where">Castellan axe blade or guardian spear blade.</div>
+      <div class="paint-step"><span class="ps-num">10.</span><div class="ps-swatch" style="background:#7a7d82"></div><span class="ps-name">Leadbelcher</span> <span class="ps-desc">— base coat blade</span><span class="ps-avail ps-borrow">BORROW</span></div>
+      <div class="paint-step"><span class="ps-num">11.</span><div class="ps-swatch" style="background:#2b2b2b"></div><span class="ps-name">Nuln Oil</span> <span class="ps-desc">— wash blade</span><span class="ps-avail ps-borrow">BORROW</span></div>
+      <div class="paint-step"><span class="ps-num">12.</span><div class="ps-swatch" style="background:#d4d8dc"></div><span class="ps-name">Stormhost Silver</span> <span class="ps-desc">— edge highlight</span><span class="ps-avail ps-borrow">BORROW</span></div>
+    </div>
+
+    <!-- Zone E -->
+    <div class="zone-block" style="background:#ebf5fb;border-left-color:#2e86c1;">
+      <div class="zone-header">
+        <div class="zone-letter" style="background:#2e86c1;">E</div>
+        <span class="zone-title">Gemstones</span>
+      </div>
+      <div class="zone-where">Multiple gems on chest, belt, and shoulder pads. More gems than the Guard — this model is ornate.</div>
+      <div class="paint-step"><span class="ps-num">13.</span><div class="ps-swatch" style="background:#003d1e"></div><span class="ps-name">Caliban Green</span> <span class="ps-desc">— fill gem area</span><span class="ps-avail ps-borrow">BORROW</span></div>
+      <div class="paint-step"><span class="ps-num">14.</span><div class="ps-swatch" style="background:#f0f0f0"></div><span class="ps-name">White Scar</span> <span class="ps-desc">— tiny dot for shine</span><span class="ps-avail ps-borrow">BORROW</span></div>
+    </div>
+
+    <!-- Zone F -->
+    <div class="zone-block" style="background:#faf8f4;border-left-color:#c2b59b;">
+      <div class="zone-header">
+        <div class="zone-letter" style="background:#c2b59b;color:#333;text-shadow:none;">F</div>
+        <span class="zone-title">Base</span>
+      </div>
+      <div class="paint-step"><span class="ps-num">15.</span><div class="ps-swatch" style="background:#c2b59b"></div><span class="ps-name">Texture paint</span> <span class="ps-desc">— same as Guard base</span><span class="ps-avail ps-borrow">BORROW</span></div>
+    </div>
+
+    <div class="order-box">
+      <strong>Paint order:</strong> Same as Custodian Guard: A (gold) &rarr; B (red) &rarr; C (black) &rarr; D (blade) &rarr; E (gems) &rarr; F (base). This model just has more of everything.
+    </div>
+
+    <div class="note note-gold" style="margin-top:4px;">
+      <strong>Beginner tip — Washing:</strong> "Washing" means applying a thin, watery paint (like Reikland Fleshshade) over an area. It flows into the cracks and recesses, creating instant shadows. Don't glob it on flat panels — guide it into the crevices with your brush tip.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- PROSECUTORS (Sisters of Silence)           -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="page-break"></div>
+<h2>Prosecutors (x5) — Sisters of Silence</h2>
+<p style="font-size:7pt;color:#888;margin-bottom:6px;">DIFFERENT SCHEME from the Custodians! These are dark silver armor, NOT gold. They also have visible faces and hair. A nice change of pace after painting all that gold.</p>
+
+<div class="diagram">
+  <div class="model-container">
+    <img src="https://www.warhammer.com/app/resources/catalog/product/920x950/99120108007_ProsecutorSquad01.jpg" alt="Prosecutors (Sisters of Silence)">
+    <!-- Zone P: dark silver armor — center model chest -->
+    <div class="dot" style="top:40%;left:48%;background:#7a7d82;">P</div>
+    <!-- Zone P: armor — left model shoulder -->
+    <div class="dot" style="top:42%;left:22%;background:#7a7d82;">P</div>
+    <!-- Zone Q: gold trim — center model shoulder trim -->
+    <div class="dot" style="top:30%;left:44%;background:#c5962a;">Q</div>
+    <!-- Zone Q: gold trim — right model chest eagle -->
+    <div class="dot" style="top:40%;left:76%;background:#c5962a;">Q</div>
+    <!-- Zone R: red/purple cloth — center model cloak -->
+    <div class="dot" style="top:56%;left:55%;background:#6b2d5b;">R</div>
+    <!-- Zone R: cloth — left model tabard -->
+    <div class="dot" style="top:56%;left:22%;background:#6b2d5b;">R</div>
+    <!-- Zone S: skin — center model face -->
+    <div class="dot" style="top:28%;left:50%;background:#c8a080;">S</div>
+    <!-- Zone S: skin/hair — right model head -->
+    <div class="dot" style="top:28%;left:75%;background:#c8a080;">S</div>
+    <!-- Zone F: base -->
+    <div class="dot" style="top:86%;left:48%;background:#c2b59b;color:#333;text-shadow:none;">F</div>
+  </div>
+
+  <div class="legend">
+    <!-- Zone P -->
+    <div class="zone-block" style="background:#f5f5f7;border-left-color:#7a7d82;">
+      <div class="zone-header">
+        <div class="zone-letter" style="background:#7a7d82;">P</div>
+        <span class="zone-title">Dark Silver Armor (NOT gold!)</span>
+      </div>
+      <div class="zone-where">All armor plates: chest, shoulders, legs, arms, helmet (if worn). This is Leadbelcher silver, not Retributor gold.</div>
+      <div class="paint-step"><span class="ps-num">1.</span><div class="ps-swatch" style="background:#7a7d82"></div><span class="ps-name">Leadbelcher</span> <span class="ps-desc">— base coat ALL armor</span><span class="ps-avail ps-borrow">BORROW</span></div>
+      <div class="paint-step"><span class="ps-num">2.</span><div class="ps-swatch" style="background:#2b2b2b"></div><span class="ps-name">Nuln Oil</span> <span class="ps-desc">— wash ALL over armor (darkens it nicely)</span><span class="ps-avail ps-borrow">BORROW</span></div>
+      <div class="paint-step"><span class="ps-num">3.</span><div class="ps-swatch" style="background:#a8acb0"></div><span class="ps-name">Ironbreaker</span> <span class="ps-desc">— highlight edges of armor plates</span><span class="ps-avail ps-borrow">BORROW</span></div>
+    </div>
+
+    <!-- Zone Q -->
+    <div class="zone-block" style="background:#fdf8ee;border-left-color:#c5962a;">
+      <div class="zone-header">
+        <div class="zone-letter" style="background:#c5962a;">Q</div>
+        <span class="zone-title">Gold Trim (small areas)</span>
+      </div>
+      <div class="zone-where">Shoulder pad trim, chest eagle/aquila, small ornamental details on weapon. Much less gold than Custodians.</div>
+      <div class="paint-step"><span class="ps-num">4.</span><div class="ps-swatch" style="background:#c5962a"></div><span class="ps-name">Retributor Armour</span> <span class="ps-desc">— base coat gold trim</span><span class="ps-avail ps-borrow">BORROW</span></div>
+      <div class="paint-step"><span class="ps-num">5.</span><div class="ps-swatch" style="background:rgba(180,120,60,0.5);border-color:#b4783c"></div><span class="ps-name">Reikland Fleshshade</span> <span class="ps-desc">— wash gold areas</span><span class="ps-avail ps-borrow">BORROW</span></div>
+    </div>
+
+    <!-- Zone R -->
+    <div class="zone-block" style="background:#f8f0f6;border-left-color:#6b2d5b;">
+      <div class="zone-header">
+        <div class="zone-letter" style="background:#6b2d5b;">R</div>
+        <span class="zone-title">Red/Purple Cloth &amp; Robes</span>
+      </div>
+      <div class="zone-where">Cloaks, tabards, hanging cloth. Can be painted red (Khorne Red) or purple (Naggaroth Night) — your choice!</div>
+      <div class="paint-step"><span class="ps-num">6.</span><div class="ps-swatch" style="background:#9b1a1a"></div><span class="ps-name">Khorne Red</span> <span class="ps-desc">— base coat robes (or Naggaroth Night for purple)</span><span class="ps-avail ps-borrow">BORROW</span></div>
+      <div class="paint-step"><span class="ps-num">7.</span><div class="ps-swatch" style="background:#2b2b2b"></div><span class="ps-name">Nuln Oil</span> <span class="ps-desc">— wash into cloth folds</span><span class="ps-avail ps-borrow">BORROW</span></div>
+      <div class="paint-step"><span class="ps-num">8.</span><div class="ps-swatch" style="background:#c83c2e"></div><span class="ps-name">Evil Sunz Scarlet</span> <span class="ps-desc">— highlight raised folds</span><span class="ps-avail ps-borrow">BORROW</span></div>
+    </div>
+
+    <!-- Zone S -->
+    <div class="zone-block" style="background:#faf6f0;border-left-color:#c8a080;">
+      <div class="zone-header">
+        <div class="zone-letter" style="background:#c8a080;">S</div>
+        <span class="zone-title">Skin &amp; Hair (faces are visible!)</span>
+      </div>
+      <div class="zone-where">Faces, any exposed skin on arms. Also hair (usually topknots). Prosecutors don't wear full helmets.</div>
+      <div class="paint-step"><span class="ps-num">9.</span><div class="ps-swatch" style="background:#c8a888"></div><span class="ps-name">Rakarth Flesh</span> <span class="ps-desc">— base coat all skin areas</span><span class="ps-avail ps-borrow">BORROW</span></div>
+      <div class="paint-step"><span class="ps-num">10.</span><div class="ps-swatch" style="background:rgba(180,120,80,0.5);border-color:#b47850"></div><span class="ps-name">Reikland Fleshshade</span> <span class="ps-desc">— wash skin (creates shadows around eyes/nose)</span><span class="ps-avail ps-borrow">BORROW</span></div>
+      <div class="paint-step"><span class="ps-num">11.</span><div class="ps-swatch" style="background:#e0d0c0"></div><span class="ps-name">Pallid Wych Flesh</span> <span class="ps-desc">— highlight forehead, nose, cheeks</span><span class="ps-avail ps-borrow">BORROW</span></div>
+    </div>
+
+    <!-- Zone F -->
+    <div class="zone-block" style="background:#faf8f4;border-left-color:#c2b59b;">
+      <div class="zone-header">
+        <div class="zone-letter" style="background:#c2b59b;color:#333;text-shadow:none;">F</div>
+        <span class="zone-title">Base</span>
+      </div>
+      <div class="paint-step"><span class="ps-num">12.</span><div class="ps-swatch" style="background:#c2b59b"></div><span class="ps-name">Texture paint</span> <span class="ps-desc">— same base style as your Custodians</span><span class="ps-avail ps-borrow">BORROW</span></div>
+    </div>
+
+    <div class="order-box">
+      <strong>Paint order:</strong> P (silver armor) first on all 5 models, then Q (gold trim), then R (cloth), then S (skin — save faces for last, they're fiddly!), then F (base).
+    </div>
+
+    <div class="note note-red" style="margin-top:4px;">
+      <strong>Important:</strong> Do NOT spray these gold! Prosecutors get black primer, then Leadbelcher silver on the armor. They are a completely separate scheme from your gold Custodians.
+    </div>
+
+    <div class="note note-blue" style="margin-top:4px;">
+      <strong>Beginner tip — Painting faces:</strong> Faces are the hardest part for beginners. Use a VERY small brush (size 0 or 00). Water your paint down extra. The Reikland Fleshshade wash does most of the work — it settles into eye sockets and around the nose, creating depth automatically. Don't stress about perfection.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- VERTUS PRAETORS (Jetbikes)                 -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="page-break"></div>
+<h2>Vertus Praetors (x3) — Jetbikes</h2>
+<p style="font-size:7pt;color:#888;margin-bottom:6px;">Gold rider on a gold jetbike. Same gold scheme as Guard but the bike adds engine details and a large flat hull. These are the biggest models in the army.</p>
+
+<div class="diagram">
+  <div class="model-container">
+    <img src="https://www.warhammer.com/app/resources/catalog/product/920x950/99120108014_VertusPraetors01.jpg" alt="Vertus Praetors (Jetbikes)">
+    <!-- Zone A: gold armor — bike hull -->
+    <div class="dot" style="top:52%;left:38%;background:#c5962a;">A</div>
+    <!-- Zone A: gold — rider shoulder -->
+    <div class="dot" style="top:30%;left:40%;background:#c5962a;">A</div>
+    <!-- Zone A: gold — right bike hull -->
+    <div class="dot" style="top:42%;left:72%;background:#c5962a;">A</div>
+    <!-- Zone B: red plume — left rider plume -->
+    <div class="dot" style="top:22%;left:38%;background:#9b1a1a;">B</div>
+    <!-- Zone B: red cape — center rider cape -->
+    <div class="dot" style="top:40%;left:55%;background:#9b1a1a;">B</div>
+    <!-- Zone C: dark engine — left bike engine -->
+    <div class="dot" style="top:42%;left:22%;background:#1a1a1a;border-color:#888;">C</div>
+    <!-- Zone C: dark engine — right bike rear -->
+    <div class="dot" style="top:48%;left:82%;background:#1a1a1a;border-color:#888;">C</div>
+    <!-- Zone D: weapon blade — left lance tip -->
+    <div class="dot" style="top:12%;left:30%;background:#7a7d82;">D</div>
+    <!-- Zone D: weapon blade — right lance -->
+    <div class="dot" style="top:15%;left:68%;background:#7a7d82;">D</div>
+    <!-- Zone E: gemstone — rider chest -->
+    <div class="dot" style="top:34%;left:44%;background:#2e86c1;">E</div>
+    <!-- Zone F: base -->
+    <div class="dot" style="top:88%;left:34%;background:#c2b59b;color:#333;text-shadow:none;">F</div>
+  </div>
+
+  <div class="legend">
+    <!-- Zone A -->
+    <div class="zone-block" style="background:#fdf8ee;border-left-color:#c5962a;">
+      <div class="zone-header">
+        <div class="zone-letter" style="background:#c5962a;">A</div>
+        <span class="zone-title">Gold Armor + Gold Bike Hull</span>
+      </div>
+      <div class="zone-where">Rider armor (same as Guard) AND the entire jetbike hull — the big curved body panels, the front cowling, the aquila wings on the nose.</div>
+      <div class="paint-step"><span class="ps-num">1.</span><div class="ps-swatch" style="background:#c5962a"></div><span class="ps-name">Retributor Armour</span> <span class="ps-desc">— base coat rider + bike hull (lots of gold!)</span><span class="ps-avail ps-borrow">BORROW</span></div>
+      <div class="paint-step"><span class="ps-num">2.</span><div class="ps-swatch" style="background:rgba(180,120,60,0.5);border-color:#b4783c"></div><span class="ps-name">Reikland Fleshshade</span> <span class="ps-desc">— wash all recesses (panel lines on bike too)</span><span class="ps-avail ps-borrow">BORROW</span></div>
+      <div class="paint-step"><span class="ps-num">3.</span><div class="ps-swatch" style="background:#d4a745"></div><span class="ps-name">Liberator Gold</span> <span class="ps-desc">— highlight raised edges of armor + bike panels</span><span class="ps-avail ps-borrow">BORROW</span></div>
+      <div class="paint-step"><span class="ps-num">4.</span><div class="ps-swatch" style="background:#d4d8dc"></div><span class="ps-name">Stormhost Silver</span> <span class="ps-desc">— fine edge highlights</span><span class="ps-avail ps-borrow">BORROW</span></div>
+    </div>
+
+    <!-- Zone B -->
+    <div class="zone-block" style="background:#fdf0f0;border-left-color:#9b1a1a;">
+      <div class="zone-header">
+        <div class="zone-letter" style="background:#9b1a1a;">B</div>
+        <span class="zone-title">Red Plume &amp; Cape</span>
+      </div>
+      <div class="zone-where">Rider's helmet plume and flowing cape/cloak behind the rider.</div>
+      <div class="paint-step"><span class="ps-num">5.</span><div class="ps-swatch" style="background:#9b1a1a"></div><span class="ps-name">Khorne Red</span> <span class="ps-desc">— base coat (2 thin coats)</span><span class="ps-avail ps-borrow">BORROW</span></div>
+      <div class="paint-step"><span class="ps-num">6.</span><div class="ps-swatch" style="background:#2b2b2b"></div><span class="ps-name">Nuln Oil</span> <span class="ps-desc">— wash into folds</span><span class="ps-avail ps-borrow">BORROW</span></div>
+      <div class="paint-step"><span class="ps-num">7.</span><div class="ps-swatch" style="background:#c83c2e"></div><span class="ps-name">Evil Sunz Scarlet</span> <span class="ps-desc">— highlight raised areas</span><span class="ps-avail ps-borrow">BORROW</span></div>
+    </div>
+
+    <!-- Zone C -->
+    <div class="zone-block" style="background:#f5f5f5;border-left-color:#1a1a1a;">
+      <div class="zone-header">
+        <div class="zone-letter" style="background:#1a1a1a;">C</div>
+        <span class="zone-title">Dark Engine &amp; Mechanical Details</span>
+      </div>
+      <div class="zone-where">Bike engine block (rear of bike), exhaust ports, under-hull mechanics, rider joints, lance haft (handle).</div>
+      <div class="paint-step"><span class="ps-num">8.</span><div class="ps-swatch" style="background:#1a1a1a"></div><span class="ps-name">Abaddon Black</span> <span class="ps-desc">— base coat engine &amp; dark areas</span><span class="ps-avail ps-borrow">BORROW</span></div>
+      <div class="paint-step"><span class="ps-num">9.</span><div class="ps-swatch" style="background:#484b4e"></div><span class="ps-name">Eshin Grey</span> <span class="ps-desc">— edge highlight mechanical details</span><span class="ps-avail ps-borrow">BORROW</span></div>
+      <div class="paint-step"><span class="ps-num">10.</span><div class="ps-swatch" style="background:#7a7d82"></div><span class="ps-name">Leadbelcher</span> <span class="ps-desc">— drybrush engine block for metallic look</span><span class="ps-avail ps-borrow">BORROW</span></div>
+    </div>
+
+    <!-- Zone D -->
+    <div class="zone-block" style="background:#f5f5f7;border-left-color:#7a7d82;">
+      <div class="zone-header">
+        <div class="zone-letter" style="background:#7a7d82;">D</div>
+        <span class="zone-title">Interceptor Lance Blade</span>
+      </div>
+      <div class="zone-where">The long lance each rider carries — just the blade tip (the flat metallic part), not the haft.</div>
+      <div class="paint-step"><span class="ps-num">11.</span><div class="ps-swatch" style="background:#7a7d82"></div><span class="ps-name">Leadbelcher</span> <span class="ps-desc">— base coat blade</span><span class="ps-avail ps-borrow">BORROW</span></div>
+      <div class="paint-step"><span class="ps-num">12.</span><div class="ps-swatch" style="background:#2b2b2b"></div><span class="ps-name">Nuln Oil</span> <span class="ps-desc">— wash blade</span><span class="ps-avail ps-borrow">BORROW</span></div>
+      <div class="paint-step"><span class="ps-num">13.</span><div class="ps-swatch" style="background:#d4d8dc"></div><span class="ps-name">Stormhost Silver</span> <span class="ps-desc">— edge highlight</span><span class="ps-avail ps-borrow">BORROW</span></div>
+    </div>
+
+    <!-- Zone E -->
+    <div class="zone-block" style="background:#ebf5fb;border-left-color:#2e86c1;">
+      <div class="zone-header">
+        <div class="zone-letter" style="background:#2e86c1;">E</div>
+        <span class="zone-title">Gemstones</span>
+      </div>
+      <div class="zone-where">Small gems on rider's chest and bike hull. Same technique as Guard.</div>
+      <div class="paint-step"><span class="ps-num">14.</span><div class="ps-swatch" style="background:#003d1e"></div><span class="ps-name">Caliban Green</span> <span class="ps-desc">— fill gem</span><span class="ps-avail ps-borrow">BORROW</span></div>
+      <div class="paint-step"><span class="ps-num">15.</span><div class="ps-swatch" style="background:#f0f0f0"></div><span class="ps-name">White Scar</span> <span class="ps-desc">— tiny dot for shine</span><span class="ps-avail ps-borrow">BORROW</span></div>
+    </div>
+
+    <!-- Zone F -->
+    <div class="zone-block" style="background:#faf8f4;border-left-color:#c2b59b;">
+      <div class="zone-header">
+        <div class="zone-letter" style="background:#c2b59b;color:#333;text-shadow:none;">F</div>
+        <span class="zone-title">Base (larger oval base)</span>
+      </div>
+      <div class="zone-where">These are on large oval bases — more texture paint needed. The bike sits on a flight stand.</div>
+      <div class="paint-step"><span class="ps-num">16.</span><div class="ps-swatch" style="background:#c2b59b"></div><span class="ps-name">Texture paint</span> <span class="ps-desc">— same style, bigger base</span><span class="ps-avail ps-borrow">BORROW</span></div>
+    </div>
+
+    <div class="order-box">
+      <strong>Paint order:</strong> Build the rider separately from the bike if possible! Paint rider and bike hull gold (Zone A) together. Then B (red), C (engine/dark), D (lance blade), E (gems), F (base). Attach rider to bike after painting.
+    </div>
+
+    <div class="note note-gold" style="margin-top:4px;">
+      <strong>Beginner tip — Sub-assemblies:</strong> For these jetbikes, it is much easier to paint the rider and the bike as separate pieces, then glue them together at the end. This lets you reach areas that would be blocked. Ask jrob about "sub-assemblies" if you are unsure.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- PAINT SHOPPING LIST                         -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="page-break"></div>
+<h2>Paint Availability — What to Borrow vs. Buy</h2>
+<p style="font-size:7.5pt;color:#888;margin-bottom:8px;">Nearly everything comes from jrob's collection. You only need to buy paints if you want the optional upgrades.</p>
+
+<table class="model-table">
+  <tr style="border-bottom:2px solid #c5962a;"><td colspan="3" style="color:#c5962a;font-weight:700;font-size:8pt;">BORROW FROM JROB (free!)</td></tr>
+  <tr><td>Retributor Armour (pot)</td><td>Citadel Base</td><td style="color:#155724;font-weight:600;">BORROW</td></tr>
+  <tr><td>Reikland Fleshshade</td><td>Citadel Shade</td><td style="color:#155724;font-weight:600;">BORROW</td></tr>
+  <tr><td>Liberator Gold</td><td>Citadel Layer</td><td style="color:#155724;font-weight:600;">BORROW</td></tr>
+  <tr><td>Stormhost Silver</td><td>Citadel Layer</td><td style="color:#155724;font-weight:600;">BORROW</td></tr>
+  <tr><td>Abaddon Black</td><td>Citadel Base</td><td style="color:#155724;font-weight:600;">BORROW</td></tr>
+  <tr><td>Eshin Grey</td><td>Citadel Layer</td><td style="color:#155724;font-weight:600;">BORROW</td></tr>
+  <tr><td>Khorne Red</td><td>Citadel Base</td><td style="color:#155724;font-weight:600;">BORROW</td></tr>
+  <tr><td>Nuln Oil</td><td>Citadel Shade</td><td style="color:#155724;font-weight:600;">BORROW</td></tr>
+  <tr><td>Evil Sunz Scarlet</td><td>Citadel Layer</td><td style="color:#155724;font-weight:600;">BORROW</td></tr>
+  <tr><td>Leadbelcher</td><td>Citadel Base</td><td style="color:#155724;font-weight:600;">BORROW</td></tr>
+  <tr><td>Ironbreaker</td><td>Citadel Layer</td><td style="color:#155724;font-weight:600;">BORROW</td></tr>
+  <tr><td>Caliban Green</td><td>Citadel Base</td><td style="color:#155724;font-weight:600;">BORROW</td></tr>
+  <tr><td>White Scar</td><td>Citadel Layer</td><td style="color:#155724;font-weight:600;">BORROW</td></tr>
+  <tr><td>Rakarth Flesh</td><td>Citadel Base</td><td style="color:#155724;font-weight:600;">BORROW</td></tr>
+  <tr><td>Pallid Wych Flesh</td><td>Citadel Layer</td><td style="color:#155724;font-weight:600;">BORROW</td></tr>
+  <tr><td>Texture paint (base)</td><td>Citadel Technical</td><td style="color:#155724;font-weight:600;">BORROW</td></tr>
+  <tr style="border-bottom:2px solid #856404;"><td colspan="3" style="color:#856404;font-weight:700;font-size:8pt;padding-top:12px;">OPTIONAL BUYS (nice to have, not required)</td></tr>
+  <tr><td>Retributor Armour Spray</td><td>Citadel Spray ~$22</td><td style="color:#856404;font-weight:600;">BUY</td></tr>
+  <tr><td>Reikland Fleshshade Gloss</td><td>Citadel Shade ~$8</td><td style="color:#856404;font-weight:600;">BUY</td></tr>
+</table>
+
+<div class="note note-green" style="margin-top:8px;">
+  <strong>Bottom line:</strong> Darren's paint cost = $0 if borrowing everything. Up to ~$30 if buying the spray can and gloss shade for convenience. The spray saves a LOT of time on 8 gold models + 3 gold bikes.
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- BATCH PAINTING ORDER                        -->
+<!-- ═══════════════════════════════════════════ -->
+<h2 style="margin-top:16px;">Recommended Batch Painting Order</h2>
+<p style="font-size:7.5pt;color:#888;margin-bottom:8px;">Paint models in batches — do the same step on all models before moving to the next step. This is MUCH faster than painting one model at a time.</p>
+
+<table class="model-table">
+  <tr style="background:#fdf8ee;"><td style="font-weight:700;color:#c5962a;">Phase 1</td><td><strong>Prime + Base Gold</strong> — Spray/brush Retributor Armour on Shield-Captain, Guard x4, Praetors x3 (8 models at once). Prime Prosecutors BLACK separately.</td></tr>
+  <tr><td style="font-weight:700;color:#c5962a;">Phase 2</td><td><strong>Shade Gold</strong> — Reikland Fleshshade wash on all 8 gold models. Let dry completely (30 min). While drying, base coat Prosecutor armor with Leadbelcher.</td></tr>
+  <tr><td style="font-weight:700;color:#c5962a;">Phase 3</td><td><strong>Red</strong> — Khorne Red on all plumes, capes, tabards across all gold models. 2 thin coats.</td></tr>
+  <tr><td style="font-weight:700;color:#c5962a;">Phase 4</td><td><strong>Black details</strong> — Abaddon Black on joints, weapon hafts, undersuits on all gold models.</td></tr>
+  <tr><td style="font-weight:700;color:#c5962a;">Phase 5</td><td><strong>Gold highlights</strong> — Liberator Gold on raised edges of all gold models. Then shade red with Nuln Oil.</td></tr>
+  <tr><td style="font-weight:700;color:#c5962a;">Phase 6</td><td><strong>Final highlights</strong> — Stormhost Silver edges on gold. Evil Sunz Scarlet highlights on red. Eshin Grey edges on black.</td></tr>
+  <tr style="background:#f5f5f7;"><td style="font-weight:700;color:#7a7d82;">Phase 7</td><td><strong>Prosecutors</strong> — Nuln Oil wash on silver, then gold trim, cloth, skin. Save faces for last.</td></tr>
+  <tr><td style="font-weight:700;color:#7a7d82;">Phase 8</td><td><strong>Weapon blades</strong> — Leadbelcher + Nuln Oil + Stormhost Silver on all weapon blades across the army.</td></tr>
+  <tr><td style="font-weight:700;color:#2e86c1;">Phase 9</td><td><strong>Gems + details</strong> — Caliban Green + white dot on all gems. Quick and fun.</td></tr>
+  <tr style="background:#faf8f4;"><td style="font-weight:700;color:#8b7355;">Phase 10</td><td><strong>Bases</strong> — Texture paint all 13 bases at once. Drybrush. Add tufts. DONE!</td></tr>
+</table>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- BEGINNER TIPS                               -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="page-break"></div>
+<h2>Beginner Tips for First-Time Painters</h2>
+<p style="font-size:7.5pt;color:#888;margin-bottom:10px;">Welcome to the hobby, Darren! These tips will save you time and frustration.</p>
+
+<div class="tip-grid">
+  <div class="tip-card" style="border-left:3px solid #c5962a;">
+    <strong>1. Thin Your Paints</strong>
+    The #1 rule. Add a small drop of water to your paint on a palette (a paper plate works). You want the consistency of milk, not toothpaste. Thick paint hides detail and looks lumpy.
+  </div>
+  <div class="tip-card" style="border-left:3px solid #c5962a;">
+    <strong>2. Two Thin Coats</strong>
+    One thin coat often looks patchy — that is normal! Let it dry completely (5-10 minutes), then apply a second thin coat. Two thin coats always looks better than one thick coat.
+  </div>
+  <div class="tip-card" style="border-left:3px solid #9b1a1a;">
+    <strong>3. Let Each Layer Dry</strong>
+    Seriously. Wait until the previous layer is fully dry before painting over it. Painting on wet paint = muddy mess. Go make a cup of tea between coats.
+  </div>
+  <div class="tip-card" style="border-left:3px solid #9b1a1a;">
+    <strong>4. Shake Your Paints</strong>
+    Shake each pot vigorously for 30 seconds before opening. The pigment settles to the bottom. If you skip this, you will get watery paint with no color.
+  </div>
+  <div class="tip-card" style="border-left:3px solid #7a7d82;">
+    <strong>5. Use a Wet Palette</strong>
+    Ask jrob to show you his wet palette. It keeps paint from drying out on your workspace. A DIY version: damp paper towel in a tupperware lid, parchment paper on top.
+  </div>
+  <div class="tip-card" style="border-left:3px solid #7a7d82;">
+    <strong>6. Don't Panic About Mistakes</strong>
+    Made a mistake? Just wait for it to dry, then paint over it with the correct color. Acrylic paint is very forgiving. Everyone makes mistakes, even experts.
+  </div>
+  <div class="tip-card" style="border-left:3px solid #2e86c1;">
+    <strong>7. Wash = Instant Shadows</strong>
+    Shade/wash paints (like Reikland Fleshshade and Nuln Oil) are your secret weapon. They flow into recesses and create shadows automatically. One coat of wash makes a model look 10x better.
+  </div>
+  <div class="tip-card" style="border-left:3px solid #2e86c1;">
+    <strong>8. Edge Highlighting for Beginners</strong>
+    Use the SIDE of your brush, not the tip. Lightly drag the side of the brush along raised edges. The paint catches on the edge naturally. Practice on a spare bit of sprue first.
+  </div>
+  <div class="tip-card" style="border-left:3px solid #155724;">
+    <strong>9. Clean Your Brush Often</strong>
+    Rinse your brush in water every few minutes. Don't let paint dry in the bristles — it ruins brushes fast. Always re-wet before picking up more paint.
+  </div>
+  <div class="tip-card" style="border-left:3px solid #155724;">
+    <strong>10. Your First Models Won't Be Perfect</strong>
+    And that is completely fine! Every painter's first model looks rough. By model #5 you will already see improvement. The goal is "table ready" — looks good from arm's length.
+  </div>
+</div>
+
+<div class="note note-gold" style="margin-top:10px;">
+  <strong>The good news about Custodes:</strong> They are one of the EASIEST armies to paint because gold spray does 70% of the work. You have only 13 models to paint (most armies have 30-100+). And the gold scheme is very forgiving — Reikland Fleshshade wash covers up a lot of imperfections.
+</div>
+
+<h2 style="margin-top:14px;">Essential Supplies Checklist</h2>
+<table class="model-table">
+  <tr><td>Brushes</td><td>At minimum: 1 medium brush (basecoating), 1 small brush (details), 1 drybrush. Ask jrob to lend spares.</td></tr>
+  <tr><td>Water cup</td><td>Any mug or cup. Fill with clean water. Change it when it gets murky.</td></tr>
+  <tr><td>Paper towels</td><td>For wiping excess paint off your brush. You will use a lot.</td></tr>
+  <tr><td>Palette</td><td>Paper plate, old tile, or wet palette. Somewhere to put paint before it goes on the model.</td></tr>
+  <tr><td>Hobby knife</td><td>For cleaning mold lines off models before priming. Scrape gently along visible lines.</td></tr>
+  <tr><td>Plastic glue</td><td>For assembling models. Citadel Plastic Glue or Tamiya Extra Thin Cement.</td></tr>
+  <tr><td>Primer spray</td><td>Gold (Retributor Armour) for Custodians. Black for Prosecutors. Spray outside in 50-80F weather.</td></tr>
+</table>
+
+<div class="note note-grey" style="margin-top:8px;">
+  <strong>Where to paint:</strong> Find a well-lit spot with a table you don't mind getting paint on. Good lighting is crucial — you can't paint what you can't see. A desk lamp angled at your model makes a big difference.
+</div>
+
+<div style="margin-top:14px; padding:8px 10px; border-radius:6px; background:#f0f7ff; border:1px solid #b0c4de; font-size:7.5pt; color:#333;">
+  <strong>Models in this army (13 total):</strong> Shield-Captain in Allarus Terminator (1), Custodian Guard (4), Prosecutors (5), Vertus Praetors (3).
+  All from the Combat Patrol box — no additional purchases needed to start playing at ~500pts.
+</div>
+
+</body>
+</html>
