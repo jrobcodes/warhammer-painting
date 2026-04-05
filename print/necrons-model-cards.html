@@ -576,129 +576,164 @@ function renderDots(modelName) {
   }).join('');
 }
 
-function getZoneSteps(zoneId, model) {
-  const modelName = model.name;
-  switch(zoneId) {
-    case 'A': return [
-      {n:1, paint:'Leadbelcher Spray', where:'spray the ENTIRE model from 20cm away, even coats, rotating the model. This is your primer + metallic base in one step.'},
-      {n:2, paint:'Black Templar', where:'brush over the ENTIRE model. This Contrast paint will pool in the recesses to create shadow and darken the metallic. Wick away any pooling on flat surfaces with a clean brush.'},
-      {n:3, paint:'Nuln Oil', where:'wash into RECESSES ONLY — the lines between armor panels, joint gaps, where body parts meet. Don\'t slather it everywhere, target the crevices.'}
-    ];
-    case 'B': return [
-      {n:4, paint:'Runelord Brass', where:'paint the shoulder pads, kneecaps, chest dynasty symbol (the raised Szarekhan emblem), spine ridge, and any other raised decorative trim on the armor.'},
-      {n:5, paint:'Canoptek Alloy', where:'highlight just the TOP EDGES of the bronze areas — the upper rim of shoulder pads, the top of the chest symbol. Leave the darker Runelord Brass visible underneath.'},
-      {n:6, paint:'Cryptek Armourshade', where:'wash into the recesses WHERE BRONZE MEETS THE BODY — around the edge of shoulder pads, around rivets, where trim meets dark armor panels. Deepens the bronze tones.'}
-    ];
-    case 'C': return [
-      {n:7, paint:'Stormhost Silver', where:'fine edge highlights on the SHARPEST edges of the dark metallic body — head crest tips, ribcage plate edges, leg armor ridges, arm plate edges. Small dots on rivets. Use the side of your brush and keep lines thin — less is more.'}
-    ];
-    case 'D': return [
-      {n:8, paint:'Matt Black', where:'base coat the glow areas solid black first — eyes, gun barrel interior, gauss rod, chest orb. This dark base makes the green pop.'},
-      {n:9, paint:'Caliban Green', where:'fill the glow area with dark green, leaving a thin BLACK RING around the outer edge visible.'},
-      {n:10, paint:'Warpstone Glow', where:'paint a SMALLER area in the center of each glow zone, leaving the dark Caliban Green visible at the edges. Each layer gets smaller.'},
-      {n:11, paint:'Moot Green', where:'bright green dot or thin line at the very CENTER — the hottest, brightest point of the glow. On eyes: a tiny dot. On gauss rods: a thin center line.'},
-      {n:12, paint:'White dot', where:'absolute PINPRICK of white at the center of each eye. Creates the "light source" reflection. Use the tip of your smallest brush.'},
-      {n:13, paint:'Biel-tan Green', where:'glaze (thin wash) over ALL the green glow areas to unify the layers and add a glossy, ethereal sheen. Ties everything together.'},
-      {n:14, paint:'Casandora Yellow', where:'tiny DAB of yellow at the very center of each eye only. Shifts the hottest point from green toward yellow-white, mimicking intense energy. Less is more — one tiny dab per eye.'}
-    ];
-    case 'E': return [
-      {n:15, paint:'Moon Dust', where:'apply to the base — rim and top surface. Creates a desert/tomb world theme matching the Szarekhan dynasty.'}
-    ];
-    case 'F': return [
-      {n:1, paint:'Retributor Armour', where:'paint the gold rank markings — crown/head crest, face plate, chest eagle/dynasty symbol, weapon handle ornaments. Gold REPLACES the dark metallic in these areas. More gold = higher rank.'},
-      {n:2, paint:'Liberator Gold', where:'highlight the TOP EDGES of gold areas — upper rim of crown horns, raised face plate ridges, top of chest symbol. Brighter gold over the darker Retributor base.'},
-      {n:3, paint:'Cryptek Armourshade Gloss', where:'thin wash over ALL gold areas. The GLOSS finish makes the gold look rich and polished. Apply thinly — don\'t let it pool on flat gold surfaces or it will look splotchy.'}
-    ];
-    case 'G': return [
-      {n:1, paint:'Wyldwood', where:'apply this Contrast paint to the TABARD/LOINCLOTH (the hanging cloth between the legs). Let it pool naturally in the folds — Contrast paint does the shading for you.'},
-      {n:2, paint:'Basilicanum Grey', where:'apply to BELT, ARM WRAPS, and any secondary leather straps. Another Contrast paint — let it pool in folds.'},
-      {n:3, paint:'Administratum Grey', where:'layer highlight on the TOP OF CLOTH FOLDS — the highest raised points of the tabard and strap edges. Only touch the very top of each fold.'}
-    ];
-    case 'I': return [
-      {n:1, paint:'Iron Hands Steel', where:'paint BLADE EDGES and weapon blades (non-energy parts). This is a brighter, different metallic tone from the body\'s Leadbelcher, making weapons look like polished steel.'}
-    ];
-    case 'P': return [
-      {n:1, paint:'Abaddon Black', where:'base coat the entire psychic projection solid black — the glitching/pixelated holographic shape on the right side of the model.'},
-      {n:2, paint:'Kantor Blue', where:'base coat the main body of the projection with this dark blue. Leave black visible in the deepest recesses between the pixel blocks.'},
-      {n:3, paint:'Teclis Blue', where:'layer the RAISED SURFACES of the projection — the outer faces of each pixel block, the more prominent features of the ghostly face.'},
-      {n:4, paint:'Lothern Blue', where:'highlight the EDGES and sharpest features of the projection. The pixel block edges should be brighter than the faces. Creates the holographic "glow" effect.'},
-      {n:5, paint:'Corax White', where:'brightest points only — the very tips of the most prominent features, the face features (eyes, mouth) of the projection. Makes it look like the projection is emitting light.'}
-    ];
-    case 'K': return [
-      {n:1, paint:'Leadbelcher', where:'base coat the ENTIRE canoptek cloak — the spider-like body and all mechanical legs underneath the Cryptek.'},
-      {n:2, paint:'Nuln Oil', where:'HEAVY wash all over the cloak — use more than you would on the Cryptek body. The cloak should be noticeably DARKER than the Cryptek, making it look like a separate mechanical creature.'},
-      {n:3, paint:'Mechanicus Std Grey', where:'DRYBRUSH the raised areas of the cloak — carapace plates, leg joints, mechanical details. Drybrushing picks up the texture and mechanical detail beautifully.'},
-      {n:4, paint:'Stormhost Silver', where:'edge highlight the CLAW TIPS and sharp leg joint edges. Makes the cloak look dangerous and metallic.'}
-    ];
-    case 'S': return [
-      {n:1, paint:'Rakarth Flesh', where:'base coat ALL the flayed skin surfaces — the draped flesh hanging off shoulders, chest, back, and dangling strips. This pale bone-white is the starting point for dead skin.'},
-      {n:2, paint:'Reikland Fleshshade', where:'wash into ALL SKIN FOLDS and edges where flesh meets metal. Creates natural-looking depth and warmth in the skin.'},
-      {n:3, paint:'Flayed One Flesh', where:'layer the RAISED SURFACES of the skin — the stretched areas, the smooth outer face of hanging strips. Leave the shaded recesses darker.'},
-      {n:4, paint:'Pallid Wych Flesh', where:'fine highlight on the HIGHEST POINTS of stretched skin — sickly pale, almost white. Top edges of shoulder drapes, stretched knuckles.'},
-      {n:5, paint:'Druchii Violet', where:'thin glaze on the EDGES where skin meets metal — creates a bruised, damaged look. Also along torn edges of hanging skin strips. Subtle purple-ish tint.'}
-    ];
-    case 'T': return [
-      {n:1, paint:'Blood for the Blood God', where:'apply to CLAW TIPS, finger blades, and torn skin edges. This is a glossy technical paint that looks like wet blood. Dab it on — let it run and pool naturally. Apply LAST after everything else is done so the glossy finish doesn\'t get messed up.'}
-    ];
-    case 'X': return [
-      {n:1, paint:'Corax White', where:'base coat the ENTIRE ethereal body — torso, limbs, face. This is NOT metallic like other Necrons — the C\'tan has a pale, ghostly body.'},
-      {n:2, paint:'Mechanicus Std Grey', where:'shade the DEEPEST RECESSES — muscle definition, joint areas, under arms. Creates the illusion of a gaunt, ethereal form.'},
-      {n:3, paint:'Biel-tan Green', where:'glaze over the ENTIRE body to give it an eerie green tint. This makes the C\'tan look otherworldly — not quite alive, not quite dead.'},
-      {n:4, paint:'White Scar', where:'highlight the HIGHEST POINTS of muscles and bone structure. Top of shoulders, chest definition, face ridges. Makes it look like the body is glowing from within.'}
-    ];
-    case 'Y': return [
-      {n:1, paint:'Leadbelcher Spray', where:'spray the metallic WING SPINES and mechanical collar/halo. These are the non-living parts of the C\'tan — ancient Necron technology, not the energy body.'},
-      {n:2, paint:'Black Templar', where:'Contrast paint over ALL wing/spine surfaces, same technique as Warrior Zone A.'},
-      {n:3, paint:'Nuln Oil', where:'wash into recesses of wing joints and mechanical details.'}
-    ];
-    case 'Z': return [
-      {n:1, paint:'Matt Black', where:'base coat ALL energy channels, tendrils, and lightning arcs solid black. There\'s A LOT of green energy on this model — every tendril, every arc between body parts, the sword blade, the base debris connections.'},
-      {n:2, paint:'Caliban Green', where:'fill ALL energy areas with dark green — much more coverage than a Warrior eye. Entire tendrils, full sword blade, all arcing connections.'},
-      {n:3, paint:'Warpstone Glow', where:'build up brighter green across the centers of all energy — center of each tendril, center of sword blade, brightest points of arcs.'},
-      {n:4, paint:'Moot Green', where:'hot centers of the most intense energy points — where tendrils connect to the body, the core chest orb, sword tip, base energy sources.'},
-      {n:5, paint:'White dot', where:'pinprick white highlights at the absolute hottest points — center of chest orb, tips of fingers where energy arcs, sword tip.'},
-      {n:6, paint:'Biel-tan Green', where:'glaze ALL green areas to unify. Consider Vallejo Fluorescent Green for extra pop on this model specifically.'},
-      {n:7, paint:'Casandora Yellow', where:'dab at the hottest energy points for a yellow-white heat effect. Chest core center, sword tip, brightest tendril junctions.'}
-    ];
-    default: return [];
-  }
-}
+/* ── Stage-based painting steps (correct order: base everything, shade everything, THEN highlight) ── */
 
-function getModelZones(model) {
-  const zones = [];
+function getModelStages(model) {
+  // Scarabs: speed paint
   if (model.name === 'Canoptek Scarab Swarms') {
-    // Speed paint — custom zone list
     return [{
-      id: 'SP',
-      name: 'Speed Paint Recipe',
-      color: '#555',
+      stage: 'Speed Paint Recipe', color: '#555',
       steps: [
-        {n:1, paint:'Leadbelcher Spray', where:'prime entire swarm black, then spray'},
-        {n:2, paint:'Nuln Oil', where:'wash all over'},
-        {n:3, paint:'Stormhost Silver', where:'edge highlight carapace plates'},
-        {n:4, paint:'Moot Green', where:'tiny eye dots'},
-        {n:5, paint:'Moon Dust', where:'base'}
+        {paint:'Leadbelcher Spray', zone:'A', where:'prime black first, then spray metallic over entire swarm base'},
+        {paint:'Nuln Oil', zone:'A', where:'wash ALL OVER — heavy, let it pool between the little bugs'},
+        {paint:'Stormhost Silver', zone:'C', where:'drybrush or edge highlight a few wing/carapace edges'},
+        {paint:'Moot Green', zone:'D', where:'tiny dots on each scarab\'s eyes. That\'s it — done!'},
+        {paint:'Moon Dust', zone:'E', where:'base rim and texture'}
       ]
     }];
   }
+
+  // C'tan Void Dragon: custom
   if (model.name === "C'tan Void Dragon") {
-    zones.push({id:'X', name:ZONE_NAMES.X, color:ZONE_COLORS.X, steps:getZoneSteps('X',model)});
-    zones.push({id:'Y', name:ZONE_NAMES.Y, color:ZONE_COLORS.Y, steps:getZoneSteps('Y',model)});
-    zones.push({id:'Z', name:ZONE_NAMES.Z, color:ZONE_COLORS.Z, steps:getZoneSteps('Z',model)});
-    zones.push({id:'E', name:ZONE_NAMES.E, color:ZONE_COLORS.E, steps:getZoneSteps('E',model)});
-    return zones;
+    return [
+      { stage: '1. Base Coats', color: '#555', steps: [
+        {paint:'Corax White', zone:'X', where:'base coat the ENTIRE ethereal body — torso, limbs, face. NOT metallic like other Necrons.'},
+        {paint:'Leadbelcher Spray', zone:'Y', where:'spray the metallic WING SPINES and mechanical collar/halo — ancient Necron tech.'},
+        {paint:'Matt Black', zone:'Z', where:'base coat ALL energy areas solid black — every tendril, sword blade, lightning arcs, base connections. There\'s A LOT.'},
+      ]},
+      { stage: '2. Shades & Washes', color: '#555', steps: [
+        {paint:'Mechanicus Std Grey', zone:'X', where:'shade the DEEPEST RECESSES of the body — muscle definition, under arms, joint areas.'},
+        {paint:'Black Templar', zone:'Y', where:'Contrast paint over ALL wing/spine surfaces to darken and add depth.'},
+        {paint:'Nuln Oil', zone:'Y', where:'wash into recesses of wing joints and mechanical details.'},
+      ]},
+      { stage: '3. Layers & Glow', color: '#555', steps: [
+        {paint:'Biel-tan Green', zone:'X', where:'glaze over the ENTIRE body for an eerie green tint — otherworldly, not alive, not dead.'},
+        {paint:'White Scar', zone:'X', where:'highlight the HIGHEST muscle/bone points — shoulders, chest, face ridges.'},
+        {paint:'Caliban Green', zone:'Z', where:'fill ALL energy areas — much more coverage than a Warrior. Entire tendrils, full sword blade.'},
+        {paint:'Warpstone Glow', zone:'Z', where:'build up brighter green in the centers of all energy channels and tendrils.'},
+        {paint:'Moot Green', zone:'Z', where:'hot centers — where tendrils connect to body, chest orb core, sword tip.'},
+        {paint:'White dot', zone:'Z', where:'pinprick highlights at absolute hottest points.'},
+      ]},
+      { stage: '4. Glazes & Finish', color: '#555', steps: [
+        {paint:'Biel-tan Green', zone:'Z', where:'glaze ALL green energy to unify. Consider Vallejo Fluorescent Green for extra pop.'},
+        {paint:'Casandora Yellow', zone:'Z', where:'dab at hottest energy points — chest core center, sword tip, tendril junctions.'},
+        {paint:'Moon Dust', zone:'E', where:'base rim and texture.'},
+      ]},
+    ];
   }
-  // Standard zones A-E
-  ['A','B','C','D','E'].forEach(z => {
-    zones.push({id:z, name:ZONE_NAMES[z], color:ZONE_COLORS[z], steps:getZoneSteps(z,model)});
-  });
-  // Extra zones for overlord/custom
-  if (model.extraZones) {
-    model.extraZones.forEach(z => {
-      zones.push({id:z, name:ZONE_NAMES[z], color:ZONE_COLORS[z], steps:getZoneSteps(z,model)});
-    });
+
+  const stages = [];
+  const isOverlord = model.scheme === 'overlord';
+  const hasCloth = model.extraZones && model.extraZones.includes('G');
+  const hasBlue = model.extraZones && model.extraZones.includes('P');
+  const hasCloak = model.extraZones && model.extraZones.includes('K');
+  const hasFlesh = model.extraZones && model.extraZones.includes('S');
+  const hasBlood = model.extraZones && model.extraZones.includes('T');
+  const hasBlade = model.extraZones && model.extraZones.includes('I');
+
+  // STAGE 1: PRIME
+  const primeSteps = [
+    {paint:'Leadbelcher Spray', zone:'A', where:'spray the ENTIRE model from ~20cm away, even coats, rotating the model. Primer + metallic base in one step.'},
+  ];
+  stages.push({ stage: '1. Prime', color: '#888', steps: primeSteps });
+
+  // STAGE 2: BASE COATS (all areas get their base color before any shading)
+  const baseSteps = [
+    {paint:'Black Templar', zone:'A', where:'brush over the ENTIRE model. This Contrast paint pools in recesses for shadow. Wick away pooling on flat surfaces with a clean brush.'},
+    {paint:'Runelord Brass', zone:'B', where:'paint shoulder pads, kneecaps, chest dynasty symbol, spine ridge, and all raised decorative trim.'},
+    {paint:'Matt Black', zone:'D', where:'base coat the glow areas solid black — eyes, gun barrel interior, gauss rod, chest orb. Dark base makes green pop.'},
+  ];
+  if (isOverlord) {
+    baseSteps.push({paint:'Retributor Armour', zone:'F', where:'paint gold rank markings — crown/crest, face plate, chest eagle, weapon ornaments. Gold REPLACES dark metallic here. More gold = higher rank.'});
   }
-  return zones;
+  if (hasCloth) {
+    baseSteps.push({paint:'Wyldwood', zone:'G', where:'apply Contrast to the TABARD/LOINCLOTH. Let it pool in folds — Contrast does the shading for you.'});
+    baseSteps.push({paint:'Basilicanum Grey', zone:'G', where:'apply Contrast to BELT, ARM WRAPS, leather straps. Let it pool in folds.'});
+  }
+  if (hasBlue) {
+    baseSteps.push({paint:'Abaddon Black', zone:'P', where:'base coat the entire psychic projection solid black — the pixelated holographic shape.'});
+    baseSteps.push({paint:'Kantor Blue', zone:'P', where:'base coat the projection body with dark blue. Leave black in deepest recesses between pixel blocks.'});
+  }
+  if (hasCloak) {
+    baseSteps.push({paint:'Leadbelcher', zone:'K', where:'base coat the ENTIRE canoptek cloak — spider body and all mechanical legs underneath.'});
+  }
+  if (hasFlesh) {
+    baseSteps.push({paint:'Rakarth Flesh', zone:'S', where:'base coat ALL flayed skin — the draped flesh on shoulders, chest, back, dangling strips. Pale bone-white starting point.'});
+  }
+  if (hasBlade) {
+    baseSteps.push({paint:'Iron Hands Steel', zone:'I', where:'paint BLADE EDGES and weapon surfaces. Brighter metallic tone than the body, making weapons look like polished steel.'});
+  }
+  stages.push({ stage: '2. Base Coats', color: '#2e7d32', steps: baseSteps });
+
+  // STAGE 3: SHADES & WASHES (all at once — let each dry before next)
+  const washSteps = [
+    {paint:'Nuln Oil', zone:'A', where:'wash into RECESSES ONLY — panel lines, joint gaps, where body parts meet. Target the crevices, don\'t slather everywhere.'},
+    {paint:'Cryptek Armourshade', zone:'B', where:'wash into recesses WHERE BRONZE MEETS BODY — around shoulder pad edges, rivets, where trim meets dark panels.'},
+  ];
+  if (isOverlord) {
+    washSteps.push({paint:'Cryptek Armourshade Gloss', zone:'F', where:'thin wash over ALL gold areas. GLOSS finish = rich polished look. Apply thinly — don\'t pool on flat gold.'});
+  }
+  if (hasCloak) {
+    washSteps.push({paint:'Nuln Oil', zone:'K', where:'HEAVY wash all over the cloak — noticeably DARKER than the Cryptek body. Looks like a separate creature.'});
+  }
+  if (hasFlesh) {
+    washSteps.push({paint:'Reikland Fleshshade', zone:'S', where:'wash into ALL SKIN FOLDS and edges where flesh meets metal. Creates natural depth and warmth.'});
+  }
+  stages.push({ stage: '3. Shades & Washes', color: '#6a1b9a', steps: washSteps });
+
+  // STAGE 4: LAYERS & HIGHLIGHTS (now safe to do — base and shade are locked in)
+  const layerSteps = [
+    {paint:'Canoptek Alloy', zone:'B', where:'highlight TOP EDGES of bronze areas — upper rim of shoulder pads, top of chest symbol. Leave darker Runelord Brass underneath.'},
+    {paint:'Stormhost Silver', zone:'C', where:'fine edge highlights on SHARPEST edges — head crest tips, ribcage edges, leg ridges, arm plates. Dots on rivets. Side of brush, thin lines — less is more.'},
+  ];
+  if (isOverlord) {
+    layerSteps.push({paint:'Liberator Gold', zone:'F', where:'highlight TOP EDGES of gold — crown horns, face plate ridges, chest symbol peak. Brighter gold over darker Retributor.'});
+  }
+  if (hasCloth) {
+    layerSteps.push({paint:'Administratum Grey', zone:'G', where:'highlight TOP OF CLOTH FOLDS — highest raised points of tabard and strap edges only.'});
+  }
+  if (hasBlue) {
+    layerSteps.push({paint:'Teclis Blue', zone:'P', where:'layer RAISED SURFACES of projection — outer pixel block faces, prominent features of the ghostly face.'});
+    layerSteps.push({paint:'Lothern Blue', zone:'P', where:'highlight EDGES of projection — pixel block edges brighter than faces. Creates holographic glow.'});
+    layerSteps.push({paint:'Corax White', zone:'P', where:'brightest points only — tips of prominent features, face details. Looks like emitting light.'});
+  }
+  if (hasCloak) {
+    layerSteps.push({paint:'Mechanicus Std Grey', zone:'K', where:'DRYBRUSH raised cloak areas — carapace plates, leg joints. Picks up mechanical detail beautifully.'});
+    layerSteps.push({paint:'Stormhost Silver', zone:'K', where:'edge highlight CLAW TIPS and sharp leg joint edges.'});
+  }
+  if (hasFlesh) {
+    layerSteps.push({paint:'Flayed One Flesh', zone:'S', where:'layer RAISED skin surfaces — stretched areas, smooth outer face of hanging strips. Leave recesses darker.'});
+    layerSteps.push({paint:'Pallid Wych Flesh', zone:'S', where:'fine highlight on HIGHEST skin points — sickly pale, top edges of shoulder drapes.'});
+    layerSteps.push({paint:'Druchii Violet', zone:'S', where:'thin glaze on edges WHERE SKIN MEETS METAL — bruised look. Also along torn skin edges.'});
+  }
+  stages.push({ stage: '4. Layers & Highlights', color: '#e65100', steps: layerSteps });
+
+  // STAGE 5: GREEN GLOW (done after all metallic work is finished)
+  const glowSteps = [
+    {paint:'Caliban Green', zone:'D', where:'fill glow areas with dark green, leaving a thin BLACK RING visible around the outer edge.'},
+    {paint:'Warpstone Glow', zone:'D', where:'paint a SMALLER area in the center. Leave Caliban Green at edges. Each layer gets smaller.'},
+    {paint:'Moot Green', zone:'D', where:'bright dot or thin line at the CENTER — hottest point. Eyes: tiny dot. Gauss rods: thin center line.'},
+    {paint:'White dot', zone:'D', where:'absolute PINPRICK of white at center of each eye. "Light source" reflection. Smallest brush tip.'},
+  ];
+  stages.push({ stage: '5. Green Glow (Zone D)', color: '#1b7a2e', steps: glowSteps });
+
+  // STAGE 6: GLAZES (unify and finish)
+  const glazeSteps = [
+    {paint:'Biel-tan Green', zone:'D', where:'glaze (thin wash) over ALL green glow areas to unify layers and add glossy, ethereal sheen.'},
+    {paint:'Casandora Yellow', zone:'D', where:'tiny DAB at very center of each eye only. Shifts hottest point toward yellow-white. One dab per eye.'},
+  ];
+  stages.push({ stage: '6. Glazes', color: '#00695c', steps: glazeSteps });
+
+  // STAGE 7: BASE & BLOOD (very last)
+  const finishSteps = [
+    {paint:'Moon Dust', zone:'E', where:'apply to base — rim and top surface. Desert/tomb world theme.'},
+  ];
+  if (hasBlood) {
+    finishSteps.push({paint:'Blood for the Blood God', zone:'T', where:'apply to CLAW TIPS, finger blades, torn skin edges. Glossy technical paint = wet blood. Dab on, let run/pool. Apply DEAD LAST so glossy finish doesn\'t get messed up.'});
+  }
+  stages.push({ stage: '7. Basing & Finish', color: '#795548', steps: finishSteps });
+
+  return stages;
 }
 
 function renderSwatch(paint) {
@@ -706,17 +741,16 @@ function renderSwatch(paint) {
   return `<span class="swatch" style="background:${c}"></span>`;
 }
 
-function renderZoneBlock(zone) {
-  const letterBg = zone.color || '#555';
-  const textColor = ['#d0d0d0','#e8e8e8','#d4b896','#c4a96a','#ffffff'].includes(letterBg) ? '#222' : '#fff';
-  let html = `<div class="zone-block">`;
-  html += `<div class="zone-title">`;
-  html += `<span class="zone-letter" style="background:${letterBg};color:${textColor}">${zone.id}</span>`;
-  html += `<span>${zone.name}</span></div>`;
+function renderStageBlock(stage) {
+  const stageColor = stage.color || '#555';
+  let html = `<div class="zone-block" style="border-left:3px solid ${stageColor};">`;
+  html += `<div class="zone-title" style="color:${stageColor};">`;
+  html += `<span>${stage.stage}</span></div>`;
   html += `<ul class="step-list">`;
-  zone.steps.forEach(s => {
+  stage.steps.forEach((s, i) => {
+    const zoneDot = DOT_COLORS[s.zone] ? `<span class="zone-letter" style="background-color:${DOT_COLORS[s.zone].bg};${DOT_COLORS[s.zone].color ? 'color:'+DOT_COLORS[s.zone].color+';' : ''}font-size:6pt;width:14px;height:14px;">${s.zone}</span>` : '';
     html += `<li>`;
-    html += `<div class="step-head"><span class="step-num">${s.n}.</span>${renderSwatch(s.paint)}<span class="step-paint">${s.paint}</span></div>`;
+    html += `<div class="step-head"><span class="step-num">${i+1}.</span>${renderSwatch(s.paint)}${zoneDot}<span class="step-paint">${s.paint}</span></div>`;
     html += `<div class="step-where">${s.where}</div>`;
     html += `</li>`;
   });
@@ -739,7 +773,7 @@ function renderCard(model) {
                       model.scheme === 'overlord' ? 'tag-overlord' : 'tag-custom';
   const ownerClass = model.ownership === 'OWN' ? 'tag-own' : 'tag-buy';
 
-  const zones = getModelZones(model);
+  const stages = getModelStages(model);
 
   let html = `<div class="model-page">`;
   // Header
@@ -765,7 +799,7 @@ function renderCard(model) {
 
   // Zones
   html += `<div class="zones" style="margin-top:6px">`;
-  zones.forEach(z => { html += renderZoneBlock(z); });
+  stages.forEach(s => { html += renderStageBlock(s); });
   html += `</div>`;
 
   // Checklist
