@@ -10,6 +10,8 @@
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     background: #fff; color: #1a1a1a;
     font-size: 8.5pt; line-height: 1.3;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 
   .model-page {
@@ -66,13 +68,29 @@
     text-align: center;
     margin: 6px 0 8px;
   }
-  .model-image img {
+  .img-container {
+    position: relative;
+    display: inline-block;
+  }
+  .img-container img {
     width: 350px;
     height: 350px;
     object-fit: contain;
     border-radius: 8px;
     background: #f5f5f5;
     border: 1px solid #ddd;
+    display: block;
+  }
+  .dot {
+    position: absolute;
+    width: 22px; height: 22px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 9pt; color: #fff;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.7);
+    border: 2px solid #fff;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.5);
+    transform: translate(-50%, -50%);
+    z-index: 2;
   }
 
   /* Zones */
@@ -403,6 +421,147 @@ const PAINT_SWATCHES = {
   'Blood for the Blood God': '#8b0000'
 };
 
+// Dot color map for image overlays
+const DOT_COLORS = {
+  A: { bg:'#4a4e52' },
+  B: { bg:'#a67d5b' },
+  C: { bg:'#b0b8c4' },
+  D: { bg:'#39ff14', color:'#000', textShadow:'none' },
+  E: { bg:'#c2b59b', color:'#333', textShadow:'none' },
+  F: { bg:'#c5962a' },
+  G: { bg:'#3d2b1a', border:'#a08060' },
+  I: { bg:'#5a5e63' },
+  K: { bg:'#2a3a3a' },
+  P: { bg:'#4dc9f6' },
+  S: { bg:'#d4b89c', color:'#333', textShadow:'none' },
+  T: { bg:'#8b0000' },
+  X: { bg:'#7aafcc' },
+  Y: { bg:'#4a4e52' },
+  Z: { bg:'#39ff14', color:'#000', textShadow:'none' }
+};
+
+// Dot positions per model name
+const MODEL_DOTS = {
+  'Necron Warriors (Flayers)': [
+    {z:'A',top:'40%',left:'44%'},{z:'B',top:'31%',left:'34%'},{z:'B',top:'30%',left:'54%'},{z:'B',top:'62%',left:'38%'},
+    {z:'C',top:'19%',left:'44%'},{z:'C',top:'68%',left:'50%'},
+    {z:'D',top:'26%',left:'46%'},{z:'D',top:'56%',left:'47%'},{z:'D',top:'53%',left:'70%'},
+    {z:'E',top:'87%',left:'47%'}
+  ],
+  'Necron Warriors (Reapers)': [
+    {z:'A',top:'40%',left:'44%'},{z:'B',top:'31%',left:'34%'},{z:'B',top:'30%',left:'54%'},{z:'B',top:'62%',left:'38%'},
+    {z:'C',top:'19%',left:'44%'},{z:'C',top:'68%',left:'50%'},
+    {z:'D',top:'26%',left:'46%'},{z:'D',top:'56%',left:'47%'},{z:'D',top:'53%',left:'70%'},
+    {z:'E',top:'87%',left:'47%'}
+  ],
+  'Overlord': [
+    {z:'A',top:'40%',left:'48%'},{z:'B',top:'30%',left:'35%'},
+    {z:'F',top:'21%',left:'46%'},{z:'F',top:'38%',left:'45%'},
+    {z:'G',top:'55%',left:'48%'},
+    {z:'D',top:'24%',left:'45%'},{z:'D',top:'17%',left:'65%'},{z:'D',top:'66%',left:'34%'}
+  ],
+  'Skorpekh Lord': [
+    {z:'A',top:'35%',left:'52%'},{z:'B',top:'26%',left:'52%'},{z:'B',top:'58%',left:'45%'},
+    {z:'F',top:'32%',left:'48%'},{z:'F',top:'20%',left:'55%'},
+    {z:'D',top:'24%',left:'56%'},{z:'D',top:'35%',left:'28%'},{z:'D',top:'23%',left:'35%'}
+  ],
+  'Skorpekh Destroyers': [
+    {z:'A',top:'40%',left:'50%'},{z:'B',top:'28%',left:'40%'},
+    {z:'D',top:'25%',left:'45%'}
+  ],
+  'Royal Warden': [
+    {z:'A',top:'40%',left:'45%'},{z:'B',top:'25%',left:'40%'},
+    {z:'D',top:'20%',left:'45%'},{z:'D',top:'50%',left:'60%'}
+  ],
+  'Canoptek Scarab Swarms': [
+    {z:'A',top:'40%',left:'50%'},
+    {z:'D',top:'30%',left:'50%'}
+  ],
+  'Lokhust Heavy Destroyers': [
+    {z:'A',top:'55%',left:'42%'},{z:'B',top:'25%',left:'50%'},{z:'B',top:'62%',left:'35%'},
+    {z:'D',top:'22%',left:'54%'},{z:'D',top:'38%',left:'72%'}
+  ],
+  'Plasmancer': [
+    {z:'A',top:'40%',left:'45%'},
+    {z:'F',top:'22%',left:'50%'},
+    {z:'D',top:'25%',left:'48%'},{z:'D',top:'45%',left:'55%'}
+  ],
+  'Cryptothralls': [
+    {z:'A',top:'40%',left:'50%'},
+    {z:'D',top:'25%',left:'50%'}
+  ],
+  'Canoptek Reanimator': [
+    {z:'A',top:'45%',left:'50%'},
+    {z:'D',top:'20%',left:'50%'},{z:'D',top:'35%',left:'45%'}
+  ],
+  'Technomancer': [
+    {z:'A',top:'32%',left:'48%'},{z:'B',top:'26%',left:'40%'},{z:'B',top:'50%',left:'45%'},
+    {z:'F',top:'18%',left:'48%'},
+    {z:'D',top:'22%',left:'50%'},{z:'D',top:'14%',left:'32%'},{z:'D',top:'62%',left:'38%'},
+    {z:'K',top:'68%',left:'42%'}
+  ],
+  'Overlord w/ Translocation Shroud': [
+    {z:'A',top:'40%',left:'48%'},{z:'B',top:'30%',left:'35%'},
+    {z:'F',top:'21%',left:'46%'},{z:'F',top:'38%',left:'45%'},
+    {z:'G',top:'55%',left:'48%'},
+    {z:'D',top:'24%',left:'45%'},{z:'D',top:'17%',left:'65%'},{z:'D',top:'66%',left:'34%'}
+  ],
+  'Lychguard (Shields)': [
+    {z:'A',top:'40%',left:'50%'},{z:'B',top:'28%',left:'45%'},
+    {z:'F',top:'35%',left:'50%'},{z:'F',top:'25%',left:'40%'}
+  ],
+  'Lychguard (2nd box)': [
+    {z:'A',top:'40%',left:'50%'},{z:'B',top:'28%',left:'45%'},
+    {z:'F',top:'35%',left:'50%'},{z:'F',top:'25%',left:'40%'}
+  ],
+  'Immortals': [
+    {z:'A',top:'40%',left:'50%'},{z:'B',top:'25%',left:'45%'},
+    {z:'D',top:'22%',left:'50%'},{z:'D',top:'45%',left:'65%'}
+  ],
+  'Canoptek Wraiths': [
+    {z:'A',top:'40%',left:'50%'},
+    {z:'C',top:'55%',left:'45%'},
+    {z:'D',top:'25%',left:'50%'}
+  ],
+  'Psychomancer': [
+    {z:'A',top:'38%',left:'42%'},{z:'B',top:'25%',left:'48%'},
+    {z:'F',top:'22%',left:'44%'},
+    {z:'D',top:'28%',left:'52%'},{z:'D',top:'8%',left:'38%'},
+    {z:'P',top:'48%',left:'72%'},{z:'P',top:'68%',left:'68%'}
+  ],
+  'Triarch Stalker': [
+    {z:'A',top:'40%',left:'50%'},{z:'B',top:'30%',left:'45%'},
+    {z:'D',top:'25%',left:'50%'}
+  ],
+  'Flayed Ones': [
+    {z:'A',top:'35%',left:'42%'},{z:'A',top:'60%',left:'45%'},
+    {z:'S',top:'28%',left:'36%'},{z:'S',top:'42%',left:'52%'},
+    {z:'T',top:'38%',left:'62%'},{z:'T',top:'32%',left:'30%'},
+    {z:'D',top:'22%',left:'50%'}
+  ],
+  "C'tan Void Dragon": [
+    {z:'X',top:'42%',left:'48%'},
+    {z:'Y',top:'18%',left:'35%'},{z:'Y',top:'18%',left:'60%'},
+    {z:'Z',top:'24%',left:'48%'},{z:'Z',top:'48%',left:'35%'},{z:'Z',top:'60%',left:'58%'}
+  ]
+};
+
+function renderDots(modelName) {
+  const dots = MODEL_DOTS[modelName];
+  if (!dots) return '';
+  return dots.map(d => {
+    const dc = DOT_COLORS[d.z] || { bg:'#555' };
+    const styles = [
+      `top:${d.top}`, `left:${d.left}`,
+      `background-color:${dc.bg}`
+    ];
+    if (dc.color) styles.push(`color:${dc.color}`);
+    if (dc.textShadow) styles.push(`text-shadow:${dc.textShadow}`);
+    if (dc.border) styles.push(`border-color:${dc.border}`);
+    return `<div class="dot" style="${styles.join(';')}">${d.z}</div>`;
+  }).join('');
+}
+
 function getZoneSteps(zoneId, model) {
   const modelName = model.name;
   switch(zoneId) {
@@ -569,8 +728,8 @@ function renderCard(model) {
   html += `<span class="tag ${ownerClass}">${model.ownership}</span>`;
   html += `</div></div>`;
 
-  // Image
-  html += `<div class="model-image"><img src="${IMG_BASE}${model.img}" alt="${model.name}"></div>`;
+  // Image with zone dots
+  html += `<div class="model-image"><div class="img-container"><img src="${IMG_BASE}${model.img}" alt="${model.name}">${renderDots(model.name)}</div></div>`;
 
   // Glow note
   if (model.glowNote) {
