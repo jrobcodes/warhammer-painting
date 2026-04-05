@@ -432,7 +432,11 @@ const PAINT_SWATCHES = {
   'Flayed One Flesh': '#d6c4a6',
   'Pallid Wych Flesh': '#e8dcc8',
   'Druchii Violet': '#6a3478',
-  'Blood for the Blood God': '#8b0000'
+  'Blood for the Blood God': '#8b0000',
+  'Vallejo Sandy Paste': '#c4b090',
+  'Agrax Earthshade': '#5a4528',
+  'Ushabti Bone': '#c8b87a',
+  'Moot Green + Lahmian Medium': '#52c41a'
 };
 
 // Dot color map for image overlays
@@ -587,8 +591,11 @@ function getModelStages(model) {
         {paint:'Leadbelcher Spray', zone:'A', where:'prime black first, then spray metallic over entire swarm base'},
         {paint:'Nuln Oil', zone:'A', where:'wash ALL OVER — heavy, let it pool between the little bugs'},
         {paint:'Stormhost Silver', zone:'C', where:'drybrush or edge highlight a few wing/carapace edges'},
-        {paint:'Moot Green', zone:'D', where:'tiny dots on each scarab\'s eyes. That\'s it — done!'},
-        {paint:'Moon Dust', zone:'E', where:'base rim and texture'}
+        {paint:'Moot Green', zone:'D', where:'tiny dots on each scarab\'s eyes. That\'s it for the bugs!'},
+        {paint:'Vallejo Sandy Paste', zone:'E', where:'texture paste on base, push in 1 small crystal while wet. Let dry.'},
+        {paint:'Agrax Earthshade', zone:'E', where:'wash the sand (not crystal).'},
+        {paint:'Ushabti Bone', zone:'E', where:'drybrush the sand.'},
+        {paint:'Caliban Green → Moot Green → White tip', zone:'E', where:'paint the crystal with glow recipe. Black base rim.'}
       ]
     }];
   }
@@ -724,14 +731,33 @@ function getModelStages(model) {
   ];
   stages.push({ stage: '6. Glazes', color: '#00695c', steps: glazeSteps });
 
-  // STAGE 7: BASE & BLOOD (very last)
+  // STAGE 7: BASING — Crystal Tomb World
+  const isHero = isOverlord || model.name.includes('Lord') || model.name.includes('C\'tan');
+  const isCenterpiece = model.name.includes('C\'tan') || model.name.includes('Overlord');
+  const crystalNote = isHero
+    ? '2-3 crystals (mix small + medium). Push into wet paste at angles, clustered together.'
+    : '1-2 small crystals. Push into wet paste, slightly angled. Keep it simple on troops.';
+  const oslNote = isHero
+    ? {paint:'Moot Green + Lahmian Medium', zone:'E', where:'HERO ONLY: thin green wash on the sand directly around the crystal bases. Creates OSL glow on the ground — makes the crystals look like they\'re emitting light.'}
+    : null;
+
   const finishSteps = [
-    {paint:'Moon Dust', zone:'E', where:'apply to base — rim and top surface. Desert/tomb world theme.'},
+    {paint:'Vallejo Sandy Paste', zone:'E', where:'spread texture paste onto the base with an old brush or sculpting tool. While still WET, push clear resin crystals into the paste (' + crystalNote + '). Let dry ~1 hour.'},
+    {paint:'Agrax Earthshade', zone:'E', where:'wash the SAND TEXTURE only (avoid the crystals). Adds depth and shadow to the gritty texture.'},
+    {paint:'Ushabti Bone', zone:'E', where:'DRYBRUSH the sand — lightly drag a mostly-dry brush across the raised grit. Picks up the texture beautifully.'},
+    {paint:'Abaddon Black', zone:'E', where:'paint the crystals solid black. This is the base for the crystal glow, same as weapon glow prep.'},
+    {paint:'Caliban Green', zone:'E', where:'paint the crystals dark green, leaving black visible at the very base where they meet the sand.'},
+    {paint:'Warpstone Glow', zone:'E', where:'layer the upper half / tips of each crystal with brighter green.'},
+    {paint:'Moot Green', zone:'E', where:'just the crystal TIPS — bright green, looks like energy concentrating at the point.'},
+    {paint:'White dot', zone:'E', where:'tiny white dot at the very tip of each crystal. Makes them look like they\'re glowing.'},
+    {paint:'Biel-tan Green', zone:'E', where:'glaze over all crystals to unify the green and add a glossy sheen.'},
   ];
+  if (oslNote) finishSteps.push(oslNote);
+  finishSteps.push({paint:'Abaddon Black', zone:'E', where:'paint the base RIM neat black for a clean finish.'});
   if (hasBlood) {
     finishSteps.push({paint:'Blood for the Blood God', zone:'T', where:'apply to CLAW TIPS, finger blades, torn skin edges. Glossy technical paint = wet blood. Dab on, let run/pool. Apply DEAD LAST so glossy finish doesn\'t get messed up.'});
   }
-  stages.push({ stage: '7. Basing & Finish', color: '#795548', steps: finishSteps });
+  stages.push({ stage: '7. Crystal Basing — Tomb World', color: '#795548', steps: finishSteps });
 
   return stages;
 }
