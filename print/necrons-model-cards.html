@@ -2,797 +2,602 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Szarekhan Necrons — Model Cards</title>
+<title>Szarekhan Necrons — Model Painting Cards</title>
 <style>
-  @page { size: letter; margin: 0.4in; }
+  @page { size: letter; margin: 0.5in; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     background: #fff; color: #1a1a1a;
-    padding: 16px; max-width: 960px; margin: 0 auto; font-size: 9pt;
-  }
-  h1 { font-size: 15pt; margin-bottom: 2px; text-align: center; }
-  .subtitle { color: #666; font-size: 8pt; margin-bottom: 14px; text-align: center; border-bottom: 2px solid #222; padding-bottom: 6px; }
-
-  .cards-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    font-size: 8.5pt; line-height: 1.3;
   }
 
-  .card {
-    border: 2px dashed #999;
-    border-radius: 8px;
-    padding: 10px;
-    page-break-inside: avoid;
-    break-inside: avoid;
-    display: flex;
-    gap: 10px;
-    background: #fff;
-  }
-
-  .card-img {
-    width: 180px;
-    flex-shrink: 0;
+  .model-page {
+    page-break-after: always;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    padding: 0;
   }
-  .card-img img {
-    width: 180px;
-    height: 180px;
+  .model-page:last-child { page-break-after: auto; }
+
+  /* Header */
+  .model-header {
+    text-align: center;
+    margin-bottom: 8px;
+    border-bottom: 2.5px solid #222;
+    padding-bottom: 6px;
+  }
+  .model-name {
+    font-size: 18pt;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  .model-meta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    font-size: 9pt;
+    flex-wrap: wrap;
+  }
+  .meta-item {
+    font-weight: 600;
+  }
+  .tag {
+    display: inline-block;
+    padding: 1px 8px;
+    border-radius: 3px;
+    font-size: 8pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .tag-warrior { background: #2d5a27; color: #fff; }
+  .tag-overlord { background: #8b6914; color: #fff; }
+  .tag-custom { background: #6a1b9a; color: #fff; }
+  .tag-own { background: #1565c0; color: #fff; }
+  .tag-buy { background: #c62828; color: #fff; }
+
+  /* Image */
+  .model-image {
+    text-align: center;
+    margin: 6px 0 8px;
+  }
+  .model-image img {
+    width: 350px;
+    height: 350px;
     object-fit: contain;
-    border-radius: 6px;
+    border-radius: 8px;
     background: #f5f5f5;
     border: 1px solid #ddd;
   }
 
-  .card-body {
+  /* Zones */
+  .zones {
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
+    columns: 2;
+    column-gap: 16px;
     font-size: 8pt;
   }
-
-  .card-name {
-    font-size: 10pt;
-    font-weight: 800;
-    line-height: 1.2;
-  }
-  .card-pts {
-    font-size: 9pt;
-    font-weight: 700;
-    color: #555;
-  }
-
-  .card-scheme {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 10px;
-    font-size: 7pt;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    width: fit-content;
-  }
-  .scheme-warrior { background: #e8e8e8; color: #333; border: 1px solid #aaa; }
-  .scheme-overlord { background: #fdf3d7; color: #7a5c00; border: 1px solid #d4a745; }
-  .scheme-custom { background: #e8f0fe; color: #1a56db; border: 1px solid #7baaf7; }
-  .scheme-speed { background: #e6f9e6; color: #1b7a2e; border: 1px solid #66bb6a; }
-
-  .card-zones {
-    font-size: 7.5pt;
-    color: #444;
-    line-height: 1.4;
-    padding: 4px 6px;
-    background: #fafafa;
+  .zone-block {
+    break-inside: avoid;
+    margin-bottom: 6px;
+    border: 1px solid #ccc;
     border-radius: 4px;
-    border: 1px solid #eee;
+    padding: 5px 6px;
+    background: #fafafa;
   }
-  .card-zones strong { color: #222; }
-
-  .zone-swatches {
-    display: flex;
-    gap: 3px;
-    margin-top: 3px;
-    flex-wrap: wrap;
-  }
-  .zswatch {
-    width: 14px; height: 14px;
-    border-radius: 2px;
-    border: 1px solid #bbb;
-    display: inline-block;
-  }
-
-  .card-checks {
-    display: flex;
-    gap: 8px;
-    font-size: 7pt;
-    color: #555;
-    flex-wrap: wrap;
-    margin-top: auto;
-    padding-top: 4px;
-    border-top: 1px solid #eee;
-  }
-  .card-checks label {
+  .zone-title {
+    font-weight: 800;
+    font-size: 8.5pt;
+    margin-bottom: 3px;
     display: flex;
     align-items: center;
-    gap: 2px;
+    gap: 5px;
   }
-  .card-checks input[type="checkbox"] {
-    width: 12px; height: 12px;
+  .zone-letter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px; height: 18px;
+    border-radius: 3px;
+    color: #fff;
+    font-weight: 800;
+    font-size: 8pt;
+    flex-shrink: 0;
+  }
+  .swatch {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 2px;
+    border: 1px solid #999;
+    vertical-align: middle;
+    margin-right: 3px;
+    flex-shrink: 0;
+  }
+  .step-list {
+    list-style: none;
+    padding: 0;
     margin: 0;
   }
-
-  .tag-buy {
-    display: inline-block;
-    background: #fee2e2;
-    color: #b91c1c;
-    font-size: 7pt;
-    font-weight: 700;
-    padding: 1px 6px;
-    border-radius: 8px;
-    border: 1px solid #f87171;
-    margin-left: 4px;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
+  .step-list li {
+    padding: 1px 0;
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
   }
-  .tag-own {
-    display: inline-block;
-    background: #dcfce7;
-    color: #166534;
-    font-size: 7pt;
+  .step-num {
     font-weight: 700;
-    padding: 1px 6px;
-    border-radius: 8px;
-    border: 1px solid #86efac;
-    margin-left: 4px;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
+    color: #555;
+    min-width: 14px;
+    text-align: right;
+    flex-shrink: 0;
   }
-
-  .card-special {
-    font-size: 7pt;
-    color: #7c3aed;
+  .step-where {
+    color: #666;
     font-style: italic;
+    font-size: 7.5pt;
+  }
+
+  .glow-note {
+    font-size: 7.5pt;
+    color: #2e7d32;
+    font-style: italic;
+    margin-top: 2px;
+    padding: 2px 4px;
+    background: #e8f5e9;
+    border-radius: 2px;
+  }
+
+  /* Checklist */
+  .checklist {
+    margin-top: 8px;
+    padding-top: 6px;
+    border-top: 1.5px solid #ccc;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    font-size: 9pt;
+    font-weight: 600;
+  }
+  .checklist label {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .check-box {
+    display: inline-block;
+    width: 14px; height: 14px;
+    border: 1.5px solid #555;
+    border-radius: 2px;
+    flex-shrink: 0;
   }
 
   @media print {
     body { padding: 0; }
-    .card { border: 2px dashed #aaa; }
+    .model-page { height: auto; min-height: 100vh; }
   }
 </style>
 </head>
 <body>
 
-<h1>Szarekhan Necrons &mdash; Model Cards</h1>
-<p class="subtitle">Cut along dashed lines &bull; Check boxes as you progress &bull; 21 units total</p>
+<script>
+// ---- DATA ----
+const IMG_BASE = 'https://www.warhammer.com/app/resources/catalog/product/';
 
-<div class="cards-grid">
+const models = [
+  {
+    name: 'Necron Warriors (Flayers)',
+    count: 10, pts: 90, ownership: 'OWN',
+    img: 'threeSixty/60010199034_NecronWarriorsSpin1360/01.jpg',
+    scheme: 'warrior',
+    glowNote: 'Gauss flayer barrels — small cylindrical glow on each of 10 models'
+  },
+  {
+    name: 'Necron Warriors (Reapers)',
+    count: 10, pts: 90, ownership: 'OWN',
+    img: 'threeSixty/60010199034_NecronWarriorsSpin1360/01.jpg',
+    scheme: 'warrior',
+    glowNote: 'Gauss reaper barrels — wider barrel opening than flayers, slightly more glow area'
+  },
+  {
+    name: 'Overlord',
+    count: 1, pts: 85, ownership: 'OWN',
+    img: '920x950/99070110006_OverlordTachyonArrow1.jpg',
+    scheme: 'overlord',
+    glowNote: 'Resurrection orb, tachyon arrow tip, eye sockets — multiple small glow points',
+    extraZones: ['F', 'G', 'I']
+  },
+  {
+    name: 'Skorpekh Lord',
+    count: 1, pts: 90, ownership: 'OWN',
+    img: 'threeSixty/99120110072_NecronsRoyalCourtOTT1360/01-01.jpg',
+    scheme: 'overlord',
+    glowNote: 'Eye sockets, joints between body segments — glow peeking through armor gaps',
+    extraZones: ['F', 'I']
+  },
+  {
+    name: 'Skorpekh Destroyers',
+    count: 3, pts: 90, ownership: 'OWN',
+    img: '920x950/99120110051_SkorpekhDestroyersLead.jpg',
+    scheme: 'warrior',
+    glowNote: 'Eye sockets, blade joints — minimal glow, keep it subtle and menacing'
+  },
+  {
+    name: 'Royal Warden',
+    count: 1, pts: 50, ownership: 'OWN',
+    img: '920x950/99070110007_RoyalWarden1.jpg',
+    scheme: 'warrior',
+    glowNote: 'Gauss blaster barrel — single prominent glow source, plus eye sockets'
+  },
+  {
+    name: 'Canoptek Scarab Swarms',
+    count: 3, pts: 40, ownership: 'OWN',
+    img: 'threeSixty/60010199034_NecronScarabsSpin1360/01.jpg',
+    scheme: 'custom',
+    customLabel: 'Speed Paint',
+    glowNote: 'Tiny eyes on each scarab — just Moot Green dots'
+  },
+  {
+    name: 'Lokhust Heavy Destroyers',
+    count: 3, pts: 165, ownership: 'OWN',
+    img: '920x950/99120110044_LokhustHeavyDestroyerLead.jpg',
+    scheme: 'warrior',
+    glowNote: 'Massive gauss destructor barrel — biggest glow area in the army, full OSL opportunity'
+  },
+  {
+    name: 'Plasmancer',
+    count: 1, pts: 55, ownership: 'OWN',
+    img: 'threeSixty/99120110072_NecronsRoyalCourtOTT3360/01-01.jpg',
+    scheme: 'overlord',
+    glowNote: 'Lightning tendrils from hands — extensive glow, let it bleed onto nearby surfaces',
+    extraZones: ['F', 'I']
+  },
+  {
+    name: 'Cryptothralls',
+    count: 2, pts: 60, ownership: 'OWN',
+    img: 'threeSixty/99120110072_NecronsRoyalCourtOTT4360/01-01.jpg',
+    scheme: 'warrior',
+    glowNote: 'Eye sockets, blade tips — small glow points, keep it restrained'
+  },
+  {
+    name: 'Canoptek Reanimator',
+    count: 1, pts: 75, ownership: 'OWN',
+    img: 'threeSixty/99120110072_NecronsRoyalCourtOTT2360/01-01.jpg',
+    scheme: 'warrior',
+    glowNote: 'Reanimation beam emitters on top — focal glow point, like a searchlight'
+  },
+  {
+    name: 'Technomancer',
+    count: 1, pts: 80, ownership: 'OWN',
+    img: '920x950/99070110005_NECCryptekLead.jpg',
+    scheme: 'overlord',
+    glowNote: 'Staff tip, canoptek cloak joints — glow from staff is the focal point',
+    extraZones: ['F', 'I', 'K']
+  },
+  {
+    name: 'Overlord w/ Translocation Shroud',
+    count: 1, pts: 85, ownership: 'OWN',
+    img: '920x950/99070110006_OverlordTachyonArrow1.jpg',
+    scheme: 'overlord',
+    glowNote: 'Same as Overlord — resurrection orb, weapon tips, eye sockets',
+    extraZones: ['F', 'G', 'I']
+  },
+  {
+    name: 'Lychguard (Shields)',
+    count: 5, pts: 85, ownership: 'OWN',
+    img: '920x950/99120110058_TriarchLychguardLead.jpg',
+    scheme: 'warrior',
+    glowNote: 'Dispersion shield energy field — large flat glow surface, warpsword eyes'
+  },
+  {
+    name: 'Lychguard (2nd box)',
+    count: 5, pts: 85, ownership: 'BUY',
+    img: '920x950/99120110058_TriarchLychguardLead.jpg',
+    scheme: 'warrior',
+    glowNote: 'Dispersion shield energy field — large flat glow surface, warpsword eyes'
+  },
+  {
+    name: 'Immortals',
+    count: 10, pts: 150, ownership: 'BUY',
+    img: '920x950/99120110057_NECImmortalsLead.jpg',
+    scheme: 'warrior',
+    glowNote: 'Gauss blaster barrels — similar to Warriors but chunkier weapon glow'
+  },
+  {
+    name: 'Canoptek Wraiths',
+    count: 6, pts: 220, ownership: 'BUY',
+    img: '920x950/99120110060_NECCanoptekWraithsLead.jpg',
+    scheme: 'warrior',
+    glowNote: 'Eye sockets, particle caster tips, whip coils — eerie floating glow'
+  },
+  {
+    name: 'Psychomancer',
+    count: 1, pts: 55, ownership: 'OWN',
+    img: '920x950/99120110073_NECPsychomancerLead.jpg',
+    scheme: 'overlord',
+    glowNote: 'Nightmare shroud projections — spectral glow from the mask/head area',
+    extraZones: ['F', 'I', 'P']
+  },
+  {
+    name: 'Triarch Stalker',
+    count: 1, pts: 110, ownership: 'OWN',
+    img: '920x950/99120110058_NecronTriarchStalkerLead.jpg',
+    scheme: 'warrior',
+    glowNote: 'Heat ray / twin heavy gauss cannon — large weapon glow, plus eye lens'
+  },
+  {
+    name: 'Flayed Ones',
+    count: 5, pts: 60, ownership: 'OWN',
+    img: '920x950/99120110056_NECFlayedOnesLead.jpg',
+    scheme: 'custom',
+    customLabel: 'Warrior + Flesh',
+    glowNote: 'Minimal eyes only — the flesh and blood are the focal point, not glow',
+    extraZones: ['S', 'T']
+  },
+  {
+    name: "C'tan Void Dragon",
+    count: 1, pts: 300, ownership: 'BUY',
+    img: '920x950/99120110054_CTanShardoftheVoidDragonLead.jpg',
+    scheme: 'custom',
+    customLabel: 'Void Dragon',
+    glowNote: 'Green energy coursing through entire body — Zone D but with much more coverage, full ethereal effect',
+    extraZones: ['X', 'Y', 'Z']
+  }
+];
 
-  <!-- 1. Necron Warriors (Flayers) -->
-  <div class="card">
-    <div class="card-img">
-      <img src="https://www.warhammer.com/app/resources/catalog/product/threeSixty/60010199034_NecronWarriorsSpin1360/01.jpg" alt="Necron Warriors (Flayers)">
-    </div>
-    <div class="card-body">
-      <div class="card-name">Necron Warriors (Flayers) x10</div>
-      <div class="card-pts">90 pts</div>
-      <span class="card-scheme scheme-warrior">Warrior Scheme</span>
-      <div class="card-zones">
-        <strong>Zones A-E:</strong> Dark metallic body &rarr; Bronze trim &rarr; Silver edges &rarr; Green glow &rarr; Base
-        <div class="zone-swatches">
-          <span class="zswatch" style="background:#2b2b2b" title="Leadbelcher"></span>
-          <span class="zswatch" style="background:#6d4c1d" title="Bronze"></span>
-          <span class="zswatch" style="background:#c0c0c0" title="Silver"></span>
-          <span class="zswatch" style="background:#39ff14" title="Green glow"></span>
-          <span class="zswatch" style="background:#3b3024" title="Base texture"></span>
-        </div>
-      </div>
-      <div class="card-checks">
-        <label><input type="checkbox"> Built</label>
-        <label><input type="checkbox"> Primed</label>
-        <label><input type="checkbox"> Painted</label>
-        <label><input type="checkbox"> Based</label>
-        <label><input type="checkbox"> Done</label>
-      </div>
-    </div>
-  </div>
+// Zone definitions
+const ZONE_COLORS = {
+  A: '#3a3a3a', B: '#a87832', C: '#d0d0d0', D: '#39a832',
+  E: '#c4a96a', F: '#d4a017', G: '#7a6652', I: '#8a9bae',
+  P: '#1a5fa8', K: '#5a5a5a', S: '#d4b896', T: '#8b0000',
+  X: '#e8e8e8', Y: '#3a3a3a', Z: '#39a832'
+};
 
-  <!-- 2. Necron Warriors (Reapers) -->
-  <div class="card">
-    <div class="card-img">
-      <img src="https://www.warhammer.com/app/resources/catalog/product/threeSixty/60010199034_NecronWarriorsSpin1360/01.jpg" alt="Necron Warriors (Reapers)">
-    </div>
-    <div class="card-body">
-      <div class="card-name">Necron Warriors (Reapers) x10</div>
-      <div class="card-pts">90 pts</div>
-      <span class="card-scheme scheme-warrior">Warrior Scheme</span>
-      <div class="card-zones">
-        <strong>Zones A-E:</strong> Dark metallic body &rarr; Bronze trim &rarr; Silver edges &rarr; Green glow &rarr; Base
-        <div class="zone-swatches">
-          <span class="zswatch" style="background:#2b2b2b" title="Leadbelcher"></span>
-          <span class="zswatch" style="background:#6d4c1d" title="Bronze"></span>
-          <span class="zswatch" style="background:#c0c0c0" title="Silver"></span>
-          <span class="zswatch" style="background:#39ff14" title="Green glow"></span>
-          <span class="zswatch" style="background:#3b3024" title="Base texture"></span>
-        </div>
-      </div>
-      <div class="card-checks">
-        <label><input type="checkbox"> Built</label>
-        <label><input type="checkbox"> Primed</label>
-        <label><input type="checkbox"> Painted</label>
-        <label><input type="checkbox"> Based</label>
-        <label><input type="checkbox"> Done</label>
-      </div>
-    </div>
-  </div>
+const ZONE_NAMES = {
+  A: 'Dark Metallic', B: 'Bronze Trim', C: 'Silver Highlights', D: 'Green Glow',
+  E: 'Base', F: 'Gold Rank', G: 'Cloth', I: 'Polished Steel',
+  P: 'Blue Projection', K: 'Canoptek Cloak', S: 'Flesh', T: 'Blood',
+  X: 'Ethereal Body', Y: 'Metallic Wings', Z: 'Green Energy'
+};
 
-  <!-- 3. Overlord -->
-  <div class="card">
-    <div class="card-img">
-      <img src="https://www.warhammer.com/app/resources/catalog/product/920x950/99070110006_OverlordTachyonArrow1.jpg" alt="Overlord">
-    </div>
-    <div class="card-body">
-      <div class="card-name">Overlord</div>
-      <div class="card-pts">85 pts</div>
-      <span class="card-scheme scheme-overlord">Overlord Scheme</span>
-      <div class="card-zones">
-        <strong>Zones A-E + F-I:</strong> Dark metallic body &rarr; Bronze trim &rarr; Silver edges &rarr; Green glow &rarr; Base + Gold rank details, cloth, polished steel
-        <div class="zone-swatches">
-          <span class="zswatch" style="background:#2b2b2b" title="Leadbelcher"></span>
-          <span class="zswatch" style="background:#6d4c1d" title="Bronze"></span>
-          <span class="zswatch" style="background:#c0c0c0" title="Silver"></span>
-          <span class="zswatch" style="background:#39ff14" title="Green glow"></span>
-          <span class="zswatch" style="background:#d4a745" title="Gold"></span>
-          <span class="zswatch" style="background:#8b6914" title="Rich gold"></span>
-        </div>
-      </div>
-      <div class="card-checks">
-        <label><input type="checkbox"> Built</label>
-        <label><input type="checkbox"> Primed</label>
-        <label><input type="checkbox"> Painted</label>
-        <label><input type="checkbox"> Based</label>
-        <label><input type="checkbox"> Done</label>
-      </div>
-    </div>
-  </div>
+const PAINT_SWATCHES = {
+  'Leadbelcher Spray': '#888c8d',
+  'Leadbelcher': '#888c8d',
+  'Black Templar': '#2a2a2a',
+  'Nuln Oil': '#32302e',
+  'Runelord Brass': '#a87832',
+  'Canoptek Alloy': '#c8a55a',
+  'Cryptek Armourshade': '#5a4a32',
+  'Cryptek Armourshade Gloss': '#5a4a32',
+  'Stormhost Silver': '#d8d8d8',
+  'Matt Black': '#1a1a1a',
+  'Abaddon Black': '#1a1a1a',
+  'Caliban Green': '#003d15',
+  'Warpstone Glow': '#0f820f',
+  'Moot Green': '#3daf34',
+  'White dot': '#ffffff',
+  'Biel-tan Green': '#4b6b3a',
+  'Casandora Yellow': '#f4a830',
+  'Moon Dust': '#c4a96a',
+  'Retributor Armour': '#c39b2d',
+  'Liberator Gold': '#d4a540',
+  'Wyldwood': '#5e3f27',
+  'Basilicanum Grey': '#5a5a5a',
+  'Administratum Grey': '#a8a8a8',
+  'Iron Hands Steel': '#7a8a96',
+  'Kantor Blue': '#02325a',
+  'Teclis Blue': '#2e7ec2',
+  'Lothern Blue': '#4ea6dc',
+  'Corax White': '#f0f0f0',
+  'Mechanicus Std Grey': '#6a6a6a',
+  'White Scar': '#ffffff',
+  'Rakarth Flesh': '#c4b398',
+  'Reikland Fleshshade': '#c27a4a',
+  'Flayed One Flesh': '#d6c4a6',
+  'Pallid Wych Flesh': '#e8dcc8',
+  'Druchii Violet': '#6a3478',
+  'Blood for the Blood God': '#8b0000'
+};
 
-  <!-- 4. Skorpekh Lord -->
-  <div class="card">
-    <div class="card-img">
-      <img src="https://www.warhammer.com/app/resources/catalog/product/threeSixty/99120110072_NecronsRoyalCourtOTT1360/01-01.jpg" alt="Skorpekh Lord">
-    </div>
-    <div class="card-body">
-      <div class="card-name">Skorpekh Lord</div>
-      <div class="card-pts">90 pts</div>
-      <span class="card-scheme scheme-overlord">Overlord Scheme</span>
-      <div class="card-zones">
-        <strong>Zones A-E + F-I:</strong> Dark metallic body &rarr; Bronze trim &rarr; Silver edges &rarr; Green glow &rarr; Base + Gold rank details, cloth, polished steel
-        <div class="zone-swatches">
-          <span class="zswatch" style="background:#2b2b2b" title="Leadbelcher"></span>
-          <span class="zswatch" style="background:#6d4c1d" title="Bronze"></span>
-          <span class="zswatch" style="background:#c0c0c0" title="Silver"></span>
-          <span class="zswatch" style="background:#39ff14" title="Green glow"></span>
-          <span class="zswatch" style="background:#d4a745" title="Gold"></span>
-          <span class="zswatch" style="background:#8b6914" title="Rich gold"></span>
-        </div>
-      </div>
-      <div class="card-checks">
-        <label><input type="checkbox"> Built</label>
-        <label><input type="checkbox"> Primed</label>
-        <label><input type="checkbox"> Painted</label>
-        <label><input type="checkbox"> Based</label>
-        <label><input type="checkbox"> Done</label>
-      </div>
-    </div>
-  </div>
+function getZoneSteps(zoneId, model) {
+  const modelName = model.name;
+  switch(zoneId) {
+    case 'A': return [
+      {n:1, paint:'Leadbelcher Spray', where:'entire model'},
+      {n:2, paint:'Black Templar', where:'all over — contrast coat'},
+      {n:3, paint:'Nuln Oil', where:'recesses only'}
+    ];
+    case 'B': return [
+      {n:4, paint:'Runelord Brass', where:'shoulder pads, trim, dynasty markings'},
+      {n:5, paint:'Canoptek Alloy', where:'highlight top edges of bronze'},
+      {n:6, paint:'Cryptek Armourshade', where:'wash into bronze recesses'}
+    ];
+    case 'C': return [
+      {n:7, paint:'Stormhost Silver', where:'sharpest edges, rivets'}
+    ];
+    case 'D': return [
+      {n:8, paint:'Matt Black', where:'base coat glow areas'},
+      {n:9, paint:'Caliban Green', where:'fill glow areas'},
+      {n:10, paint:'Warpstone Glow', where:'center of glow'},
+      {n:11, paint:'Moot Green', where:'hot center point'},
+      {n:12, paint:'White dot', where:'pinprick highlight'},
+      {n:13, paint:'Biel-tan Green', where:'glaze to blend'},
+      {n:14, paint:'Casandora Yellow', where:'center dab for heat'}
+    ];
+    case 'E': return [
+      {n:15, paint:'Moon Dust', where:'entire base rim and texture'}
+    ];
+    case 'F': return [
+      {n:1, paint:'Retributor Armour', where:'rank insignia, crown, special trim'},
+      {n:2, paint:'Liberator Gold', where:'highlight gold edges'},
+      {n:3, paint:'Cryptek Armourshade Gloss', where:'wash gold recesses'}
+    ];
+    case 'G': return [
+      {n:1, paint:'Wyldwood', where:'cloak, tabard, cloth areas'},
+      {n:2, paint:'Basilicanum Grey', where:'shade cloth folds'},
+      {n:3, paint:'Administratum Grey', where:'highlight raised cloth'}
+    ];
+    case 'I': return [
+      {n:1, paint:'Iron Hands Steel', where:'polished weapon surfaces, blade edges'}
+    ];
+    case 'P': return [
+      {n:1, paint:'Abaddon Black', where:'base projection area'},
+      {n:2, paint:'Kantor Blue', where:'fill projection'},
+      {n:3, paint:'Teclis Blue', where:'mid highlight'},
+      {n:4, paint:'Lothern Blue', where:'edges of projection'},
+      {n:5, paint:'Corax White', where:'brightest points'}
+    ];
+    case 'K': return [
+      {n:1, paint:'Leadbelcher', where:'entire canoptek cloak'},
+      {n:2, paint:'Nuln Oil', where:'heavy wash all over cloak'},
+      {n:3, paint:'Mechanicus Std Grey', where:'drybrush raised areas'},
+      {n:4, paint:'Stormhost Silver', where:'edge highlight cloak plates'}
+    ];
+    case 'S': return [
+      {n:1, paint:'Rakarth Flesh', where:'all flayed skin surfaces'},
+      {n:2, paint:'Reikland Fleshshade', where:'wash into skin folds'},
+      {n:3, paint:'Flayed One Flesh', where:'layer raised skin areas'},
+      {n:4, paint:'Pallid Wych Flesh', where:'highlight skin edges'},
+      {n:5, paint:'Druchii Violet', where:'thin wash on skin edges for bruising'}
+    ];
+    case 'T': return [
+      {n:1, paint:'Blood for the Blood God', where:'claws, fingertips, dripping areas'}
+    ];
+    case 'X': return [
+      {n:1, paint:'Corax White', where:'entire ethereal body'},
+      {n:2, paint:'Mechanicus Std Grey', where:'shade deepest recesses'},
+      {n:3, paint:'Biel-tan Green', where:'glaze for ghostly green tint'},
+      {n:4, paint:'White Scar', where:'highlight raised surfaces'}
+    ];
+    case 'Y': return [
+      {n:1, paint:'Leadbelcher Spray', where:'metallic wing surfaces'},
+      {n:2, paint:'Black Templar', where:'all over wings'},
+      {n:3, paint:'Nuln Oil', where:'wing recesses'}
+    ];
+    case 'Z': return [
+      {n:1, paint:'Matt Black', where:'base all energy channels'},
+      {n:2, paint:'Caliban Green', where:'fill energy areas — much more coverage than normal'},
+      {n:3, paint:'Warpstone Glow', where:'build up green across body'},
+      {n:4, paint:'Moot Green', where:'hot centers of energy'},
+      {n:5, paint:'White dot', where:'pinprick highlights'},
+      {n:6, paint:'Biel-tan Green', where:'glaze to unify'},
+      {n:7, paint:'Casandora Yellow', where:'hottest energy points'}
+    ];
+    default: return [];
+  }
+}
 
-  <!-- 5. Skorpekh Destroyers -->
-  <div class="card">
-    <div class="card-img">
-      <img src="https://www.warhammer.com/app/resources/catalog/product/920x950/99120110051_SkorpekhDestroyersLead.jpg" alt="Skorpekh Destroyers">
-    </div>
-    <div class="card-body">
-      <div class="card-name">Skorpekh Destroyers x3</div>
-      <div class="card-pts">90 pts</div>
-      <span class="card-scheme scheme-warrior">Warrior Scheme</span>
-      <div class="card-zones">
-        <strong>Zones A-E:</strong> Dark metallic body &rarr; Bronze trim &rarr; Silver edges &rarr; Green glow &rarr; Base
-        <div class="zone-swatches">
-          <span class="zswatch" style="background:#2b2b2b" title="Leadbelcher"></span>
-          <span class="zswatch" style="background:#6d4c1d" title="Bronze"></span>
-          <span class="zswatch" style="background:#c0c0c0" title="Silver"></span>
-          <span class="zswatch" style="background:#39ff14" title="Green glow"></span>
-          <span class="zswatch" style="background:#3b3024" title="Base texture"></span>
-        </div>
-      </div>
-      <div class="card-checks">
-        <label><input type="checkbox"> Built</label>
-        <label><input type="checkbox"> Primed</label>
-        <label><input type="checkbox"> Painted</label>
-        <label><input type="checkbox"> Based</label>
-        <label><input type="checkbox"> Done</label>
-      </div>
-    </div>
-  </div>
+function getModelZones(model) {
+  const zones = [];
+  if (model.name === 'Canoptek Scarab Swarms') {
+    // Speed paint — custom zone list
+    return [{
+      id: 'SP',
+      name: 'Speed Paint Recipe',
+      color: '#555',
+      steps: [
+        {n:1, paint:'Leadbelcher Spray', where:'prime entire swarm black, then spray'},
+        {n:2, paint:'Nuln Oil', where:'wash all over'},
+        {n:3, paint:'Stormhost Silver', where:'edge highlight carapace plates'},
+        {n:4, paint:'Moot Green', where:'tiny eye dots'},
+        {n:5, paint:'Moon Dust', where:'base'}
+      ]
+    }];
+  }
+  if (model.name === "C'tan Void Dragon") {
+    zones.push({id:'X', name:ZONE_NAMES.X, color:ZONE_COLORS.X, steps:getZoneSteps('X',model)});
+    zones.push({id:'Y', name:ZONE_NAMES.Y, color:ZONE_COLORS.Y, steps:getZoneSteps('Y',model)});
+    zones.push({id:'Z', name:ZONE_NAMES.Z, color:ZONE_COLORS.Z, steps:getZoneSteps('Z',model)});
+    zones.push({id:'E', name:ZONE_NAMES.E, color:ZONE_COLORS.E, steps:getZoneSteps('E',model)});
+    return zones;
+  }
+  // Standard zones A-E
+  ['A','B','C','D','E'].forEach(z => {
+    zones.push({id:z, name:ZONE_NAMES[z], color:ZONE_COLORS[z], steps:getZoneSteps(z,model)});
+  });
+  // Extra zones for overlord/custom
+  if (model.extraZones) {
+    model.extraZones.forEach(z => {
+      zones.push({id:z, name:ZONE_NAMES[z], color:ZONE_COLORS[z], steps:getZoneSteps(z,model)});
+    });
+  }
+  return zones;
+}
 
-  <!-- 6. Royal Warden -->
-  <div class="card">
-    <div class="card-img">
-      <img src="https://www.warhammer.com/app/resources/catalog/product/920x950/99070110007_RoyalWarden1.jpg" alt="Royal Warden">
-    </div>
-    <div class="card-body">
-      <div class="card-name">Royal Warden</div>
-      <div class="card-pts">50 pts</div>
-      <span class="card-scheme scheme-warrior">Warrior Scheme</span>
-      <div class="card-zones">
-        <strong>Zones A-E:</strong> Dark metallic body &rarr; Bronze trim &rarr; Silver edges &rarr; Green glow &rarr; Base
-        <div class="zone-swatches">
-          <span class="zswatch" style="background:#2b2b2b" title="Leadbelcher"></span>
-          <span class="zswatch" style="background:#6d4c1d" title="Bronze"></span>
-          <span class="zswatch" style="background:#c0c0c0" title="Silver"></span>
-          <span class="zswatch" style="background:#39ff14" title="Green glow"></span>
-          <span class="zswatch" style="background:#3b3024" title="Base texture"></span>
-        </div>
-      </div>
-      <div class="card-checks">
-        <label><input type="checkbox"> Built</label>
-        <label><input type="checkbox"> Primed</label>
-        <label><input type="checkbox"> Painted</label>
-        <label><input type="checkbox"> Based</label>
-        <label><input type="checkbox"> Done</label>
-      </div>
-    </div>
-  </div>
+function renderSwatch(paint) {
+  const c = PAINT_SWATCHES[paint] || '#ccc';
+  return `<span class="swatch" style="background:${c}"></span>`;
+}
 
-  <!-- 7. Canoptek Scarab Swarms -->
-  <div class="card">
-    <div class="card-img">
-      <img src="https://www.warhammer.com/app/resources/catalog/product/threeSixty/60010199034_NecronScarabsSpin1360/01.jpg" alt="Canoptek Scarab Swarms">
-    </div>
-    <div class="card-body">
-      <div class="card-name">Canoptek Scarab Swarms x3</div>
-      <div class="card-pts">40 pts</div>
-      <span class="card-scheme scheme-speed">Speed Paint</span>
-      <div class="card-zones">
-        <strong>Speed method:</strong> Prime black &rarr; Drybrush Leadbelcher &rarr; Nuln Oil wash &rarr; Silver edges &rarr; Green eyes
-        <div class="zone-swatches">
-          <span class="zswatch" style="background:#111" title="Black primer"></span>
-          <span class="zswatch" style="background:#2b2b2b" title="Leadbelcher"></span>
-          <span class="zswatch" style="background:#1a1a1a; border-color:#555" title="Nuln Oil"></span>
-          <span class="zswatch" style="background:#c0c0c0" title="Silver"></span>
-          <span class="zswatch" style="background:#39ff14" title="Green eyes"></span>
-        </div>
-      </div>
-      <div class="card-checks">
-        <label><input type="checkbox"> Built</label>
-        <label><input type="checkbox"> Primed</label>
-        <label><input type="checkbox"> Painted</label>
-        <label><input type="checkbox"> Based</label>
-        <label><input type="checkbox"> Done</label>
-      </div>
-    </div>
-  </div>
+function renderZoneBlock(zone) {
+  const letterBg = zone.color || '#555';
+  const textColor = ['#d0d0d0','#e8e8e8','#d4b896','#c4a96a','#ffffff'].includes(letterBg) ? '#222' : '#fff';
+  let html = `<div class="zone-block">`;
+  html += `<div class="zone-title">`;
+  html += `<span class="zone-letter" style="background:${letterBg};color:${textColor}">${zone.id}</span>`;
+  html += `<span>${zone.name}</span></div>`;
+  html += `<ul class="step-list">`;
+  zone.steps.forEach(s => {
+    html += `<li><span class="step-num">${s.n}.</span>${renderSwatch(s.paint)}<strong>${s.paint}</strong> <span class="step-where">— ${s.where}</span></li>`;
+  });
+  html += `</ul></div>`;
+  return html;
+}
 
-  <!-- 8. Lokhust Heavy Destroyers -->
-  <div class="card">
-    <div class="card-img">
-      <img src="https://www.warhammer.com/app/resources/catalog/product/920x950/99120110044_LokhustHeavyDestroyerLead.jpg" alt="Lokhust Heavy Destroyers">
-    </div>
-    <div class="card-body">
-      <div class="card-name">Lokhust Heavy Destroyers x3</div>
-      <div class="card-pts">165 pts</div>
-      <span class="card-scheme scheme-warrior">Warrior Scheme</span>
-      <div class="card-zones">
-        <strong>Zones A-E:</strong> Dark metallic body &rarr; Bronze trim &rarr; Silver edges &rarr; Green glow &rarr; Base
-        <div class="card-special">+ Big gauss glow effect on weapon barrel</div>
-        <div class="zone-swatches">
-          <span class="zswatch" style="background:#2b2b2b" title="Leadbelcher"></span>
-          <span class="zswatch" style="background:#6d4c1d" title="Bronze"></span>
-          <span class="zswatch" style="background:#c0c0c0" title="Silver"></span>
-          <span class="zswatch" style="background:#39ff14" title="Green glow"></span>
-          <span class="zswatch" style="background:#00ff41" title="Intense gauss glow"></span>
-        </div>
-      </div>
-      <div class="card-checks">
-        <label><input type="checkbox"> Built</label>
-        <label><input type="checkbox"> Primed</label>
-        <label><input type="checkbox"> Painted</label>
-        <label><input type="checkbox"> Based</label>
-        <label><input type="checkbox"> Done</label>
-      </div>
-    </div>
-  </div>
+function renderCard(model) {
+  const schemeLabel = model.scheme === 'warrior' ? 'Warrior Scheme' :
+                      model.scheme === 'overlord' ? 'Overlord Scheme' :
+                      (model.customLabel || 'Custom');
+  const schemeClass = model.scheme === 'warrior' ? 'tag-warrior' :
+                      model.scheme === 'overlord' ? 'tag-overlord' : 'tag-custom';
+  const ownerClass = model.ownership === 'OWN' ? 'tag-own' : 'tag-buy';
 
-  <!-- 9. Plasmancer -->
-  <div class="card">
-    <div class="card-img">
-      <img src="https://www.warhammer.com/app/resources/catalog/product/threeSixty/99120110072_NecronsRoyalCourtOTT3360/01-01.jpg" alt="Plasmancer">
-    </div>
-    <div class="card-body">
-      <div class="card-name">Plasmancer</div>
-      <div class="card-pts">55 pts</div>
-      <span class="card-scheme scheme-overlord">Overlord Scheme</span>
-      <div class="card-zones">
-        <strong>Zones A-E + F-I:</strong> Dark metallic body &rarr; Bronze trim &rarr; Silver edges &rarr; Green glow &rarr; Base + Gold rank details, cloth, polished steel
-        <div class="card-special">+ Lightning/energy effect on hands</div>
-        <div class="zone-swatches">
-          <span class="zswatch" style="background:#2b2b2b" title="Leadbelcher"></span>
-          <span class="zswatch" style="background:#d4a745" title="Gold"></span>
-          <span class="zswatch" style="background:#c0c0c0" title="Silver"></span>
-          <span class="zswatch" style="background:#39ff14" title="Green glow"></span>
-          <span class="zswatch" style="background:#7df9ff" title="Lightning blue"></span>
-        </div>
-      </div>
-      <div class="card-checks">
-        <label><input type="checkbox"> Built</label>
-        <label><input type="checkbox"> Primed</label>
-        <label><input type="checkbox"> Painted</label>
-        <label><input type="checkbox"> Based</label>
-        <label><input type="checkbox"> Done</label>
-      </div>
-    </div>
-  </div>
+  const zones = getModelZones(model);
 
-  <!-- 10. Cryptothralls -->
-  <div class="card">
-    <div class="card-img">
-      <img src="https://www.warhammer.com/app/resources/catalog/product/threeSixty/99120110072_NecronsRoyalCourtOTT4360/01-01.jpg" alt="Cryptothralls">
-    </div>
-    <div class="card-body">
-      <div class="card-name">Cryptothralls x2</div>
-      <div class="card-pts">60 pts</div>
-      <span class="card-scheme scheme-warrior">Warrior Scheme</span>
-      <div class="card-zones">
-        <strong>Zones A-E:</strong> Dark metallic body &rarr; Bronze trim &rarr; Silver edges &rarr; Green glow &rarr; Base
-        <div class="zone-swatches">
-          <span class="zswatch" style="background:#2b2b2b" title="Leadbelcher"></span>
-          <span class="zswatch" style="background:#6d4c1d" title="Bronze"></span>
-          <span class="zswatch" style="background:#c0c0c0" title="Silver"></span>
-          <span class="zswatch" style="background:#39ff14" title="Green glow"></span>
-          <span class="zswatch" style="background:#3b3024" title="Base texture"></span>
-        </div>
-      </div>
-      <div class="card-checks">
-        <label><input type="checkbox"> Built</label>
-        <label><input type="checkbox"> Primed</label>
-        <label><input type="checkbox"> Painted</label>
-        <label><input type="checkbox"> Based</label>
-        <label><input type="checkbox"> Done</label>
-      </div>
-    </div>
-  </div>
+  let html = `<div class="model-page">`;
+  // Header
+  html += `<div class="model-header">`;
+  html += `<div class="model-name">${model.name}</div>`;
+  html += `<div class="model-meta">`;
+  html += `<span class="meta-item">${model.pts}pts</span>`;
+  html += `<span class="meta-item">${model.count} model${model.count>1?'s':''}</span>`;
+  html += `<span class="tag ${schemeClass}">${schemeLabel}</span>`;
+  html += `<span class="tag ${ownerClass}">${model.ownership}</span>`;
+  html += `</div></div>`;
 
-  <!-- 11. Canoptek Reanimator -->
-  <div class="card">
-    <div class="card-img">
-      <img src="https://www.warhammer.com/app/resources/catalog/product/threeSixty/99120110072_NecronsRoyalCourtOTT2360/01-01.jpg" alt="Canoptek Reanimator">
-    </div>
-    <div class="card-body">
-      <div class="card-name">Canoptek Reanimator</div>
-      <div class="card-pts">75 pts</div>
-      <span class="card-scheme scheme-warrior">Warrior Scheme</span>
-      <div class="card-zones">
-        <strong>Zones A-E:</strong> Dark metallic body &rarr; Bronze trim &rarr; Silver edges &rarr; Green glow &rarr; Base
-        <div class="card-special">+ Beam glow effect on reanimation beam</div>
-        <div class="zone-swatches">
-          <span class="zswatch" style="background:#2b2b2b" title="Leadbelcher"></span>
-          <span class="zswatch" style="background:#6d4c1d" title="Bronze"></span>
-          <span class="zswatch" style="background:#c0c0c0" title="Silver"></span>
-          <span class="zswatch" style="background:#39ff14" title="Green glow"></span>
-          <span class="zswatch" style="background:#00ff41" title="Beam glow"></span>
-        </div>
-      </div>
-      <div class="card-checks">
-        <label><input type="checkbox"> Built</label>
-        <label><input type="checkbox"> Primed</label>
-        <label><input type="checkbox"> Painted</label>
-        <label><input type="checkbox"> Based</label>
-        <label><input type="checkbox"> Done</label>
-      </div>
-    </div>
-  </div>
+  // Image
+  html += `<div class="model-image"><img src="${IMG_BASE}${model.img}" alt="${model.name}"></div>`;
 
-  <!-- 12. Technomancer -->
-  <div class="card">
-    <div class="card-img">
-      <img src="https://www.warhammer.com/app/resources/catalog/product/920x950/99070110005_NECCryptekLead.jpg" alt="Technomancer">
-    </div>
-    <div class="card-body">
-      <div class="card-name">Technomancer</div>
-      <div class="card-pts">80 pts</div>
-      <span class="card-scheme scheme-overlord">Overlord Scheme</span>
-      <div class="card-zones">
-        <strong>Zones A-E + F-I:</strong> Dark metallic body &rarr; Bronze trim &rarr; Silver edges &rarr; Green glow &rarr; Base + Gold rank details, cloth, polished steel
-        <div class="card-special">+ Canoptek cloak details</div>
-        <div class="zone-swatches">
-          <span class="zswatch" style="background:#2b2b2b" title="Leadbelcher"></span>
-          <span class="zswatch" style="background:#d4a745" title="Gold"></span>
-          <span class="zswatch" style="background:#c0c0c0" title="Silver"></span>
-          <span class="zswatch" style="background:#39ff14" title="Green glow"></span>
-          <span class="zswatch" style="background:#8b6914" title="Rich gold"></span>
-        </div>
-      </div>
-      <div class="card-checks">
-        <label><input type="checkbox"> Built</label>
-        <label><input type="checkbox"> Primed</label>
-        <label><input type="checkbox"> Painted</label>
-        <label><input type="checkbox"> Based</label>
-        <label><input type="checkbox"> Done</label>
-      </div>
-    </div>
-  </div>
+  // Glow note
+  if (model.glowNote) {
+    html += `<div class="glow-note"><strong>Green Glow Notes:</strong> ${model.glowNote}</div>`;
+  }
 
-  <!-- 13. Overlord w/ Translocation Shroud -->
-  <div class="card">
-    <div class="card-img">
-      <img src="https://www.warhammer.com/app/resources/catalog/product/920x950/99070110006_OverlordTachyonArrow1.jpg" alt="Overlord w/ Translocation Shroud">
-    </div>
-    <div class="card-body">
-      <div class="card-name">Overlord w/ Translocation Shroud</div>
-      <div class="card-pts">85 pts</div>
-      <span class="card-scheme scheme-overlord">Overlord Scheme</span>
-      <div class="card-zones">
-        <strong>Zones A-E + F-I:</strong> Dark metallic body &rarr; Bronze trim &rarr; Silver edges &rarr; Green glow &rarr; Base + Gold rank details, cloth, polished steel
-        <div class="zone-swatches">
-          <span class="zswatch" style="background:#2b2b2b" title="Leadbelcher"></span>
-          <span class="zswatch" style="background:#d4a745" title="Gold"></span>
-          <span class="zswatch" style="background:#c0c0c0" title="Silver"></span>
-          <span class="zswatch" style="background:#39ff14" title="Green glow"></span>
-          <span class="zswatch" style="background:#8b6914" title="Rich gold"></span>
-        </div>
-      </div>
-      <div class="card-checks">
-        <label><input type="checkbox"> Built</label>
-        <label><input type="checkbox"> Primed</label>
-        <label><input type="checkbox"> Painted</label>
-        <label><input type="checkbox"> Based</label>
-        <label><input type="checkbox"> Done</label>
-      </div>
-    </div>
-  </div>
+  // Zones
+  html += `<div class="zones" style="margin-top:6px">`;
+  zones.forEach(z => { html += renderZoneBlock(z); });
+  html += `</div>`;
 
-  <!-- 14. Lychguard (shields) — OWNED -->
-  <div class="card">
-    <div class="card-img">
-      <img src="https://www.warhammer.com/app/resources/catalog/product/920x950/99120110058_TriarchLychguardLead.jpg" alt="Lychguard (shields)">
-    </div>
-    <div class="card-body">
-      <div class="card-name">Lychguard x5 (shields) <span class="tag-own">OWN</span></div>
-      <div class="card-pts">85 pts</div>
-      <span class="card-scheme scheme-warrior">Warrior + Heavy Gold</span>
-      <div class="card-zones">
-        <strong>Zones A-E:</strong> Dark metallic body &rarr; Bronze trim &rarr; Silver edges &rarr; Green glow &rarr; Base
-        <div class="card-special">+ Heavy gold on shields &amp; weapon hilts</div>
-        <div class="zone-swatches">
-          <span class="zswatch" style="background:#2b2b2b" title="Leadbelcher"></span>
-          <span class="zswatch" style="background:#6d4c1d" title="Bronze"></span>
-          <span class="zswatch" style="background:#c0c0c0" title="Silver"></span>
-          <span class="zswatch" style="background:#39ff14" title="Green glow"></span>
-          <span class="zswatch" style="background:#d4a745" title="Heavy gold"></span>
-        </div>
-      </div>
-      <div class="card-checks">
-        <label><input type="checkbox"> Built</label>
-        <label><input type="checkbox"> Primed</label>
-        <label><input type="checkbox"> Painted</label>
-        <label><input type="checkbox"> Based</label>
-        <label><input type="checkbox"> Done</label>
-      </div>
-    </div>
-  </div>
+  // Checklist
+  html += `<div class="checklist">`;
+  ['Built','Primed','Painted','Based','Done'].forEach(s => {
+    html += `<label><span class="check-box"></span> ${s}</label>`;
+  });
+  html += `</div>`;
 
-  <!-- 15. Lychguard (2nd box) — BUY -->
-  <div class="card">
-    <div class="card-img">
-      <img src="https://www.warhammer.com/app/resources/catalog/product/920x950/99120110058_TriarchLychguardLead.jpg" alt="Lychguard (2nd box)">
-    </div>
-    <div class="card-body">
-      <div class="card-name">Lychguard x5 (2nd box) <span class="tag-buy">BUY</span></div>
-      <div class="card-pts">85 pts</div>
-      <span class="card-scheme scheme-warrior">Warrior + Heavy Gold</span>
-      <div class="card-zones">
-        <strong>Zones A-E:</strong> Dark metallic body &rarr; Bronze trim &rarr; Silver edges &rarr; Green glow &rarr; Base
-        <div class="card-special">+ Heavy gold on shields &amp; weapon hilts</div>
-        <div class="zone-swatches">
-          <span class="zswatch" style="background:#2b2b2b" title="Leadbelcher"></span>
-          <span class="zswatch" style="background:#6d4c1d" title="Bronze"></span>
-          <span class="zswatch" style="background:#c0c0c0" title="Silver"></span>
-          <span class="zswatch" style="background:#39ff14" title="Green glow"></span>
-          <span class="zswatch" style="background:#d4a745" title="Heavy gold"></span>
-        </div>
-      </div>
-      <div class="card-checks">
-        <label><input type="checkbox"> Built</label>
-        <label><input type="checkbox"> Primed</label>
-        <label><input type="checkbox"> Painted</label>
-        <label><input type="checkbox"> Based</label>
-        <label><input type="checkbox"> Done</label>
-      </div>
-    </div>
-  </div>
+  html += `</div>`;
+  return html;
+}
 
-  <!-- 16. Immortals — BUY -->
-  <div class="card">
-    <div class="card-img">
-      <img src="https://www.warhammer.com/app/resources/catalog/product/920x950/99120110057_NECImmortalsLead.jpg" alt="Immortals">
-    </div>
-    <div class="card-body">
-      <div class="card-name">Immortals x10 <span class="tag-buy">BUY</span></div>
-      <div class="card-pts">150 pts</div>
-      <span class="card-scheme scheme-warrior">Warrior Scheme</span>
-      <div class="card-zones">
-        <strong>Zones A-E:</strong> Dark metallic body &rarr; Bronze trim &rarr; Silver edges &rarr; Green glow &rarr; Base
-        <div class="zone-swatches">
-          <span class="zswatch" style="background:#2b2b2b" title="Leadbelcher"></span>
-          <span class="zswatch" style="background:#6d4c1d" title="Bronze"></span>
-          <span class="zswatch" style="background:#c0c0c0" title="Silver"></span>
-          <span class="zswatch" style="background:#39ff14" title="Green glow"></span>
-          <span class="zswatch" style="background:#3b3024" title="Base texture"></span>
-        </div>
-      </div>
-      <div class="card-checks">
-        <label><input type="checkbox"> Built</label>
-        <label><input type="checkbox"> Primed</label>
-        <label><input type="checkbox"> Painted</label>
-        <label><input type="checkbox"> Based</label>
-        <label><input type="checkbox"> Done</label>
-      </div>
-    </div>
-  </div>
-
-  <!-- 17. Canoptek Wraiths — BUY -->
-  <div class="card">
-    <div class="card-img">
-      <img src="https://www.warhammer.com/app/resources/catalog/product/920x950/99120110060_NECCanoptekWraithsLead.jpg" alt="Canoptek Wraiths">
-    </div>
-    <div class="card-body">
-      <div class="card-name">Canoptek Wraiths x6 <span class="tag-buy">BUY</span></div>
-      <div class="card-pts">220 pts</div>
-      <span class="card-scheme scheme-warrior">Warrior Scheme</span>
-      <div class="card-zones">
-        <strong>Zones A-E:</strong> Dark metallic body &rarr; Bronze trim &rarr; Silver edges &rarr; Green glow &rarr; Base
-        <div class="card-special">+ Claw edge highlights</div>
-        <div class="zone-swatches">
-          <span class="zswatch" style="background:#2b2b2b" title="Leadbelcher"></span>
-          <span class="zswatch" style="background:#6d4c1d" title="Bronze"></span>
-          <span class="zswatch" style="background:#c0c0c0" title="Silver"></span>
-          <span class="zswatch" style="background:#39ff14" title="Green glow"></span>
-          <span class="zswatch" style="background:#e0e0e0" title="Sharp silver highlights"></span>
-        </div>
-      </div>
-      <div class="card-checks">
-        <label><input type="checkbox"> Built</label>
-        <label><input type="checkbox"> Primed</label>
-        <label><input type="checkbox"> Painted</label>
-        <label><input type="checkbox"> Based</label>
-        <label><input type="checkbox"> Done</label>
-      </div>
-    </div>
-  </div>
-
-  <!-- 18. Psychomancer -->
-  <div class="card">
-    <div class="card-img">
-      <img src="https://www.warhammer.com/app/resources/catalog/product/920x950/99120110073_NECPsychomancerLead.jpg" alt="Psychomancer">
-    </div>
-    <div class="card-body">
-      <div class="card-name">Psychomancer</div>
-      <div class="card-pts">55 pts</div>
-      <span class="card-scheme scheme-overlord">Overlord Scheme</span>
-      <div class="card-zones">
-        <strong>Zones A-E + F-I:</strong> Dark metallic body &rarr; Bronze trim &rarr; Silver edges &rarr; Green glow &rarr; Base + Gold rank details, cloth, polished steel
-        <div class="card-special">+ Zone P: Blue projection effect</div>
-        <div class="zone-swatches">
-          <span class="zswatch" style="background:#2b2b2b" title="Leadbelcher"></span>
-          <span class="zswatch" style="background:#d4a745" title="Gold"></span>
-          <span class="zswatch" style="background:#c0c0c0" title="Silver"></span>
-          <span class="zswatch" style="background:#39ff14" title="Green glow"></span>
-          <span class="zswatch" style="background:#4a9eff" title="Blue projection"></span>
-        </div>
-      </div>
-      <div class="card-checks">
-        <label><input type="checkbox"> Built</label>
-        <label><input type="checkbox"> Primed</label>
-        <label><input type="checkbox"> Painted</label>
-        <label><input type="checkbox"> Based</label>
-        <label><input type="checkbox"> Done</label>
-      </div>
-    </div>
-  </div>
-
-  <!-- 19. Triarch Stalker -->
-  <div class="card">
-    <div class="card-img">
-      <img src="https://www.warhammer.com/app/resources/catalog/product/920x950/99120110058_NecronTriarchStalkerLead.jpg" alt="Triarch Stalker">
-    </div>
-    <div class="card-body">
-      <div class="card-name">Triarch Stalker</div>
-      <div class="card-pts">110 pts</div>
-      <span class="card-scheme scheme-warrior">Warrior Scheme</span>
-      <div class="card-zones">
-        <strong>Zones A-E:</strong> Dark metallic body &rarr; Bronze trim &rarr; Silver edges &rarr; Green glow &rarr; Base
-        <div class="zone-swatches">
-          <span class="zswatch" style="background:#2b2b2b" title="Leadbelcher"></span>
-          <span class="zswatch" style="background:#6d4c1d" title="Bronze"></span>
-          <span class="zswatch" style="background:#c0c0c0" title="Silver"></span>
-          <span class="zswatch" style="background:#39ff14" title="Green glow"></span>
-          <span class="zswatch" style="background:#3b3024" title="Base texture"></span>
-        </div>
-      </div>
-      <div class="card-checks">
-        <label><input type="checkbox"> Built</label>
-        <label><input type="checkbox"> Primed</label>
-        <label><input type="checkbox"> Painted</label>
-        <label><input type="checkbox"> Based</label>
-        <label><input type="checkbox"> Done</label>
-      </div>
-    </div>
-  </div>
-
-  <!-- 20. Flayed Ones -->
-  <div class="card">
-    <div class="card-img">
-      <img src="https://www.warhammer.com/app/resources/catalog/product/920x950/99120110056_NECFlayedOnesLead.jpg" alt="Flayed Ones">
-    </div>
-    <div class="card-body">
-      <div class="card-name">Flayed Ones x5</div>
-      <div class="card-pts">60 pts</div>
-      <span class="card-scheme scheme-warrior">Warrior Scheme</span>
-      <div class="card-zones">
-        <strong>Zones A-E:</strong> Dark metallic body &rarr; Bronze trim &rarr; Silver edges &rarr; Green glow &rarr; Base
-        <div class="card-special">+ Flesh/blood gore effects on claws &amp; draped skin</div>
-        <div class="zone-swatches">
-          <span class="zswatch" style="background:#2b2b2b" title="Leadbelcher"></span>
-          <span class="zswatch" style="background:#6d4c1d" title="Bronze"></span>
-          <span class="zswatch" style="background:#39ff14" title="Green glow"></span>
-          <span class="zswatch" style="background:#d4a088" title="Flesh"></span>
-          <span class="zswatch" style="background:#8b0000" title="Blood"></span>
-        </div>
-      </div>
-      <div class="card-checks">
-        <label><input type="checkbox"> Built</label>
-        <label><input type="checkbox"> Primed</label>
-        <label><input type="checkbox"> Painted</label>
-        <label><input type="checkbox"> Based</label>
-        <label><input type="checkbox"> Done</label>
-      </div>
-    </div>
-  </div>
-
-  <!-- 21. C'tan Shard of the Void Dragon — BUY -->
-  <div class="card">
-    <div class="card-img">
-      <img src="https://www.warhammer.com/app/resources/catalog/product/920x950/99120110054_CTanShardoftheVoidDragonLead.jpg" alt="C'tan Shard of the Void Dragon">
-    </div>
-    <div class="card-body">
-      <div class="card-name">C'tan Shard of the Void Dragon <span class="tag-buy">BUY</span></div>
-      <div class="card-pts">300 pts</div>
-      <span class="card-scheme scheme-custom">Custom Scheme</span>
-      <div class="card-zones">
-        <strong>Custom:</strong> Unique centerpiece model &mdash; plan custom metallic/ethereal scheme. Reference 'Eavy Metal and box art for inspiration.
-        <div class="card-special">Star god energy, living metal, Necrodermis effects</div>
-        <div class="zone-swatches">
-          <span class="zswatch" style="background:#2b2b2b" title="Dark metallic"></span>
-          <span class="zswatch" style="background:#c0c0c0" title="Silver"></span>
-          <span class="zswatch" style="background:#39ff14" title="Green energy"></span>
-          <span class="zswatch" style="background:#7df9ff" title="Ethereal blue"></span>
-          <span class="zswatch" style="background:#ffffff; border-color:#aaa" title="White highlights"></span>
-        </div>
-      </div>
-      <div class="card-checks">
-        <label><input type="checkbox"> Built</label>
-        <label><input type="checkbox"> Primed</label>
-        <label><input type="checkbox"> Painted</label>
-        <label><input type="checkbox"> Based</label>
-        <label><input type="checkbox"> Done</label>
-      </div>
-    </div>
-  </div>
-
-</div><!-- end cards-grid -->
+// Render all
+document.addEventListener('DOMContentLoaded', () => {
+  document.body.innerHTML = models.map(renderCard).join('');
+});
+</script>
 
 </body>
 </html>

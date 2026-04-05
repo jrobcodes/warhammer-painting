@@ -4,325 +4,290 @@
 <meta charset="UTF-8">
 <title>Szarekhan Necrons — Army Tracker</title>
 <style>
-  @page { size: letter landscape; margin: 0.35in; }
+  @page { size: letter; margin: 0.5in; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     background: #fff; color: #1a1a1a;
-    padding: 12px 16px; font-size: 7.5pt;
+    font-size: 9pt; line-height: 1.35;
   }
 
-  .header {
-    text-align: center;
-    margin-bottom: 8px;
-    border-bottom: 2px solid #222;
-    padding-bottom: 4px;
+  .tier-page {
+    page-break-after: always;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
   }
-  .header h1 {
-    font-size: 14pt;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-bottom: 1px;
-  }
-  .header .note {
-    font-size: 7pt;
-    color: #888;
-    font-style: italic;
-  }
+  .tier-page:last-child { page-break-after: auto; }
 
-  .tiers {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 12px;
-  }
-
-  .tier {
-    border: 1.5px solid #333;
-    border-radius: 6px;
-    overflow: hidden;
-  }
   .tier-header {
-    padding: 4px 8px;
-    font-weight: 800;
-    font-size: 9pt;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
     text-align: center;
+    border-bottom: 3px solid #222;
+    padding-bottom: 6px;
+    margin-bottom: 10px;
   }
-  .tier-1 .tier-header { background: #1a5c1a; color: #fff; }
-  .tier-2 .tier-header { background: #7a5c00; color: #fff; }
-  .tier-3 .tier-header { background: #4a1a6b; color: #fff; }
+  .tier-title {
+    font-size: 20pt;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .tier-subtitle {
+    font-size: 10pt;
+    color: #555;
+    margin-top: 2px;
+  }
 
-  .tier-body { padding: 4px 6px; }
-
-  table {
+  .roster-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 7.5pt;
+    margin-bottom: 10px;
   }
-  th {
+  .roster-table th {
+    background: #222;
+    color: #fff;
+    padding: 5px 8px;
     text-align: left;
-    font-size: 6.5pt;
+    font-size: 8pt;
     text-transform: uppercase;
-    color: #888;
+    letter-spacing: 0.5px;
+  }
+  .roster-table th:first-child { border-radius: 4px 0 0 0; }
+  .roster-table th:last-child { border-radius: 0 4px 0 0; }
+
+  .roster-table td {
+    padding: 6px 8px;
+    border-bottom: 1px solid #ddd;
+    vertical-align: middle;
+  }
+  .roster-table tr:nth-child(even) td {
+    background: #f9f9f9;
+  }
+  .roster-table tr:last-child td {
+    border-bottom: 2px solid #222;
+  }
+
+  .unit-img {
+    width: 80px;
+    height: 60px;
+    object-fit: contain;
+    border-radius: 4px;
+    background: #f0f0f0;
+    border: 1px solid #ddd;
+    display: block;
+  }
+
+  .unit-name {
+    font-weight: 700;
+    font-size: 10pt;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 7.5pt;
+    font-weight: 700;
+    text-transform: uppercase;
     letter-spacing: 0.3px;
-    padding: 2px 3px;
-    border-bottom: 1px solid #ccc;
   }
-  td {
-    padding: 2.5px 3px;
-    border-bottom: 1px solid #eee;
-    vertical-align: middle;
+  .tag-own { background: #1565c0; color: #fff; }
+  .tag-buy { background: #c62828; color: #fff; }
+
+  .status-boxes {
+    display: flex;
+    gap: 6px;
+    flex-wrap: nowrap;
   }
-  tr:last-child td { border-bottom: none; }
-
-  .cb { width: 20px; text-align: center; }
-  .cb input[type="checkbox"] { width: 11px; height: 11px; margin: 0; }
-  .unit-name { font-weight: 600; white-space: nowrap; }
-  .models { text-align: center; color: #666; }
-  .pts { text-align: right; font-weight: 600; white-space: nowrap; }
-
-  .tag-buy {
-    display: inline-block;
-    background: #fee2e2;
-    color: #b91c1c;
-    font-size: 6pt;
-    font-weight: 700;
-    padding: 0px 4px;
-    border-radius: 6px;
-    border: 1px solid #f87171;
+  .status-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    font-size: 6.5pt;
+    color: #666;
     text-transform: uppercase;
-    vertical-align: middle;
+    letter-spacing: 0.3px;
   }
-  .tag-own {
-    display: inline-block;
-    background: #dcfce7;
-    color: #166534;
-    font-size: 6pt;
-    font-weight: 700;
-    padding: 0px 4px;
-    border-radius: 6px;
-    border: 1px solid #86efac;
-    text-transform: uppercase;
-    vertical-align: middle;
+  .check-box {
+    display: block;
+    width: 16px; height: 16px;
+    border: 1.5px solid #555;
+    border-radius: 2px;
   }
 
-  .tier-total {
-    text-align: right;
-    font-weight: 800;
-    font-size: 8.5pt;
-    padding: 4px 6px;
-    border-top: 2px solid #333;
-    background: #f5f5f5;
+  .tier-totals {
+    margin-top: auto;
+    padding-top: 8px;
+    border-top: 2.5px solid #222;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11pt;
+    font-weight: 700;
+  }
+  .tier-totals .running {
+    font-size: 9pt;
+    font-weight: 600;
+    color: #555;
+  }
+  .total-pts {
+    font-size: 14pt;
+    color: #222;
+  }
+  .total-models {
+    font-size: 10pt;
+    color: #444;
   }
 
   @media print {
     body { padding: 0; }
+    .tier-page { height: auto; }
   }
 </style>
 </head>
 <body>
 
-<div class="header">
-  <h1>Szarekhan Necrons &mdash; Army Tracker</h1>
-  <div class="note">Keep on painting desk &bull; Check off units as completed</div>
-</div>
+<script>
+const IMG_BASE = 'https://www.warhammer.com/app/resources/catalog/product/';
 
-<div class="tiers">
+const allUnits = [
+  { name:'Necron Warriors (Flayers)', count:10, pts:90, own:'OWN', img:'threeSixty/60010199034_NecronWarriorsSpin1360/01.jpg' },
+  { name:'Necron Warriors (Reapers)', count:10, pts:90, own:'OWN', img:'threeSixty/60010199034_NecronWarriorsSpin1360/01.jpg' },
+  { name:'Overlord', count:1, pts:85, own:'OWN', img:'920x950/99070110006_OverlordTachyonArrow1.jpg' },
+  { name:'Skorpekh Lord', count:1, pts:90, own:'OWN', img:'threeSixty/99120110072_NecronsRoyalCourtOTT1360/01-01.jpg' },
+  { name:'Skorpekh Destroyers', count:3, pts:90, own:'OWN', img:'920x950/99120110051_SkorpekhDestroyersLead.jpg' },
+  { name:'Royal Warden', count:1, pts:50, own:'OWN', img:'920x950/99070110007_RoyalWarden1.jpg' },
+  { name:'Canoptek Scarab Swarms', count:3, pts:40, own:'OWN', img:'threeSixty/60010199034_NecronScarabsSpin1360/01.jpg' },
+  { name:'Lokhust Heavy Destroyers', count:3, pts:165, own:'OWN', img:'920x950/99120110044_LokhustHeavyDestroyerLead.jpg' },
+  { name:'Plasmancer', count:1, pts:55, own:'OWN', img:'threeSixty/99120110072_NecronsRoyalCourtOTT3360/01-01.jpg' },
+  { name:'Cryptothralls', count:2, pts:60, own:'OWN', img:'threeSixty/99120110072_NecronsRoyalCourtOTT4360/01-01.jpg' },
+  { name:'Canoptek Reanimator', count:1, pts:75, own:'OWN', img:'threeSixty/99120110072_NecronsRoyalCourtOTT2360/01-01.jpg' },
+  { name:'Technomancer', count:1, pts:80, own:'OWN', img:'920x950/99070110005_NECCryptekLead.jpg' },
+  { name:'Overlord w/ Translocation Shroud', count:1, pts:85, own:'OWN', img:'920x950/99070110006_OverlordTachyonArrow1.jpg' },
+  { name:'Lychguard (Shields)', count:5, pts:85, own:'OWN', img:'920x950/99120110058_TriarchLychguardLead.jpg' },
+  { name:'Lychguard (2nd box)', count:5, pts:85, own:'BUY', img:'920x950/99120110058_TriarchLychguardLead.jpg' },
+  { name:'Immortals', count:10, pts:150, own:'BUY', img:'920x950/99120110057_NECImmortalsLead.jpg' },
+  { name:'Canoptek Wraiths', count:6, pts:220, own:'BUY', img:'920x950/99120110060_NECCanoptekWraithsLead.jpg' },
+  { name:'Psychomancer', count:1, pts:55, own:'OWN', img:'920x950/99120110073_NECPsychomancerLead.jpg' },
+  { name:'Triarch Stalker', count:1, pts:110, own:'OWN', img:'920x950/99120110058_NecronTriarchStalkerLead.jpg' },
+  { name:'Flayed Ones', count:5, pts:60, own:'OWN', img:'920x950/99120110056_NECFlayedOnesLead.jpg' },
+  { name:"C'tan Void Dragon", count:1, pts:300, own:'BUY', img:'920x950/99120110054_CTanShardoftheVoidDragonLead.jpg' }
+];
 
-  <!-- TIER 1: 500pt Base -->
-  <div class="tier tier-1">
-    <div class="tier-header">500pt Base</div>
-    <div class="tier-body">
-      <table>
-        <thead>
-          <tr><th class="cb"></th><th>Unit</th><th class="models">#</th><th class="pts">Pts</th><th></th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="cb"><input type="checkbox"></td>
-            <td class="unit-name">Necron Warriors (Flayers)</td>
-            <td class="models">10</td>
-            <td class="pts">90</td>
-            <td><span class="tag-own">OWN</span></td>
-          </tr>
-          <tr>
-            <td class="cb"><input type="checkbox"></td>
-            <td class="unit-name">Necron Warriors (Reapers)</td>
-            <td class="models">10</td>
-            <td class="pts">90</td>
-            <td><span class="tag-own">OWN</span></td>
-          </tr>
-          <tr>
-            <td class="cb"><input type="checkbox"></td>
-            <td class="unit-name">Overlord</td>
-            <td class="models">1</td>
-            <td class="pts">85</td>
-            <td><span class="tag-own">OWN</span></td>
-          </tr>
-          <tr>
-            <td class="cb"><input type="checkbox"></td>
-            <td class="unit-name">Skorpekh Lord</td>
-            <td class="models">1</td>
-            <td class="pts">90</td>
-            <td><span class="tag-own">OWN</span></td>
-          </tr>
-          <tr>
-            <td class="cb"><input type="checkbox"></td>
-            <td class="unit-name">Skorpekh Destroyers</td>
-            <td class="models">3</td>
-            <td class="pts">90</td>
-            <td><span class="tag-own">OWN</span></td>
-          </tr>
-          <tr>
-            <td class="cb"><input type="checkbox"></td>
-            <td class="unit-name">Royal Warden</td>
-            <td class="models">1</td>
-            <td class="pts">50</td>
-            <td><span class="tag-own">OWN</span></td>
-          </tr>
-          <tr>
-            <td class="cb"><input type="checkbox"></td>
-            <td class="unit-name">Canoptek Scarab Swarms</td>
-            <td class="models">3</td>
-            <td class="pts">40</td>
-            <td><span class="tag-own">OWN</span></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="tier-total">Total: 535 pts</div>
-  </div>
+// Tier assignments
+const tier500 = [
+  'Necron Warriors (Flayers)',
+  'Overlord',
+  'Skorpekh Lord',
+  'Skorpekh Destroyers',
+  'Royal Warden',
+  'Canoptek Scarab Swarms'
+];
 
-  <!-- TIER 2: 1000pt Additions -->
-  <div class="tier tier-2">
-    <div class="tier-header">1000pt Additions</div>
-    <div class="tier-body">
-      <table>
-        <thead>
-          <tr><th class="cb"></th><th>Unit</th><th class="models">#</th><th class="pts">Pts</th><th></th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="cb"><input type="checkbox"></td>
-            <td class="unit-name">Lokhust Heavy Destroyers</td>
-            <td class="models">3</td>
-            <td class="pts">165</td>
-            <td><span class="tag-own">OWN</span></td>
-          </tr>
-          <tr>
-            <td class="cb"><input type="checkbox"></td>
-            <td class="unit-name">Plasmancer</td>
-            <td class="models">1</td>
-            <td class="pts">55</td>
-            <td><span class="tag-own">OWN</span></td>
-          </tr>
-          <tr>
-            <td class="cb"><input type="checkbox"></td>
-            <td class="unit-name">Cryptothralls</td>
-            <td class="models">2</td>
-            <td class="pts">60</td>
-            <td><span class="tag-own">OWN</span></td>
-          </tr>
-          <tr>
-            <td class="cb"><input type="checkbox"></td>
-            <td class="unit-name">Canoptek Reanimator</td>
-            <td class="models">1</td>
-            <td class="pts">75</td>
-            <td><span class="tag-own">OWN</span></td>
-          </tr>
-          <tr>
-            <td class="cb"><input type="checkbox"></td>
-            <td class="unit-name">Technomancer</td>
-            <td class="models">1</td>
-            <td class="pts">80</td>
-            <td><span class="tag-own">OWN</span></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="tier-total">Tier adds: 435 pts &bull; Running: 970 pts</div>
-  </div>
+const tier1000 = [
+  'Necron Warriors (Reapers)',
+  'Lokhust Heavy Destroyers',
+  'Plasmancer',
+  'Cryptothralls',
+  'Canoptek Reanimator',
+  'Technomancer'
+];
 
-  <!-- TIER 3: 2000pt Additions -->
-  <div class="tier tier-3">
-    <div class="tier-header">2000pt Additions</div>
-    <div class="tier-body">
-      <table>
-        <thead>
-          <tr><th class="cb"></th><th>Unit</th><th class="models">#</th><th class="pts">Pts</th><th></th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="cb"><input type="checkbox"></td>
-            <td class="unit-name">Overlord w/ Transloc. Shroud</td>
-            <td class="models">1</td>
-            <td class="pts">85</td>
-            <td><span class="tag-own">OWN</span></td>
-          </tr>
-          <tr>
-            <td class="cb"><input type="checkbox"></td>
-            <td class="unit-name">Lychguard (shields)</td>
-            <td class="models">5</td>
-            <td class="pts">85</td>
-            <td><span class="tag-own">OWN</span></td>
-          </tr>
-          <tr>
-            <td class="cb"><input type="checkbox"></td>
-            <td class="unit-name">Lychguard (2nd box)</td>
-            <td class="models">5</td>
-            <td class="pts">85</td>
-            <td><span class="tag-buy">BUY</span></td>
-          </tr>
-          <tr>
-            <td class="cb"><input type="checkbox"></td>
-            <td class="unit-name">Immortals</td>
-            <td class="models">10</td>
-            <td class="pts">150</td>
-            <td><span class="tag-buy">BUY</span></td>
-          </tr>
-          <tr>
-            <td class="cb"><input type="checkbox"></td>
-            <td class="unit-name">Canoptek Wraiths</td>
-            <td class="models">6</td>
-            <td class="pts">220</td>
-            <td><span class="tag-buy">BUY</span></td>
-          </tr>
-          <tr>
-            <td class="cb"><input type="checkbox"></td>
-            <td class="unit-name">Psychomancer</td>
-            <td class="models">1</td>
-            <td class="pts">55</td>
-            <td><span class="tag-own">OWN</span></td>
-          </tr>
-          <tr>
-            <td class="cb"><input type="checkbox"></td>
-            <td class="unit-name">Triarch Stalker</td>
-            <td class="models">1</td>
-            <td class="pts">110</td>
-            <td><span class="tag-own">OWN</span></td>
-          </tr>
-          <tr>
-            <td class="cb"><input type="checkbox"></td>
-            <td class="unit-name">Flayed Ones</td>
-            <td class="models">5</td>
-            <td class="pts">60</td>
-            <td><span class="tag-own">OWN</span></td>
-          </tr>
-          <tr>
-            <td class="cb"><input type="checkbox"></td>
-            <td class="unit-name">C'tan Void Dragon</td>
-            <td class="models">1</td>
-            <td class="pts">300</td>
-            <td><span class="tag-buy">BUY</span></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="tier-total">Tier adds: 1150 pts &bull; Grand total: 2120 pts</div>
-  </div>
+const tier2000 = [
+  'Overlord w/ Translocation Shroud',
+  'Lychguard (Shields)',
+  'Lychguard (2nd box)',
+  'Immortals',
+  'Canoptek Wraiths',
+  'Psychomancer',
+  'Triarch Stalker',
+  'Flayed Ones',
+  "C'tan Void Dragon"
+];
 
-</div><!-- end tiers -->
+function getUnits(names) {
+  return names.map(n => allUnits.find(u => u.name === n)).filter(Boolean);
+}
+
+function sumPts(units) { return units.reduce((s,u) => s + u.pts, 0); }
+function sumModels(units) { return units.reduce((s,u) => s + u.count, 0); }
+
+const statuses = ['Unbuilt','Built','Primed','Painting','Based','Done'];
+
+function renderRow(unit) {
+  const tagClass = unit.own === 'OWN' ? 'tag-own' : 'tag-buy';
+  let html = `<tr>`;
+  html += `<td><img class="unit-img" src="${IMG_BASE}${unit.img}" alt="${unit.name}"></td>`;
+  html += `<td><span class="unit-name">${unit.name}</span></td>`;
+  html += `<td style="text-align:center;font-weight:700">${unit.count}</td>`;
+  html += `<td style="text-align:center;font-weight:700">${unit.pts}</td>`;
+  html += `<td style="text-align:center"><span class="tag ${tagClass}">${unit.own}</span></td>`;
+  html += `<td><div class="status-boxes">`;
+  statuses.forEach(s => {
+    html += `<div class="status-item"><span class="check-box"></span>${s}</div>`;
+  });
+  html += `</div></td>`;
+  html += `</tr>`;
+  return html;
+}
+
+function renderTier(title, subtitle, units, prevPts) {
+  const tierPts = sumPts(units);
+  const tierModels = sumModels(units);
+  const cumPts = prevPts + tierPts;
+
+  let runningText = '';
+  if (prevPts > 0) {
+    runningText = `${tierPts}pts new + ${prevPts}pts previous = ${cumPts}pts total`;
+  } else {
+    runningText = `${cumPts}pts total`;
+  }
+
+  let html = `<div class="tier-page">`;
+  html += `<div class="tier-header">`;
+  html += `<div class="tier-title">${title}</div>`;
+  if (subtitle) html += `<div class="tier-subtitle">${subtitle}</div>`;
+  html += `</div>`;
+
+  html += `<table class="roster-table">`;
+  html += `<thead><tr>`;
+  html += `<th style="width:90px">Image</th>`;
+  html += `<th>Unit</th>`;
+  html += `<th style="width:55px;text-align:center">Models</th>`;
+  html += `<th style="width:50px;text-align:center">Pts</th>`;
+  html += `<th style="width:50px;text-align:center">Status</th>`;
+  html += `<th style="width:260px">Progress</th>`;
+  html += `</tr></thead><tbody>`;
+  units.forEach(u => { html += renderRow(u); });
+  html += `</tbody></table>`;
+
+  html += `<div class="tier-totals">`;
+  html += `<span class="total-pts">${tierPts} pts</span>`;
+  html += `<span class="total-models">${tierModels} models</span>`;
+  html += `<span class="running">${runningText}</span>`;
+  html += `</div>`;
+
+  html += `</div>`;
+  return html;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const t500 = getUnits(tier500);
+  const t1000 = getUnits(tier1000);
+  const t2000 = getUnits(tier2000);
+
+  const pts500 = sumPts(t500);
+  const pts1000 = sumPts(t1000);
+
+  let html = '';
+  html += renderTier('500pt Base Army', 'Core force — start here', t500, 0);
+  html += renderTier('1000pt Army', 'Additions to reach 1000pts', t1000, pts500);
+  html += renderTier('2000pt Army', 'Additions to reach 2000pts', t2000, pts500 + pts1000);
+
+  document.body.innerHTML = html;
+});
+</script>
 
 </body>
 </html>
