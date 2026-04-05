@@ -731,52 +731,23 @@ function getModelStages(model) {
   ];
   stages.push({ stage: '6. Glazes', color: '#00695c', steps: glazeSteps });
 
-  // STAGE 7: BASING — Crystal Tomb World
+  // STAGE 7: BASING — reference to separate card
   const isHero = isOverlord || model.name.includes('Lord') || model.name.includes('C\'tan');
   const isElite = model.name.includes('Skorpekh Dest') || model.name.includes('Lychguard') || model.name.includes('Wraith') || model.name.includes('Lokhust') || model.name.includes('Flayed');
   const isCenterpiece = model.name.includes('C\'tan');
 
-  let corkNote, crystalNote;
-  if (isCenterpiece) {
-    corkNote = 'CENTERPIECE: glue 2-3 STACKED cork chunks onto the base first — creates a rocky outcrop. Build up height so the model towers over troops. Add small rock chips around the cork.';
-    crystalNote = '5-6 crystals (mix sizes, mostly medium). Cluster them around the cork formation like energy bursting from the ground. Push into wet paste at dramatic angles.';
-  } else if (isHero) {
-    corkNote = 'HERO: glue 1-2 cork chunks onto the base — model stands on top, elevated ~3mm above troops. Break cork by snapping (ragged edges look like natural rock). Add a small rock chip or two.';
-    crystalNote = '3-4 crystals (mix small + medium). Cluster near the cork/rock, like energy forming around the elevated point. Push into wet paste at angles.';
-  } else if (isElite) {
-    corkNote = null;
-    crystalNote = '2-3 small crystals. Push into wet paste at slight angles. Add one small rock chip for variety.';
-  } else {
-    corkNote = null;
-    crystalNote = '1-2 small crystals. Push into wet paste, slightly angled. Keep it simple on troops — consistency across the squad matters more than individual detail.';
-  }
+  let baseType = 'TROOPS';
+  if (isCenterpiece) baseType = 'CENTERPIECE';
+  else if (isHero) baseType = 'HERO';
+  else if (isElite) baseType = 'ELITE';
 
-  const finishSteps = [];
-  if (corkNote) {
-    finishSteps.push({paint:'Cork + super glue', zone:'E', where:corkNote});
-  }
-  finishSteps.push(
-    {paint:'Vallejo Desert Sand', zone:'E', where:'spread texture paste over the base' + (corkNote ? ' and over/around the cork to blend it into the terrain' : '') + '. While still WET, push clear resin crystals into the paste (' + crystalNote + '). Let dry ~1 hour.'},
-    {paint:'Agrax Earthshade', zone:'E', where:'wash the SAND TEXTURE only (avoid the crystals). Adds depth and shadow to the gritty texture.' + (corkNote ? ' Gets into the cork crevices nicely.' : '')},
-    {paint:'Ushabti Bone', zone:'E', where:'DRYBRUSH the sand and any cork/rock surfaces — lightly drag a mostly-dry brush across the raised grit. Picks up texture beautifully.'},
-    {paint:'Abaddon Black', zone:'E', where:'paint the crystals solid black. This is the base for the crystal glow, same as weapon glow prep.'},
-    {paint:'Caliban Green', zone:'E', where:'paint the crystals dark green, leaving black visible at the very base where crystal meets sand.'},
-    {paint:'Warpstone Glow', zone:'E', where:'layer the upper half / tips of each crystal with brighter green.'},
-    {paint:'Moot Green', zone:'E', where:'just the crystal TIPS — bright green, energy concentrating at the point.'},
-    {paint:'White dot', zone:'E', where:'tiny white dot at the very tip of each crystal. Makes them glow.'},
-    {paint:'Biel-tan Green', zone:'E', where:'glaze over all crystals to unify the green and add glossy sheen.'},
-  );
-  if (isHero || isCenterpiece) {
-    finishSteps.push({paint:'Moot Green + Lahmian Medium', zone:'E', where:'HERO/CENTERPIECE: thin green wash on the sand directly AROUND the crystal bases. Creates an OSL glow on the ground — makes the crystals look like they\'re emitting light onto the terrain.'});
-  }
-  if (isCenterpiece) {
-    finishSteps.push({paint:'Spare bits', zone:'E', where:'CENTERPIECE: glue 1-2 spare Necron bits from leftover sprues onto the base — a broken scarab, weapon shard, or skull. Paint metallic + wash. Makes the base tell a story.'});
-  }
-  finishSteps.push({paint:'Abaddon Black', zone:'E', where:'paint the base RIM neat black for a clean finish.'});
+  const finishSteps = [
+    {paint:'See Basing Card', zone:'E', where:'Follow the Crystal Tomb World basing card (first page). This model uses the ' + baseType + ' tier.'},
+  ];
   if (hasBlood) {
     finishSteps.push({paint:'Blood for the Blood God', zone:'T', where:'apply to CLAW TIPS, finger blades, torn skin edges. Glossy technical paint = wet blood. Dab on, let run/pool. Apply DEAD LAST so glossy finish doesn\'t get messed up.'});
   }
-  stages.push({ stage: '7. Crystal Basing — Tomb World', color: '#795548', steps: finishSteps });
+  stages.push({ stage: '7. Basing & Finish (' + baseType + ')', color: '#795548', steps: finishSteps });
 
   return stages;
 }
@@ -860,7 +831,101 @@ function renderCard(model) {
 
 // Render all
 document.addEventListener('DOMContentLoaded', () => {
-  document.body.innerHTML = models.map(renderCard).join('');
+  document.body.innerHTML = renderBasingCard() + models.map(renderCard).join('');
+
+function renderBasingCard() {
+  return `<div class="model-page">
+  <div class="model-header">
+    <div class="model-name">Crystal Tomb World — Basing Guide</div>
+    <div class="model-meta">
+      <span class="meta-item">All Models</span>
+      <span class="tag tag-custom" style="background:#795548;">Reference Card</span>
+    </div>
+    <div style="font-size:7.5pt;color:#666;margin-top:4px;max-width:700px;margin-left:auto;margin-right:auto;font-style:italic;">
+      Dark ash desert with glowing green energy crystals. Do the texture + crystals BEFORE priming — everything gets primed together. Paint the base during Stage 7 of each model.
+    </div>
+  </div>
+
+  <div style="font-size:8pt;padding:8px;background:#f0f7ff;border:1px solid #b0c4de;border-radius:4px;margin:8px 0;color:#333;">
+    <strong>Prep order:</strong> Glue cork (heroes) → apply texture paste → embed crystals while wet → let dry overnight → THEN prime the whole model + base together with Leadbelcher Spray.
+  </div>
+
+  <div class="zones">
+    <div class="zone-block" style="border-left:3px solid #795548;">
+      <div class="zone-title" style="color:#795548;">Dark Ash Ground (all models)</div>
+      <ul class="step-list">
+        <li><div class="step-head"><span class="step-num">1.</span>${renderSwatch('Vallejo Desert Sand')}<span class="step-paint">Vallejo Desert Sand texture</span></div>
+        <div class="step-where">Spread onto base with old brush or sculpting tool. While still WET, push clear resin crystals into the paste at angles. Let dry ~1 hour (or overnight if doing cork).</div></li>
+        <li><div class="step-head"><span class="step-num">2.</span>${renderSwatch('Nuln Oil')}<span class="step-paint">Nuln Oil</span></div>
+        <div class="step-where">Wash the ENTIRE base texture (avoid crystals). This darkens the sand to an ashen, scorched earth tone. Gets into all the gritty crevices.</div></li>
+        <li><div class="step-head"><span class="step-num">3.</span>${renderSwatch('Mechanicus Std Grey')}<span class="step-paint">Mechanicus Standard Grey</span></div>
+        <div class="step-where">DRYBRUSH the raised sand texture. Lightly drag a mostly-dry brush across the grit. Picks up the texture as pale grey dust over the dark base.</div></li>
+        <li><div class="step-head"><span class="step-num">4.</span>${renderSwatch('Administratum Grey')}<span class="step-paint">Administratum Grey</span></div>
+        <div class="step-where">LIGHT drybrush — just the very highest points. Creates an ashen, dusty look. Don't overdo it — you want most of the base to stay dark.</div></li>
+      </ul>
+    </div>
+
+    <div class="zone-block" style="border-left:3px solid #1b7a2e;">
+      <div class="zone-title" style="color:#1b7a2e;">Crystal Glow (all models)</div>
+      <ul class="step-list">
+        <li><div class="step-head"><span class="step-num">5.</span>${renderSwatch('Abaddon Black')}<span class="step-paint">Abaddon Black</span></div>
+        <div class="step-where">Paint crystals solid black (if not already black from priming). Dark base makes the green pop.</div></li>
+        <li><div class="step-head"><span class="step-num">6.</span>${renderSwatch('Caliban Green')}<span class="step-paint">Caliban Green</span></div>
+        <div class="step-where">Paint crystals dark green. Leave black visible at the very base where crystal meets sand.</div></li>
+        <li><div class="step-head"><span class="step-num">7.</span>${renderSwatch('Warpstone Glow')}<span class="step-paint">Warpstone Glow</span></div>
+        <div class="step-where">Layer the upper half / tips of each crystal with brighter green.</div></li>
+        <li><div class="step-head"><span class="step-num">8.</span>${renderSwatch('Moot Green')}<span class="step-paint">Moot Green</span></div>
+        <div class="step-where">Crystal TIPS only — bright green, energy concentrating at the point.</div></li>
+        <li><div class="step-head"><span class="step-num">9.</span>${renderSwatch('White dot')}<span class="step-paint">White dot</span></div>
+        <div class="step-where">Tiny white dot at the very tip of each crystal.</div></li>
+        <li><div class="step-head"><span class="step-num">10.</span>${renderSwatch('Biel-tan Green')}<span class="step-paint">Biel-tan Green</span></div>
+        <div class="step-where">Glaze over all crystals to unify and add glossy sheen.</div></li>
+      </ul>
+    </div>
+
+    <div class="zone-block" style="border-left:3px solid #333;">
+      <div class="zone-title" style="color:#333;">Finish (all models)</div>
+      <ul class="step-list">
+        <li><div class="step-head"><span class="step-num">11.</span>${renderSwatch('Abaddon Black')}<span class="step-paint">Abaddon Black</span></div>
+        <div class="step-where">Paint the base RIM neat black for a clean finish.</div></li>
+      </ul>
+    </div>
+
+    <div class="zone-block" style="border-left:3px solid #c5962a;">
+      <div class="zone-title" style="color:#c5962a;">Model Tier Guide — Crystals & Elevation</div>
+      <ul class="step-list" style="font-size:7.5pt;">
+        <li style="padding:4px 0;border-bottom:1px solid #eee;">
+          <div class="step-head"><span class="step-paint">TROOPS</span> <span style="color:#888;font-weight:400;">(Warriors, Immortals, Cryptothralls)</span></div>
+          <div class="step-where">1-2 small crystals, slightly angled. No cork. Keep it simple — consistency across the squad matters more than individual detail.</div>
+        </li>
+        <li style="padding:4px 0;border-bottom:1px solid #eee;">
+          <div class="step-head"><span class="step-paint">ELITE</span> <span style="color:#888;font-weight:400;">(Skorpekh Destroyers, Lychguard, Wraiths, Lokhust, Flayed Ones)</span></div>
+          <div class="step-where">2-3 small crystals at slight angles. Add one small rock chip for variety. No cork elevation.</div>
+        </li>
+        <li style="padding:4px 0;border-bottom:1px solid #eee;">
+          <div class="step-head"><span class="step-paint">HERO</span> <span style="color:#888;font-weight:400;">(Overlord, Skorpekh Lord, Plasmancer, Technomancer, Psychomancer)</span></div>
+          <div class="step-where">Glue 1-2 CORK CHUNKS onto the base first (snap cork for ragged rock edges). Model stands on top, elevated ~3mm above troops. 3-4 crystals (mix small + medium), clustered near cork. Add rock chips. After painting crystals: apply thin Moot Green + Lahmian Medium wash on sand AROUND crystal bases for OSL glow effect.</div>
+        </li>
+        <li style="padding:4px 0;">
+          <div class="step-head"><span class="step-paint">CENTERPIECE</span> <span style="color:#888;font-weight:400;">(C'tan Void Dragon)</span></div>
+          <div class="step-where">Glue 2-3 STACKED cork chunks for a rocky outcrop — build up height so model towers over everything. 5-6 crystals (mix sizes, mostly medium), dramatic cluster formation. Rock chips. Heavy OSL glow on surrounding sand. Glue 1-2 spare Necron bits from sprues (broken scarab, weapon shard) — paint metallic + wash. Makes the base tell a story.</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="checklist">
+    <label><span class="check-box"></span> Cork glued</label>
+    <label><span class="check-box"></span> Texture applied</label>
+    <label><span class="check-box"></span> Crystals embedded</label>
+    <label><span class="check-box"></span> Dried</label>
+    <label><span class="check-box"></span> Primed with model</label>
+    <label><span class="check-box"></span> Base painted</label>
+    <label><span class="check-box"></span> Crystals painted</label>
+    <label><span class="check-box"></span> Rim done</label>
+  </div>
+</div>`;
+}
 });
 </script>
 
