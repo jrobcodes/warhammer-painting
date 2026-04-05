@@ -733,26 +733,45 @@ function getModelStages(model) {
 
   // STAGE 7: BASING — Crystal Tomb World
   const isHero = isOverlord || model.name.includes('Lord') || model.name.includes('C\'tan');
-  const isCenterpiece = model.name.includes('C\'tan') || model.name.includes('Overlord');
-  const crystalNote = isHero
-    ? '2-3 crystals (mix small + medium). Push into wet paste at angles, clustered together.'
-    : '1-2 small crystals. Push into wet paste, slightly angled. Keep it simple on troops.';
-  const oslNote = isHero
-    ? {paint:'Moot Green + Lahmian Medium', zone:'E', where:'HERO ONLY: thin green wash on the sand directly around the crystal bases. Creates OSL glow on the ground — makes the crystals look like they\'re emitting light.'}
-    : null;
+  const isElite = model.name.includes('Skorpekh Dest') || model.name.includes('Lychguard') || model.name.includes('Wraith') || model.name.includes('Lokhust') || model.name.includes('Flayed');
+  const isCenterpiece = model.name.includes('C\'tan');
 
-  const finishSteps = [
-    {paint:'Vallejo Sandy Paste', zone:'E', where:'spread texture paste onto the base with an old brush or sculpting tool. While still WET, push clear resin crystals into the paste (' + crystalNote + '). Let dry ~1 hour.'},
-    {paint:'Agrax Earthshade', zone:'E', where:'wash the SAND TEXTURE only (avoid the crystals). Adds depth and shadow to the gritty texture.'},
-    {paint:'Ushabti Bone', zone:'E', where:'DRYBRUSH the sand — lightly drag a mostly-dry brush across the raised grit. Picks up the texture beautifully.'},
+  let corkNote, crystalNote;
+  if (isCenterpiece) {
+    corkNote = 'CENTERPIECE: glue 2-3 STACKED cork chunks onto the base first — creates a rocky outcrop. Build up height so the model towers over troops. Add small rock chips around the cork.';
+    crystalNote = '5-6 crystals (mix sizes, mostly medium). Cluster them around the cork formation like energy bursting from the ground. Push into wet paste at dramatic angles.';
+  } else if (isHero) {
+    corkNote = 'HERO: glue 1-2 cork chunks onto the base — model stands on top, elevated ~3mm above troops. Break cork by snapping (ragged edges look like natural rock). Add a small rock chip or two.';
+    crystalNote = '3-4 crystals (mix small + medium). Cluster near the cork/rock, like energy forming around the elevated point. Push into wet paste at angles.';
+  } else if (isElite) {
+    corkNote = null;
+    crystalNote = '2-3 small crystals. Push into wet paste at slight angles. Add one small rock chip for variety.';
+  } else {
+    corkNote = null;
+    crystalNote = '1-2 small crystals. Push into wet paste, slightly angled. Keep it simple on troops — consistency across the squad matters more than individual detail.';
+  }
+
+  const finishSteps = [];
+  if (corkNote) {
+    finishSteps.push({paint:'Cork + super glue', zone:'E', where:corkNote});
+  }
+  finishSteps.push(
+    {paint:'Vallejo Sandy Paste', zone:'E', where:'spread texture paste over the base' + (corkNote ? ' and over/around the cork to blend it into the terrain' : '') + '. While still WET, push clear resin crystals into the paste (' + crystalNote + '). Let dry ~1 hour.'},
+    {paint:'Agrax Earthshade', zone:'E', where:'wash the SAND TEXTURE only (avoid the crystals). Adds depth and shadow to the gritty texture.' + (corkNote ? ' Gets into the cork crevices nicely.' : '')},
+    {paint:'Ushabti Bone', zone:'E', where:'DRYBRUSH the sand and any cork/rock surfaces — lightly drag a mostly-dry brush across the raised grit. Picks up texture beautifully.'},
     {paint:'Abaddon Black', zone:'E', where:'paint the crystals solid black. This is the base for the crystal glow, same as weapon glow prep.'},
-    {paint:'Caliban Green', zone:'E', where:'paint the crystals dark green, leaving black visible at the very base where they meet the sand.'},
+    {paint:'Caliban Green', zone:'E', where:'paint the crystals dark green, leaving black visible at the very base where crystal meets sand.'},
     {paint:'Warpstone Glow', zone:'E', where:'layer the upper half / tips of each crystal with brighter green.'},
-    {paint:'Moot Green', zone:'E', where:'just the crystal TIPS — bright green, looks like energy concentrating at the point.'},
-    {paint:'White dot', zone:'E', where:'tiny white dot at the very tip of each crystal. Makes them look like they\'re glowing.'},
-    {paint:'Biel-tan Green', zone:'E', where:'glaze over all crystals to unify the green and add a glossy sheen.'},
-  ];
-  if (oslNote) finishSteps.push(oslNote);
+    {paint:'Moot Green', zone:'E', where:'just the crystal TIPS — bright green, energy concentrating at the point.'},
+    {paint:'White dot', zone:'E', where:'tiny white dot at the very tip of each crystal. Makes them glow.'},
+    {paint:'Biel-tan Green', zone:'E', where:'glaze over all crystals to unify the green and add glossy sheen.'},
+  );
+  if (isHero || isCenterpiece) {
+    finishSteps.push({paint:'Moot Green + Lahmian Medium', zone:'E', where:'HERO/CENTERPIECE: thin green wash on the sand directly AROUND the crystal bases. Creates an OSL glow on the ground — makes the crystals look like they\'re emitting light onto the terrain.'});
+  }
+  if (isCenterpiece) {
+    finishSteps.push({paint:'Spare bits', zone:'E', where:'CENTERPIECE: glue 1-2 spare Necron bits from leftover sprues onto the base — a broken scarab, weapon shard, or skull. Paint metallic + wash. Makes the base tell a story.'});
+  }
   finishSteps.push({paint:'Abaddon Black', zone:'E', where:'paint the base RIM neat black for a clean finish.'});
   if (hasBlood) {
     finishSteps.push({paint:'Blood for the Blood God', zone:'T', where:'apply to CLAW TIPS, finger blades, torn skin edges. Glossy technical paint = wet blood. Dab on, let run/pool. Apply DEAD LAST so glossy finish doesn\'t get messed up.'});
