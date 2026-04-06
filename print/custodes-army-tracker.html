@@ -151,13 +151,13 @@
 <script>
 const allUnits = [
   // 500pt — Combat Patrol (all OWNED)
-  { name:'Shield-Captain in Allarus Terminator Armour', count:1, pts:130, own:'OWN',
+  { name:'Shield-Captain in Allarus Terminator Armour', count:1, pts:130, own:'OWN', src:'Combat Patrol',
     img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120108011_AllarusCustodiansCpt01.jpg' },
-  { name:'Custodian Guard x4', count:4, pts:150, own:'OWN',
+  { name:'Custodian Guard x4', count:4, pts:150, own:'OWN', src:'Combat Patrol',
     img:'https://www.warhammer.com/app/resources/catalog/product/920x950/60010101002_BurningProsperoENG02.jpg' },
-  { name:'Prosecutors x5', count:5, pts:50, own:'OWN',
+  { name:'Prosecutors x5', count:5, pts:50, own:'OWN', src:'Combat Patrol',
     img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120108007_ProsecutorSquad01.jpg' },
-  { name:'Vertus Praetors x3', count:3, pts:225, own:'OWN',
+  { name:'Vertus Praetors x3', count:3, pts:225, own:'OWN', src:'Combat Patrol',
     img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120108014_VertusPraetors01.jpg' },
 
   // 1000pt additions (all BUY)
@@ -227,7 +227,9 @@ function renderRow(unit) {
   html += `<td><span class="unit-name">${unit.name}</span></td>`;
   html += `<td style="text-align:center;font-weight:700">${unit.count}</td>`;
   html += `<td style="text-align:center;font-weight:700">${unit.pts}</td>`;
-  html += `<td style="text-align:center"><span class="tag ${tagClass}">${unit.own}</span></td>`;
+  html += `<td style="text-align:center"><span class="tag ${tagClass}">${unit.own}</span>`;
+  if (unit.src) html += `<span style="font-size:6pt;color:#888;margin-left:2px;display:block;text-align:center;">(${unit.src})</span>`;
+  html += `</td>`;
   html += `<td><div class="status-boxes">`;
   statuses.forEach(s => {
     html += `<div class="status-item"><span class="check-box"></span>${s}</div>`;

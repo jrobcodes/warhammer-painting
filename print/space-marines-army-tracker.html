@@ -150,20 +150,20 @@
 
 <script>
 const allUnits = [
-  { name:'Captain (relic shield)', count:1, pts:80, own:'OWN', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120101396_SMCaptainStormShield1.jpg' },
-  { name:'Chaplain', count:1, pts:60, own:'OWN', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120101180_PrimarisChaplain01.jpg' },
-  { name:'Assault Intercessors x10', count:10, pts:150, own:'OWN', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120101283_SMAssaultIntercessorsLead.jpg' },
-  { name:'Bladeguard Veterans x3', count:3, pts:80, own:'OWN', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120101284_SMBladeguardVeteransLeadUltramarines.jpg' },
-  { name:'Eradicators x3', count:3, pts:90, own:'OWN', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120101286_SMPrimarisEradicatorsLead.jpg' },
-  { name:'Captain in Gravis Armour', count:1, pts:80, own:'OWN', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99070101077_SMCPTGravisArmourLead.jpg' },
-  { name:'Lieutenant', count:1, pts:55, own:'OWN', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99070101079_SMLieutenant1.jpg' },
-  { name:'Ancient', count:1, pts:50, own:'OWN', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99070101076_SMPrimarisAncientLead.jpg' },
-  { name:'Intercessors x10', count:10, pts:160, own:'OWN', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120101190_PrimarisIntercessors01.jpg' },
-  { name:'Hellblasters x5', count:5, pts:110, own:'OWN', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120101189_PrimarisHellblasters01.jpg' },
-  { name:'Outriders x3', count:3, pts:80, own:'OWN', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120101285_SMOutridersLead.jpg' },
-  { name:'Judiciar', count:1, pts:70, own:'OWN', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120101353_HonouredoftheChapterFeature2.jpg' },
-  { name:'Bladeguard Ancient', count:1, pts:45, own:'OWN', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120101353_HonouredoftheChapterFeature1.jpg' },
-  { name:'Inceptors x3', count:3, pts:120, own:'OWN', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120101193_PrimarisInceptors01.jpg' },
+  { name:'Captain (relic shield)', count:1, pts:80, own:'OWN', src:'Indomitus', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120101396_SMCaptainStormShield1.jpg' },
+  { name:'Chaplain', count:1, pts:60, own:'OWN', src:'Indomitus', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120101180_PrimarisChaplain01.jpg' },
+  { name:'Assault Intercessors x10', count:10, pts:150, own:'OWN', src:'Indomitus', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120101283_SMAssaultIntercessorsLead.jpg' },
+  { name:'Bladeguard Veterans x3', count:3, pts:80, own:'OWN', src:'Indomitus', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120101284_SMBladeguardVeteransLeadUltramarines.jpg' },
+  { name:'Eradicators x3', count:3, pts:90, own:'OWN', src:'Indomitus', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120101286_SMPrimarisEradicatorsLead.jpg' },
+  { name:'Captain in Gravis Armour', count:1, pts:80, own:'OWN', src:'Dark Imperium', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99070101077_SMCPTGravisArmourLead.jpg' },
+  { name:'Lieutenant', count:1, pts:55, own:'OWN', src:'Dark Imperium', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99070101079_SMLieutenant1.jpg' },
+  { name:'Ancient', count:1, pts:50, own:'OWN', src:'Dark Imperium', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99070101076_SMPrimarisAncientLead.jpg' },
+  { name:'Intercessors x10', count:10, pts:160, own:'OWN', src:'Dark Imperium', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120101190_PrimarisIntercessors01.jpg' },
+  { name:'Hellblasters x5', count:5, pts:110, own:'OWN', src:'Dark Imperium', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120101189_PrimarisHellblasters01.jpg' },
+  { name:'Outriders x3', count:3, pts:80, own:'OWN', src:'Indomitus', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120101285_SMOutridersLead.jpg' },
+  { name:'Judiciar', count:1, pts:70, own:'OWN', src:'Indomitus', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120101353_HonouredoftheChapterFeature2.jpg' },
+  { name:'Bladeguard Ancient', count:1, pts:45, own:'OWN', src:'Indomitus', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120101353_HonouredoftheChapterFeature1.jpg' },
+  { name:'Inceptors x3', count:3, pts:120, own:'OWN', src:'Dark Imperium', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120101193_PrimarisInceptors01.jpg' },
   { name:'Redemptor Dreadnought', count:1, pts:195, own:'BUY', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120101191_RedemptorDreadnought01.jpg' },
   { name:'Impulsor', count:1, pts:80, own:'BUY', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120101262_SMPrimarisImpulsor01.jpg' },
   { name:'Ballistus Dreadnought', count:1, pts:150, own:'BUY', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120101393_BallistusDreadnought1.jpg' },
@@ -213,7 +213,9 @@ function renderRow(unit) {
   html += `<td><span class="unit-name">${unit.name}</span></td>`;
   html += `<td style="text-align:center;font-weight:700">${unit.count}</td>`;
   html += `<td style="text-align:center;font-weight:700">${unit.pts}</td>`;
-  html += `<td style="text-align:center"><span class="tag ${tagClass}">${unit.own}</span></td>`;
+  html += `<td style="text-align:center"><span class="tag ${tagClass}">${unit.own}</span>`;
+  if (unit.src) html += `<span style="font-size:6pt;color:#888;margin-left:2px;display:block;text-align:center;">(${unit.src})</span>`;
+  html += `</td>`;
   html += `<td><div class="status-boxes">`;
   statuses.forEach(s => {
     html += `<div class="status-item"><span class="check-box"></span>${s}</div>`;

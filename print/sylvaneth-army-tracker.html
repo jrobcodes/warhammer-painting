@@ -165,31 +165,31 @@
 <script>
 const allUnits = [
   // 1000pt tier
-  { name:'Treelord Ancient', count:1, pts:280, own:'OWN', painted:false,
+  { name:'Treelord Ancient', count:1, pts:280, own:'OWN', src:'Start Collecting', painted:false,
     img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120204013_SylvanethTreelordAncient01.jpg' },
-  { name:'Branchwych', count:1, pts:100, own:'OWN', painted:false,
+  { name:'Branchwych', count:1, pts:100, own:'OWN', src:'Start Collecting', painted:false,
     img:'https://www.warhammer.com/app/resources/catalog/product/threeSixty/99070204002_SylvanethBranchwych360/01-01.jpg' },
-  { name:'Dryads x10 (Painted)', count:10, pts:90, own:'OWN', painted:true,
+  { name:'Dryads x10 (Painted)', count:10, pts:90, own:'OWN', src:'Start Collecting', painted:true,
     img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120204012_SylvanethDryads01.jpg' },
-  { name:'Dryads x10', count:10, pts:90, own:'OWN', painted:false,
+  { name:'Dryads x10', count:10, pts:90, own:'OWN', src:'Start Collecting', painted:false,
     img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120204012_SylvanethDryads01.jpg' },
-  { name:'Kurnoth Hunters x3 (Greatbows)', count:3, pts:200, own:'OWN', painted:false,
+  { name:'Kurnoth Hunters x3 (Greatbows)', count:3, pts:200, own:'OWN', src:'Echoes of Doom', painted:false,
     img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120204018_KurnothHunters01.jpg' },
-  { name:'Revenant Seekers x3', count:3, pts:180, own:'OWN', painted:false,
+  { name:'Revenant Seekers x3', count:3, pts:180, own:'OWN', src:'Blades of Belthanos', painted:false,
     img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120204031_RevenantSeekersFeature01.jpg' },
-  { name:'Spite-Revenants x5', count:5, pts:80, own:'OWN', painted:false,
+  { name:'Spite-Revenants x5', count:5, pts:80, own:'OWN', src:'Tree Revenants kit', painted:false,
     img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120204016_SpiteRevenant01.jpg' },
 
   // 2000pt additions
-  { name:'The Lady of Vines', count:1, pts:280, own:'OWN', painted:false,
+  { name:'The Lady of Vines', count:1, pts:280, own:'OWN', src:'Echoes of Doom', painted:false,
     img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120204034_SYLLadyofVinesLead.jpg' },
-  { name:'Kurnoth Hunters x3 (Greatswords)', count:3, pts:200, own:'OWN', painted:false,
+  { name:'Kurnoth Hunters x3 (Greatswords)', count:3, pts:200, own:'OWN', src:'Blades of Belthanos', painted:false,
     img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120204018_KurnothHunters01.jpg' },
-  { name:'Drycha Hamadreth', count:1, pts:250, own:'OWN', painted:false,
+  { name:'Drycha Hamadreth', count:1, pts:250, own:'OWN', src:'Separate purchase', painted:false,
     img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120204017_DrycaHamadreth01.jpg' },
-  { name:'Spiterider Lancers x3', count:3, pts:220, own:'OWN', painted:false,
+  { name:'Spiterider Lancers x3', count:3, pts:220, own:'OWN', src:'Separate purchase', painted:false,
     img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120204031_SpiteriderLancersLead.jpg' },
-  { name:'Gossamid Archers x5', count:5, pts:120, own:'OWN', painted:false,
+  { name:'Gossamid Archers x5', count:5, pts:120, own:'OWN', src:'Echoes of Doom', painted:false,
     img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120204032_GossamidArchersLead.jpg' },
 ];
 
@@ -208,7 +208,9 @@ function renderRow(unit) {
   html += '<td><span class="unit-name">' + unit.name + '</span></td>';
   html += '<td style="text-align:center;font-weight:700">' + unit.count + '</td>';
   html += '<td style="text-align:center;font-weight:700">' + unit.pts + '</td>';
-  html += '<td style="text-align:center"><span class="tag ' + tagClass + '">' + unit.own + '</span></td>';
+  html += '<td style="text-align:center"><span class="tag ' + tagClass + '">' + unit.own + '</span>';
+  if (unit.src) html += '<span style="font-size:6pt;color:#888;margin-left:2px;display:block;text-align:center;">(' + unit.src + ')</span>';
+  html += '</td>';
   html += '<td><div class="status-boxes">';
   statuses.forEach(function(s) {
     if (unit.painted) {

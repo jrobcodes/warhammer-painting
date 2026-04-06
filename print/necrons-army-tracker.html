@@ -152,26 +152,26 @@
 const IMG_BASE = 'https://www.warhammer.com/app/resources/catalog/product/';
 
 const allUnits = [
-  { name:'Necron Warriors (Flayers)', count:10, pts:90, own:'OWN', img:'threeSixty/60010199034_NecronWarriorsSpin1360/01.jpg' },
-  { name:'Necron Warriors (Reapers)', count:10, pts:90, own:'OWN', img:'threeSixty/60010199034_NecronWarriorsSpin1360/01.jpg' },
-  { name:'Overlord', count:1, pts:85, own:'OWN', img:'920x950/99070110006_OverlordTachyonArrow1.jpg' },
-  { name:'Skorpekh Lord', count:1, pts:90, own:'OWN', img:'threeSixty/99120110072_NecronsRoyalCourtOTT1360/01-01.jpg' },
-  { name:'Skorpekh Destroyers', count:3, pts:90, own:'OWN', img:'920x950/99120110051_SkorpekhDestroyersLead.jpg' },
-  { name:'Royal Warden', count:1, pts:50, own:'OWN', img:'920x950/99070110007_RoyalWarden1.jpg' },
-  { name:'Canoptek Scarab Swarms', count:3, pts:40, own:'OWN', img:'threeSixty/60010199034_NecronScarabsSpin1360/01.jpg' },
-  { name:'Lokhust Heavy Destroyers', count:3, pts:165, own:'OWN', img:'920x950/99120110044_LokhustHeavyDestroyerLead.jpg' },
-  { name:'Plasmancer', count:1, pts:55, own:'OWN', img:'threeSixty/99120110072_NecronsRoyalCourtOTT3360/01-01.jpg' },
-  { name:'Cryptothralls', count:2, pts:60, own:'OWN', img:'threeSixty/99120110072_NecronsRoyalCourtOTT4360/01-01.jpg' },
-  { name:'Canoptek Reanimator', count:1, pts:75, own:'OWN', img:'threeSixty/99120110072_NecronsRoyalCourtOTT2360/01-01.jpg' },
-  { name:'Technomancer', count:1, pts:80, own:'OWN', img:'920x950/99070110005_NECCryptekLead.jpg' },
-  { name:'Overlord w/ Translocation Shroud', count:1, pts:85, own:'OWN', img:'920x950/99070110006_OverlordTachyonArrow1.jpg' },
-  { name:'Lychguard (Shields)', count:5, pts:85, own:'OWN', img:'920x950/99120110058_TriarchLychguardLead.jpg' },
+  { name:'Necron Warriors (Flayers)', count:10, pts:90, own:'OWN', src:'Indomitus', img:'threeSixty/60010199034_NecronWarriorsSpin1360/01.jpg' },
+  { name:'Necron Warriors (Reapers)', count:10, pts:90, own:'OWN', src:'Indomitus', img:'threeSixty/60010199034_NecronWarriorsSpin1360/01.jpg' },
+  { name:'Overlord', count:1, pts:85, own:'OWN', src:'Indomitus', img:'920x950/99070110006_OverlordTachyonArrow1.jpg' },
+  { name:'Skorpekh Lord', count:1, pts:90, own:'OWN', src:'Indomitus', img:'threeSixty/99120110072_NecronsRoyalCourtOTT1360/01-01.jpg' },
+  { name:'Skorpekh Destroyers', count:3, pts:90, own:'OWN', src:'Indomitus', img:'920x950/99120110051_SkorpekhDestroyersLead.jpg' },
+  { name:'Royal Warden', count:1, pts:50, own:'OWN', src:'Indomitus', img:'920x950/99070110007_RoyalWarden1.jpg' },
+  { name:'Canoptek Scarab Swarms', count:3, pts:40, own:'OWN', src:'Indomitus', img:'threeSixty/60010199034_NecronScarabsSpin1360/01.jpg' },
+  { name:'Lokhust Heavy Destroyers', count:3, pts:165, own:'OWN', src:'Separate purchase', img:'920x950/99120110044_LokhustHeavyDestroyerLead.jpg' },
+  { name:'Plasmancer', count:1, pts:55, own:'OWN', src:'Indomitus', img:'threeSixty/99120110072_NecronsRoyalCourtOTT3360/01-01.jpg' },
+  { name:'Cryptothralls', count:2, pts:60, own:'OWN', src:'Indomitus', img:'threeSixty/99120110072_NecronsRoyalCourtOTT4360/01-01.jpg' },
+  { name:'Canoptek Reanimator', count:1, pts:75, own:'OWN', src:'Indomitus', img:'threeSixty/99120110072_NecronsRoyalCourtOTT2360/01-01.jpg' },
+  { name:'Technomancer', count:1, pts:80, own:'OWN', src:'Cryptek kit', img:'920x950/99070110005_NECCryptekLead.jpg' },
+  { name:'Overlord w/ Translocation Shroud', count:1, pts:85, own:'OWN', src:'Separate purchase', img:'920x950/99070110006_OverlordTachyonArrow1.jpg' },
+  { name:'Lychguard (Shields)', count:5, pts:85, own:'OWN', src:'Praetorian kit', img:'920x950/99120110058_TriarchLychguardLead.jpg' },
   { name:'Lychguard (2nd box)', count:5, pts:85, own:'BUY', img:'920x950/99120110058_TriarchLychguardLead.jpg' },
   { name:'Immortals', count:10, pts:150, own:'BUY', img:'920x950/99120110057_NECImmortalsLead.jpg' },
   { name:'Canoptek Wraiths', count:6, pts:220, own:'BUY', img:'920x950/99120110060_NECCanoptekWraithsLead.jpg' },
-  { name:'Psychomancer', count:1, pts:55, own:'OWN', img:'920x950/99120110073_NECPsychomancerLead.jpg' },
-  { name:'Triarch Stalker', count:1, pts:110, own:'OWN', img:'920x950/99120110058_NecronTriarchStalkerLead.jpg' },
-  { name:'Flayed Ones', count:5, pts:60, own:'OWN', img:'920x950/99120110056_NECFlayedOnesLead.jpg' },
+  { name:'Psychomancer', count:1, pts:55, own:'OWN', src:'Separate purchase', img:'920x950/99120110073_NECPsychomancerLead.jpg' },
+  { name:'Triarch Stalker', count:1, pts:110, own:'OWN', src:'Separate purchase', img:'920x950/99120110058_NecronTriarchStalkerLead.jpg' },
+  { name:'Flayed Ones', count:5, pts:60, own:'OWN', src:'Separate purchase', img:'920x950/99120110056_NECFlayedOnesLead.jpg' },
   { name:"C'tan Void Dragon", count:1, pts:300, own:'BUY', img:'920x950/99120110054_CTanShardoftheVoidDragonLead.jpg' }
 ];
 
@@ -222,7 +222,9 @@ function renderRow(unit) {
   html += `<td><span class="unit-name">${unit.name}</span></td>`;
   html += `<td style="text-align:center;font-weight:700">${unit.count}</td>`;
   html += `<td style="text-align:center;font-weight:700">${unit.pts}</td>`;
-  html += `<td style="text-align:center"><span class="tag ${tagClass}">${unit.own}</span></td>`;
+  html += `<td style="text-align:center"><span class="tag ${tagClass}">${unit.own}</span>`;
+  if (unit.src) html += `<span style="font-size:6pt;color:#888;margin-left:2px;display:block;text-align:center;">(${unit.src})</span>`;
+  html += `</td>`;
   html += `<td><div class="status-boxes">`;
   statuses.forEach(s => {
     html += `<div class="status-item"><span class="check-box"></span>${s}</div>`;

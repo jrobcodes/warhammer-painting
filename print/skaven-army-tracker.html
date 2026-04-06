@@ -150,13 +150,13 @@
 
 <script>
 const allUnits = [
-  { name:'Deathmaster', count:1, pts:130, own:'OWN', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99070206004_SKADeathmasterLead.jpg' },
-  { name:'Stormvermin x10', count:10, pts:110, own:'OWN', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120206045_SKAStormvermin01.jpg' },
-  { name:'Clanrats x20', count:20, pts:150, own:'OWN', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120206050_Clanrats1.jpg' },
-  { name:'Plagueclaw', count:1, pts:100, own:'OWN', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120206020_SkavenPestilensPlagueClawCatapult01.jpg' },
-  { name:'Grey Seer on Screaming Bell', count:1, pts:310, own:'OWN', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120206022_PestilensScreamingBell01.jpg' },
-  { name:'Plague Monks x20', count:20, pts:140, own:'OWN', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120206021_PestelinPlagueMonks01.jpg' },
-  { name:'Plague Priest on Plague Furnace', count:1, pts:340, own:'OWN', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120206022_PestilensPlagueFurnace01.jpg' },
+  { name:'Deathmaster', count:1, pts:130, own:'OWN', src:'Echoes of Doom', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99070206004_SKADeathmasterLead.jpg' },
+  { name:'Stormvermin x10', count:10, pts:110, own:'OWN', src:'Echoes of Doom', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120206045_SKAStormvermin01.jpg' },
+  { name:'Clanrats x20', count:20, pts:150, own:'OWN', src:'Echoes of Doom', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120206050_Clanrats1.jpg' },
+  { name:'Plagueclaw', count:1, pts:100, own:'OWN', src:'Pestilens box', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120206020_SkavenPestilensPlagueClawCatapult01.jpg' },
+  { name:'Grey Seer on Screaming Bell', count:1, pts:310, own:'OWN', src:'Echoes of Doom', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120206022_PestilensScreamingBell01.jpg' },
+  { name:'Plague Monks x20', count:20, pts:140, own:'OWN', src:'Pestilens box', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120206021_PestelinPlagueMonks01.jpg' },
+  { name:'Plague Priest on Plague Furnace', count:1, pts:340, own:'OWN', src:'Pestilens box', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120206022_PestilensPlagueFurnace01.jpg' },
   { name:'Clanrats x20 (2nd unit)', count:20, pts:150, own:'BUY', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120206050_Clanrats1.jpg' },
   { name:'Rat Ogors x3', count:3, pts:140, own:'BUY', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120206043_RatOgors1.jpg' },
   { name:'Doomwheel', count:1, pts:100, own:'BUY', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120206009_SKADoomwheel01.jpg' },
@@ -183,7 +183,9 @@ function renderRow(unit) {
   html += `<td><span class="unit-name">${unit.name}</span></td>`;
   html += `<td style="text-align:center;font-weight:700">${unit.count}</td>`;
   html += `<td style="text-align:center;font-weight:700">${unit.pts}</td>`;
-  html += `<td style="text-align:center"><span class="tag ${tagClass}">${unit.own}</span></td>`;
+  html += `<td style="text-align:center"><span class="tag ${tagClass}">${unit.own}</span>`;
+  if (unit.src) html += `<span style="font-size:6pt;color:#888;margin-left:2px;display:block;text-align:center;">(${unit.src})</span>`;
+  html += `</td>`;
   html += `<td><div class="status-boxes">`;
   statuses.forEach(s => {
     html += `<div class="status-item"><span class="check-box"></span>${s}</div>`;

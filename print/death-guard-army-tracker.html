@@ -150,12 +150,12 @@
 
 <script>
 const allUnits = [
-  { name:'Lord of Contagion', count:1, pts:120, own:'OWN', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120102150_LordFelthiusCohortLead.jpg' },
-  { name:'Malignant Plaguecaster', count:1, pts:60, own:'OWN', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120102114_DGChosenofMortarionLead.jpg' },
-  { name:'Plague Marines x7', count:7, pts:130, own:'OWN', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120102078_PlagueMarines01.jpg' },
-  { name:'Poxwalkers x20', count:20, pts:130, own:'OWN', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120102115_CSMDGPoxwalkersFeature1.jpg' },
-  { name:'Foetid Bloat-drone', count:1, pts:100, own:'OWN', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120102077_BloatDrone01.jpg' },
-  { name:'Noxious Blightbringer', count:1, pts:50, own:'OWN', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120102114_DGChosenofMortarionFeature.jpg' },
+  { name:'Lord of Contagion', count:1, pts:120, own:'OWN', src:'Dark Imperium', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120102150_LordFelthiusCohortLead.jpg' },
+  { name:'Malignant Plaguecaster', count:1, pts:60, own:'OWN', src:'Dark Imperium', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120102114_DGChosenofMortarionLead.jpg' },
+  { name:'Plague Marines x7', count:7, pts:130, own:'OWN', src:'Dark Imperium', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120102078_PlagueMarines01.jpg' },
+  { name:'Poxwalkers x20', count:20, pts:130, own:'OWN', src:'Dark Imperium', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120102115_CSMDGPoxwalkersFeature1.jpg' },
+  { name:'Foetid Bloat-drone', count:1, pts:100, own:'OWN', src:'Dark Imperium', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120102077_BloatDrone01.jpg' },
+  { name:'Noxious Blightbringer', count:1, pts:50, own:'OWN', src:'Dark Imperium', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120102114_DGChosenofMortarionFeature.jpg' },
   { name:'Typhus', count:1, pts:100, own:'BUY', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120102076_DeathGuardTyphus01.jpg' },
   { name:'Plague Marines x7 (2nd squad)', count:7, pts:130, own:'BUY', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120102078_PlagueMarines01.jpg' },
   { name:'Plagueburst Crawler', count:1, pts:210, own:'BUY', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120102075_Crawler01.jpg' }
@@ -192,7 +192,9 @@ function renderRow(unit) {
   html += `<td><span class="unit-name">${unit.name}</span></td>`;
   html += `<td style="text-align:center;font-weight:700">${unit.count}</td>`;
   html += `<td style="text-align:center;font-weight:700">${unit.pts}</td>`;
-  html += `<td style="text-align:center"><span class="tag ${tagClass}">${unit.own}</span></td>`;
+  html += `<td style="text-align:center"><span class="tag ${tagClass}">${unit.own}</span>`;
+  if (unit.src) html += `<span style="font-size:6pt;color:#888;margin-left:2px;display:block;text-align:center;">(${unit.src})</span>`;
+  html += `</td>`;
   html += `<td><div class="status-boxes">`;
   statuses.forEach(s => {
     html += `<div class="status-item"><span class="check-box"></span>${s}</div>`;
