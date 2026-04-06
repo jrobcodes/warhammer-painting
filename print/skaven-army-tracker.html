@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Skaven — Army Tracker</title>
+<style>
+  @page { size: letter; margin: 0.5in; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #fff; color: #1a1a1a;
+    font-size: 9pt; line-height: 1.35;
+  }
+
+  .tier-page {
+    page-break-after: always;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  .tier-page:last-child { page-break-after: auto; }
+
+  .tier-header {
+    text-align: center;
+    border-bottom: 3px solid #222;
+    padding-bottom: 6px;
+    margin-bottom: 10px;
+  }
+  .tier-title {
+    font-size: 20pt;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .tier-subtitle {
+    font-size: 10pt;
+    color: #555;
+    margin-top: 2px;
+  }
+
+  .roster-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+  }
+  .roster-table th {
+    background: #222;
+    color: #fff;
+    padding: 5px 8px;
+    text-align: left;
+    font-size: 8pt;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .roster-table th:first-child { border-radius: 4px 0 0 0; }
+  .roster-table th:last-child { border-radius: 0 4px 0 0; }
+
+  .roster-table td {
+    padding: 6px 8px;
+    border-bottom: 1px solid #ddd;
+    vertical-align: middle;
+  }
+  .roster-table tr:nth-child(even) td {
+    background: #f9f9f9;
+  }
+  .roster-table tr:last-child td {
+    border-bottom: 2px solid #222;
+  }
+
+  .unit-img {
+    width: 80px;
+    height: 60px;
+    object-fit: contain;
+    border-radius: 4px;
+    background: #f0f0f0;
+    border: 1px solid #ddd;
+    display: block;
+  }
+
+  .unit-name {
+    font-weight: 700;
+    font-size: 10pt;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 7.5pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .tag-own { background: #1565c0; color: #fff; }
+  .tag-buy { background: #c62828; color: #fff; }
+
+  .status-boxes {
+    display: flex;
+    gap: 6px;
+    flex-wrap: nowrap;
+  }
+  .status-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    font-size: 6.5pt;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .check-box {
+    display: block;
+    width: 16px; height: 16px;
+    border: 1.5px solid #555;
+    border-radius: 2px;
+  }
+
+  .tier-totals {
+    margin-top: auto;
+    padding-top: 8px;
+    border-top: 2.5px solid #222;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11pt;
+    font-weight: 700;
+  }
+  .tier-totals .running {
+    font-size: 9pt;
+    font-weight: 600;
+    color: #555;
+  }
+  .total-pts {
+    font-size: 14pt;
+    color: #222;
+  }
+  .total-models {
+    font-size: 10pt;
+    color: #444;
+  }
+
+  @media print {
+    body { padding: 0; }
+    .tier-page { height: auto; }
+  }
+</style>
+</head>
+<body>
+
+<script>
+const allUnits = [
+  { name:'Deathmaster', count:1, pts:130, own:'OWN', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99070206004_SKADeathmasterLead.jpg' },
+  { name:'Stormvermin x10', count:10, pts:110, own:'OWN', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120206045_SKAStormvermin01.jpg' },
+  { name:'Clanrats x20', count:20, pts:150, own:'OWN', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120206050_Clanrats1.jpg' },
+  { name:'Plagueclaw', count:1, pts:100, own:'OWN', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120206020_SkavenPestilensPlagueClawCatapult01.jpg' },
+  { name:'Grey Seer on Screaming Bell', count:1, pts:310, own:'OWN', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120206022_PestilensScreamingBell01.jpg' },
+  { name:'Plague Monks x20', count:20, pts:140, own:'OWN', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120206021_PestelinPlagueMonks01.jpg' },
+  { name:'Plague Priest on Plague Furnace', count:1, pts:340, own:'OWN', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120206022_PestilensPlagueFurnace01.jpg' },
+  { name:'Clanrats x20 (2nd unit)', count:20, pts:150, own:'BUY', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120206050_Clanrats1.jpg' },
+  { name:'Rat Ogors x3', count:3, pts:140, own:'BUY', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120206043_RatOgors1.jpg' },
+  { name:'Doomwheel', count:1, pts:100, own:'BUY', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120206009_SKADoomwheel01.jpg' },
+  { name:'Warlock Bombardier', count:1, pts:90, own:'BUY', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99070206003_WarplockBombardier01.jpg' },
+  { name:'Grey Seer (foot)', count:1, pts:120, own:'BUY', img:'https://www.warhammer.com/app/resources/catalog/product/920x950/99120206041_SkavenGreyseer01.jpg' },
+];
+
+const tier1000 = ['Deathmaster','Stormvermin x10','Clanrats x20','Plagueclaw','Grey Seer on Screaming Bell','Plague Monks x20'];
+const tier2000 = ['Plague Priest on Plague Furnace','Clanrats x20 (2nd unit)','Rat Ogors x3','Doomwheel','Warlock Bombardier','Grey Seer (foot)'];
+
+function getUnits(names) {
+  return names.map(n => allUnits.find(u => u.name === n)).filter(Boolean);
+}
+
+function sumPts(units) { return units.reduce((s,u) => s + u.pts, 0); }
+function sumModels(units) { return units.reduce((s,u) => s + u.count, 0); }
+
+const statuses = ['Unbuilt','Built','Primed','Painting','Based','Done'];
+
+function renderRow(unit) {
+  const tagClass = unit.own === 'OWN' ? 'tag-own' : 'tag-buy';
+  let html = `<tr>`;
+  html += `<td><img class="unit-img" src="${unit.img}" alt="${unit.name}"></td>`;
+  html += `<td><span class="unit-name">${unit.name}</span></td>`;
+  html += `<td style="text-align:center;font-weight:700">${unit.count}</td>`;
+  html += `<td style="text-align:center;font-weight:700">${unit.pts}</td>`;
+  html += `<td style="text-align:center"><span class="tag ${tagClass}">${unit.own}</span></td>`;
+  html += `<td><div class="status-boxes">`;
+  statuses.forEach(s => {
+    html += `<div class="status-item"><span class="check-box"></span>${s}</div>`;
+  });
+  html += `</div></td>`;
+  html += `</tr>`;
+  return html;
+}
+
+function renderTier(title, subtitle, units, prevPts) {
+  const tierPts = sumPts(units);
+  const tierModels = sumModels(units);
+  const cumPts = prevPts + tierPts;
+
+  let runningText = '';
+  if (prevPts > 0) {
+    runningText = `${tierPts}pts new + ${prevPts}pts previous = ${cumPts}pts total`;
+  } else {
+    runningText = `${cumPts}pts total`;
+  }
+
+  let html = `<div class="tier-page">`;
+  html += `<div class="tier-header">`;
+  html += `<div class="tier-title">${title}</div>`;
+  if (subtitle) html += `<div class="tier-subtitle">${subtitle}</div>`;
+  html += `</div>`;
+
+  html += `<table class="roster-table">`;
+  html += `<thead><tr>`;
+  html += `<th style="width:90px">Image</th>`;
+  html += `<th>Unit</th>`;
+  html += `<th style="width:55px;text-align:center">Models</th>`;
+  html += `<th style="width:50px;text-align:center">Pts</th>`;
+  html += `<th style="width:50px;text-align:center">Status</th>`;
+  html += `<th style="width:260px">Progress</th>`;
+  html += `</tr></thead><tbody>`;
+  units.forEach(u => { html += renderRow(u); });
+  html += `</tbody></table>`;
+
+  html += `<div class="tier-totals">`;
+  html += `<span class="total-pts">${tierPts} pts</span>`;
+  html += `<span class="total-models">${tierModels} models</span>`;
+  html += `<span class="running">${runningText}</span>`;
+  html += `</div>`;
+
+  html += `</div>`;
+  return html;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const t1000 = getUnits(tier1000);
+  const t2000 = getUnits(tier2000);
+
+  const pts1000 = sumPts(t1000);
+
+  let html = '';
+  html += renderTier('1000pt Base Army', 'Skaven — All owned, no purchases needed', t1000, 0);
+  html += renderTier('2000pt Additions', 'Skaven — Additional models to reach 2000pts', t2000, pts1000);
+
+  document.body.innerHTML = html;
+});
+</script>
+
+</body>
+</html>
