@@ -34,7 +34,7 @@ Everything from 500pt, plus the units below.
 | Plasmancer | 1 | 55 | OWNED (Indomitus) | Leader — attach to Warriors |
 | Cryptothralls x2 | 2 | 60 | OWNED (Indomitus) | Bodyguard for Plasmancer |
 | Canoptek Reanimator | 1 | 75 | OWNED (Indomitus) | Boosts Reanimation Protocols |
-| Lokhust Heavy Destroyers x3 | 3 | 165 | OWNED | Anti-tank firepower |
+| Lokhust Heavy Destroyers x3 | 3 | 165 | OWNED (have 4 total) | Anti-tank firepower |
 | Technomancer | 1 | 80 | OWNED (Cryptek kit) | Leader — attach to 2nd Warriors squad |
 | **Total** | **~38** | **970** | | |
 
@@ -70,7 +70,9 @@ Everything from 1000pt, plus the units below.
 | Triarch Stalker | 1 | 110 | OWNED (needs repair) | Anti-tank, grants +1 to hit on target |
 | Lychguard x5 (shields) | 5 | 85 | OWNED (Praetorian kit) | Built as Lychguard |
 | Lychguard x5 (shields, 2nd box) | 5 | 85 | **BUY** ~$55 | Completes 10-model squad (combined = 170pts) |
-| Immortals x10 (gauss blasters) | 10 | 150 | **BUY** ~$42 | Mid-field objective holders |
+| Canoptek Scarab Swarms x3 (2nd unit) | 3 bases | 40 | OWNED (Indomitus) | Screening + objectives |
+| Immortals x5 (gauss blasters) | 5 | — | OWNED (found!) | First half of squad |
+| Immortals x5 (gauss blasters, 2nd box) | 5 | 150 (combined) | **BUY** ~$21 | Completes 10-model squad |
 | Canoptek Wraiths x6 | 6 | 220 | **BUY** ~$100 (2 boxes) | Fast flankers, Wraith-form invuln |
 | C'tan Shard of the Void Dragon | 1 | 300 | **BUY** ~$65 | Centerpiece, anti-vehicle monster |
 | **Total** | **~69** | **2060** | | |
@@ -92,10 +94,10 @@ Everything from 1000pt, plus the units below.
 | Item | Est. Price |
 |------|-----------|
 | Lychguard x5 (2nd box) | ~$55 |
-| Immortals x10 | ~$42 |
+| Immortals x5 (2nd box) | ~$21 |
 | Canoptek Wraiths x3 (×2 boxes) | ~$100 |
 | C'tan Shard of the Void Dragon | ~$65 |
-| **Total** | **~$262** |
+| **Total** | **~$241** |
 
 ### Painting Priority (2000pt additions)
 1. **Lychguard x10** — core melee brick, pairs with Translocation Overlord

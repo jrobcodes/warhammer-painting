@@ -841,7 +841,10 @@ function renderCard(model) {
 
 // Render all
 document.addEventListener('DOMContentLoaded', () => {
-  document.body.innerHTML = renderBasingCard() + models.map(renderCard).join('');
+  const noticeHtml = `<div style="max-width:900px;margin:10px auto 20px;border:1px solid #c8a838;background:#fffaea;padding:8px 12px;font-size:8.5pt;border-radius:3px;font-family:system-ui,sans-serif;">
+    <strong>Paint availability:</strong> Black Templar, Cryptek Armourshade, Warp Lightning are <strong>discontinued</strong> (but in your collection). Matt Black AP &rarr; <strong>Abaddon Black</strong>. Matt White AP &rarr; <strong>White Scar</strong>. Moon Dust AP &rarr; <strong>Screaming Skull</strong>. If Cryptek runs out: <strong>Reikland Fleshshade Gloss</strong>. Full details: <code>schemes/necrons-szarekhan.md</code>.
+  </div>`;
+  document.body.innerHTML = noticeHtml + renderBasingCard() + models.map(renderCard).join('');
 
 function renderBasingCard() {
   return `<div class="model-page">
